@@ -1,12 +1,16 @@
 class AppImages {
-  static String APP_LOGO = 'static/images/logo.png';
-  static String MESSAGE_ICON = 'static/images/in19.png';
-  static String TODAY_PRICE_BG = 'static/images/in17.png';
-  static String HOT_RECOMMEND_ICON = 'static/images/in11.png';
-  static String TEXTFEILD_PHONE_ICON = 'static/images/lo01.png';
-  static String TEXTFEILD_PWD_ICON = 'static/images/lo02.png';
-  static String TEXTFEILD_CODE_ICON = 'static/images/lo03.png';
-  static String CHECK_ICON = 'static/images/lo04-1.png';
-  static String CHECKED_ICON = 'static/images/lo04.png';
-  static String ARROW_RIGHT_YELLOW = 'static/images/lo05.png';
+  static String APP_LOGO = 'static/images/app_logo.png';
+  static String APP_OPEN_LOGO = 'static/images/app_open_logo.png';
+  static String TABBAR_HOME_ICON = 'static/images/tabbar_home_icon.png';
+  static String TABBAR_HOME_SELECTED_ICON = 'static/images/tabbar_home_selected_icon.png';
+  static String TABBAR_BILL_ICON = 'static/images/tabbar_bill_icon.png';
+  static String TABBAR_BILL_SELECTED_ICON = 'static/images/tabbar_bill_selected_icon.png';
+  static String TABBAR_SHOP_ICON = 'static/images/tabbar_shop_icon.png';
+  static String TABBAR_SHOP_SELECTED_ICON = 'static/images/tabbar_shop_selected_icon.png';
+  static String TABBAR_CART_ICON = 'static/images/tabbar_cart_icon.png';
+  static String TABBAR_CART_SELECTED_ICON = 'static/images/tabbar_cart_selected_icon.png';
+  static String TABBAR_MY_ICON = 'static/images/tabbar_my_icon.png';
+  static String TABBAR_MY_SELECTED_ICON = 'static/images/tabbar_my_selected_icon.png';
+  static String SEARCH_ICON = 'static/images/search_icon.png';
+  static String SCAN_ICON = 'static/images/scan_icon.png';
 }

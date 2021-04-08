@@ -1,8 +1,10 @@
+import 'package:egou_app/constant/app_colors.dart';
+import 'package:egou_app/constant/app_images.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:zb_app/common/utils.dart';
-import 'package:zb_app/pages/home/view.dart';
+import 'package:egou_app/pages/home/view.dart';
 import 'logic.dart';
 import 'state.dart';
 
@@ -13,15 +15,16 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+
   final MainLogic logic = Get.put(MainLogic());
   final MainState state = Get.find<MainLogic>().state;
+  int pageIndex = 0;
   PageController pageController;
 
   @override
   void initState() {
     // TODO: implement setState
-    print(state.current.value);
-    pageController = PageController(initialPage: state.current.value);
+    pageController = PageController(initialPage: pageIndex);
     super.initState();
   }
 
@@ -39,7 +42,36 @@ class _MainPageState extends State<MainPage> {
             Text('个人中心')
           ],
         ),
-        bottomNavigationBar: Obx(() => _BottomAppBar(state.TabBarList, state.current.value, logic, pageController))
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: pageIndex,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedItemColor: AppColors.COLOR_PRIMARY_1,
+          unselectedItemColor:  AppColors.COLOR_BLACK_2,
+          selectedFontSize: 12.0,
+          onTap: (int index) {
+            setState(() {
+              pageIndex = index;
+            });
+            pageController.jumpToPage(index);
+          },
+          items: [
+            _BottomNavigationBarItem(AppImages.TABBAR_HOME_ICON, AppImages.TABBAR_HOME_SELECTED_ICON, '首页'),
+            _BottomNavigationBarItem(AppImages.TABBAR_BILL_ICON, AppImages.TABBAR_BILL_SELECTED_ICON, '报单区'),
+            _BottomNavigationBarItem(AppImages.TABBAR_CART_ICON, AppImages.TABBAR_CART_SELECTED_ICON, '购物车'),
+            _BottomNavigationBarItem(AppImages.TABBAR_SHOP_ICON, AppImages.TABBAR_SHOP_SELECTED_ICON, '商家'),
+            _BottomNavigationBarItem(AppImages.TABBAR_MY_ICON, AppImages.TABBAR_MY_SELECTED_ICON, '我的')
+          ],
+        )
+    );
+  }
+
+  BottomNavigationBarItem _BottomNavigationBarItem(icon, activeIcon, label) {
+    return BottomNavigationBarItem(
+        icon: Image.asset(icon, width: ScreenUtil().setWidth(69) , height: ScreenUtil().setWidth(69)),
+        activeIcon:  Image.asset(activeIcon, width: ScreenUtil().setWidth(69) , height: ScreenUtil().setWidth(69)),
+        label: label,
     );
   }
 
@@ -49,63 +81,4 @@ class _MainPageState extends State<MainPage> {
     pageController.dispose();
     super.dispose();
   }
-}
-
-class _BottomAppBar extends StatelessWidget{
-  final List<TabbarItem> list;
-  final int current;
-  final MainLogic logic;
-  final PageController pageController;
-  _BottomAppBar(this.list, this.current, this.logic, this.pageController);
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return StyleProvider(style: ConverStyle(), child:
-          ConvexAppBar.badge({
-            3: '10',
-          },
-          elevation: 0,
-          height: 48,
-          top: -18,
-          badgeColor: Color(0xFFEEB023),
-          badgeBorderRadius: 20,
-          badgePadding: EdgeInsets.all(3),
-          badgeMargin: EdgeInsets.only(bottom: 20, left: 20),
-          backgroundColor: Colors.white,
-          color: Utils.getColor('#5A5B5F'),
-          activeColor: Utils.getColor('#EEB023'),
-          initialActiveIndex: current,
-          style: TabStyle.fixed,
-          items: List.generate(list.length, (index) => TabItem(
-              icon: current == index ? Image.asset(list[index].selected_icon) :  Image.asset(list[index].icon),
-              title: list[index].text
-          )),
-          onTap: (index) {
-            logic.onChangeTabBar(index);
-            pageController.jumpToPage(index);
-          },
-        )
-      );
-  }
-}
-
-class ConverStyle extends StyleHook{
-  @override
-  // TODO: implement activeIconMargin
-  double get activeIconMargin => 0;
-
-  @override
-  // TODO: implement activeIconSize
-  double get activeIconSize => 45;
-
-  @override
-  // TODO: implement iconSize
-  double get iconSize => 25;
-
-  @override
-  TextStyle textStyle(Color color) {
-    // TODO: implement textStyle
-    return TextStyle(fontSize: 10, color: color, fontWeight: FontWeight.w500);
-  }
-
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zb_app/common/routes.dart';
-import 'package:zb_app/middleware/app_middleware.dart';
+import 'package:egou_app/common/routes.dart';
+import 'package:egou_app/middleware/app_middleware.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 void main() {
   runApp(MyApp());
@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(1080, 1920),
+      designSize: Size(1125, 2346),
       allowFontScaling: true,
       builder: () => GetMaterialApp(
-        title: 'zb app',
+        title: 'egou app',
         builder: (context, child){
           return EasyLoading.init()(context, Scaffold(
               // Global GestureDetector that will dismiss the keyboard
@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// 点击空白区域隐藏软键盘
 void hideKeyboard(BuildContext context) {
   FocusScopeNode currentFocus = FocusScope.of(context);
   if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {

@@ -1,6 +1,6 @@
-import 'package:zb_app/constant/app_api_urls.dart';
-import 'package:zb_app/http/http_request.dart';
-import 'package:zb_app/http/response_data.dart';
+import 'package:egou_app/constant/app_api_urls.dart';
+import 'package:egou_app/http/http_request.dart';
+import 'package:egou_app/http/response_data.dart';
 
 class LoginService {
 

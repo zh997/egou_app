@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:zb_app/pages/guide/view.dart';
-import 'package:zb_app/pages/home/view.dart';
-import 'package:zb_app/pages/launch/view.dart';
-import 'package:zb_app/pages/login/view.dart';
-import 'package:zb_app/pages/main/view.dart';
+import 'package:egou_app/pages/guide/view.dart';
+import 'package:egou_app/pages/home/view.dart';
+import 'package:egou_app/pages/launch/view.dart';
+import 'package:egou_app/pages/login/view.dart';
+import 'package:egou_app/pages/main/view.dart';
 
 class RouteConfig {
   static final String launch_page = '/';

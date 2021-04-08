@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:zb_app/constant/app_api_urls.dart';
-import 'package:zb_app/http/response_data.dart';
-import 'package:zb_app/http/status_code.dart';
+import 'package:egou_app/constant/app_api_urls.dart';
+import 'package:egou_app/http/response_data.dart';
+import 'package:egou_app/http/status_code.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class HttpRequest{

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:zb_app/common/routes.dart';
+import 'package:egou_app/common/routes.dart';
 
 import 'state.dart';
 
@@ -14,7 +14,7 @@ class LaunchLogic extends GetxController {
       if (state.CountDownSeconds <= 1) {
         _timer.cancel();
         // 跳转页面
-        Get.toNamed(RouteConfig.login_page);
+        Get.offNamed(RouteConfig.main_page);
       } else {
         --state.CountDownSeconds;
       }

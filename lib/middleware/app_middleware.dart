@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/observers/route_observer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zb_app/common/routes.dart';
+import 'package:egou_app/common/routes.dart';
 
 class AppMiddleWare {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
