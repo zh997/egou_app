@@ -32,7 +32,7 @@ class RadiusButton extends StatelessWidget {
               color: isLine ? Colors.transparent : color ?? AppColors.COLOR_PRIMARY_1,
               borderRadius: BorderRadius.circular(radius)
           ),
-          child: Text(buttonText, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: isLine ? AppColors.COLOR_PRIMARY_1 : Colors.white)),
+          child: Text(buttonText, style: TextStyle(fontSize: ScreenUtil().setSp(51), color: isLine ? AppColors.COLOR_PRIMARY_1 : Colors.white)),
         ),
       ),
     );

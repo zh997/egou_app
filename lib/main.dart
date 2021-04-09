@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(1125, 2346),
-      allowFontScaling: true,
+      allowFontScaling: false,
       builder: () => GetMaterialApp(
         title: 'egou app',
         builder: (context, child){

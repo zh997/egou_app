@@ -1,5 +1,7 @@
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_images.dart';
+import 'package:egou_app/pages/bill/view.dart';
+import 'package:egou_app/pages/cart/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,8 +38,8 @@ class _MainPageState extends State<MainPage> {
           controller: pageController,
           children: [
             HomePage(),
-            Text('采选'),
-            Text('新品'),
+            BillPage(),
+            CartPage(),
             Text('购物车'),
             Text('个人中心')
           ],
