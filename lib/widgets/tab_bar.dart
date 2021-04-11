@@ -20,8 +20,8 @@ class _TabBarWidgetState extends State<TabBarWidget> {
         child: TabBar(
             controller: widget.tabController,
             isScrollable: true,
-            labelColor: AppColors.COLOR_BLACK_3,
-            unselectedLabelColor: AppColors.COLOR_GRAY_6,
+            labelColor: AppColors.COLOR_BLACK_000000,
+            unselectedLabelColor: AppColors.COLOR_GRAY_666666,
             labelStyle: TextStyle(fontSize: ScreenUtil().setSp(58), fontWeight: FontWeight.bold),
             unselectedLabelStyle:  TextStyle(fontSize: ScreenUtil().setSp(50)),
             labelPadding: EdgeInsets.only(),
@@ -62,7 +62,7 @@ class CustomPainer extends BoxPainter {
     final Paint painer = Paint();
     painer.strokeWidth = ScreenUtil().setHeight(10);
     painer.strokeCap = StrokeCap.round;
-    painer.color = AppColors.COLOR_PRIMARY_1;
-    canvas.drawLine(Offset(startOffset, ScreenUtil().setHeight(150)), Offset(endOffset, ScreenUtil().setHeight(150)), painer);
+    painer.color = AppColors.COLOR_PRIMARY_D22315;
+    canvas.drawLine(Offset(startOffset, ScreenUtil().setWidth(120)), Offset(endOffset, ScreenUtil().setWidth(120)), painer);
   }
 }

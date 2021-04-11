@@ -2,6 +2,8 @@ import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/pages/bill/view.dart';
 import 'package:egou_app/pages/cart/view.dart';
+import 'package:egou_app/pages/my/view.dart';
+import 'package:egou_app/pages/shop/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,8 +42,8 @@ class _MainPageState extends State<MainPage> {
             HomePage(),
             BillPage(),
             CartPage(),
-            Text('购物车'),
-            Text('个人中心')
+            ShopPage(),
+            MyPage()
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -49,9 +51,10 @@ class _MainPageState extends State<MainPage> {
           currentIndex: pageIndex,
           showSelectedLabels: true,
           showUnselectedLabels: true,
-          selectedItemColor: AppColors.COLOR_PRIMARY_1,
-          unselectedItemColor:  AppColors.COLOR_BLACK_2,
+          selectedItemColor: AppColors.COLOR_PRIMARY_D22315,
+          unselectedItemColor:  AppColors.COLOR_BLACK_333333,
           selectedFontSize: 12.0,
+          backgroundColor: Colors.white,
           onTap: (int index) {
             setState(() {
               pageIndex = index;

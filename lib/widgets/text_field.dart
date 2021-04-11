@@ -36,16 +36,16 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
       focusNode:  widget.focusNode,
       textInputAction: TextInputAction.next,
       maxLines: 1,
-      cursorColor: AppColors.COLOR_PRIMARY_1,
-      style: TextStyle(fontSize: ScreenUtil().setSp(60), color: AppColors.COLOR_BLACK_2),
+      cursorColor: AppColors.COLOR_PRIMARY_D22315,
+      style: TextStyle(fontSize: ScreenUtil().setSp(60), color: AppColors.COLOR_BLACK_333333),
       obscureText:  widget.obscureText ?? false,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.only(bottom: 15),
           hasFloatingPlaceholder: false,
-          focusColor:  AppColors.COLOR_PRIMARY_1,
+          focusColor:  AppColors.COLOR_PRIMARY_D22315,
           border: InputBorder.none,
           labelText:  widget.labelText,
-          labelStyle: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_BLACK_1,  height: ScreenUtil().setHeight(4))
+          labelStyle: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_BLACK_848484,  height: ScreenUtil().setHeight(4))
       ),
       keyboardType:  widget.keyboardType ?? TextInputType.text,
     ))];
@@ -65,13 +65,13 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
         Container(
           height: ScreenUtil().setWidth(180),
           decoration: BoxDecoration(
-              border:  Border(bottom: BorderSide(width:  1, color: errorText.isNotEmpty ? AppColors.COLOR_PRIMARY_1 : AppColors.COLOR_GRAY_1))
+              border:  Border(bottom: BorderSide(width:  1, color: errorText.isNotEmpty ? AppColors.COLOR_PRIMARY_D22315 : AppColors.COLOR_GRAY_E7E8E8))
           ),
           child: Row(
             children: textFieldRowItems,
           ),
         ),
-        Text(errorText, style: TextStyle(color:  AppColors.COLOR_PRIMARY_1 , height: errorText.isNotEmpty ? 2 : 0), maxLines: 1)
+        Text(errorText, style: TextStyle(color:  AppColors.COLOR_PRIMARY_D22315 , height: errorText.isNotEmpty ? 2 : 0), maxLines: 1)
       ],
     );
   }

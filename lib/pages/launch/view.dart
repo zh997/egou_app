@@ -21,7 +21,7 @@ class LaunchPage extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.center,
-            color: AppColors.COLOR_PRIMARY_1,
+            color: AppColors.COLOR_PRIMARY_D22315,
             child: Image.asset(AppImages.APP_OPEN_LOGO, width: ScreenUtil().setWidth(384), height: ScreenUtil().setWidth(372)),
           ),
           // Positioned(

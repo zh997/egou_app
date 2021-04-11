@@ -26,12 +26,12 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final Widget getCodeBtn = GestureDetector(
       onTap: logic.StartCountDown,
-      child: Text('获取验证码', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_PRIMARY_1)),
+      child: Text('获取验证码', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_PRIMARY_D22315)),
     );
-    final Widget countDownText = Obx(() => Text('${state.CountDownSeconds.value}s', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_PRIMARY_1)));
+    final Widget countDownText = Obx(() => Text('${state.CountDownSeconds.value}s', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_PRIMARY_D22315)));
     final List<Widget> textFieldItems = [
       TextFormFieldWidget('user_name', key: GlobalKey(), leftSolt:
-      Text('+86', style: TextStyle(fontSize: ScreenUtil().setSp(48), fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_3)),
+      Text('+86', style: TextStyle(fontSize: ScreenUtil().setSp(48), fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_000000)),
           rightSolt: Obx(() => state.isStartCountdown.value ? countDownText : getCodeBtn) ,
           validate: (String val){
             if (val.isEmpty) {
@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
           }, labelText: AppStrings.LOGIN_FORM_PHONE_LABELTEXT),
       SizedBox(height: 10),
       TextFormFieldWidget('password', key: GlobalKey(),leftSolt:
-      Text('密码', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_BLACK_3)), validate: (String val){
+      Text('密码', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_BLACK_000000)), validate: (String val){
         if (val.isEmpty) {
           return AppStrings.LOGIN_FORM_PWD_LABELTEXT;
         }
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
             Image.asset(AppImages.APP_LOGO, width: ScreenUtil().setWidth(180), height: ScreenUtil().setWidth(180)),
             Padding(
                 padding: EdgeInsets.only(left: ScreenUtil().setWidth(60)),
-                child: Text(AppStrings.LOGIN, style: TextStyle(color: AppColors.COLOR_BLACK_2, fontSize: ScreenUtil().setSp(80), fontWeight: FontWeight.bold))
+                child: Text(AppStrings.LOGIN, style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: ScreenUtil().setSp(80), fontWeight: FontWeight.bold))
             )
           ],
         ),
@@ -100,10 +100,10 @@ class _LoginPageState extends State<LoginPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('还没有账号? 立即', style: TextStyle(color: AppColors.COLOR_GRAY_2, fontSize: ScreenUtil().setSp(48))),
+            Text('还没有账号? 立即', style: TextStyle(color: AppColors.COLOR_GRAY_848484, fontSize: ScreenUtil().setSp(48))),
             GestureDetector(
               onTap: (){},
-              child: Text('注册', style: TextStyle(color: AppColors.COLOR_PRIMARY_1, fontSize: ScreenUtil().setSp(48))),
+              child: Text('注册', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: ScreenUtil().setSp(48))),
             )
           ],
         ),

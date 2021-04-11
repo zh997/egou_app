@@ -28,11 +28,11 @@ class RadiusButton extends StatelessWidget {
           width: ScreenUtil().setWidth(this.width),
           height: ScreenUtil().setWidth(this.height),
           decoration: BoxDecoration(
-              border: Border.all(width: 1, color:  color ?? AppColors.COLOR_PRIMARY_1),
-              color: isLine ? Colors.transparent : color ?? AppColors.COLOR_PRIMARY_1,
+              border: Border.all(width: 1, color:  color ?? AppColors.COLOR_PRIMARY_D22315),
+              color: isLine ? Colors.transparent : color ?? AppColors.COLOR_PRIMARY_D22315,
               borderRadius: BorderRadius.circular(radius)
           ),
-          child: Text(buttonText, style: TextStyle(fontSize: ScreenUtil().setSp(51), color: isLine ? AppColors.COLOR_PRIMARY_1 : Colors.white)),
+          child: Text(buttonText, style: TextStyle(fontSize: ScreenUtil().setSp(51), color: isLine ? AppColors.COLOR_PRIMARY_D22315 : Colors.white)),
         ),
       ),
     );

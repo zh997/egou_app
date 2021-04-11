@@ -1,6 +1,7 @@
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
+import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/constant/app_strings.dart';
 import 'package:egou_app/widgets/goods_item.dart';
 import 'package:egou_app/widgets/search.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'logic.dart';
@@ -28,7 +30,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
   final HomeState state = Get.find<HomeLogic>().state;
 
   final List<String> labelList = ['精选', '手机', '运动', '饰品', '母婴用品','家居', '彩妆', '电脑', '箱包', '学习用品'];
-  
+
   TabController tabController;
 
   @override
@@ -43,36 +45,60 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.COLOR_GRAY_3,
+        backgroundColor: AppColors.COLOR_GRAY_F8F8F8,
         body: Column(
           children: [
             _HeaderSearch(),
             Expanded(child: TabBarView(
               controller: tabController,
-              children: List.generate(labelList.length, (index) => ListView(
-                padding: EdgeInsets.only(),
-                children: [
-                   Container(
-                     color: Colors.white,
-                     padding: EdgeInsets.only(top: ScreenUtil().setWidth(44)),
-                     child: Column(
-                       children: [
-                         _Swiper(),
-                         _GridItems()
-                       ],
-                     ),
-                   ),
-                    SizedBox(height: ScreenUtil().setWidth(56)),
-                    _title(),
-                    Container(
-                      padding: EdgeInsets.all(_padding_lr),
-                      child: Wrap(
-                        runSpacing: ScreenUtil().setWidth(40),
-                        alignment: WrapAlignment.spaceBetween,
-                        children: List.generate(10, (index) => GoodsItem()),
+              children: List.generate(labelList.length, (index) => Padding(
+                padding: EdgeInsets.only(bottom: AppSpace.SPACE_52),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverList(
+                      delegate: SliverChildListDelegate([
+                        Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.only(top: ScreenUtil().setWidth(44)),
+                          child: Column(
+                            children: [
+                              _Swiper(),
+                              _GridItems()
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: ScreenUtil().setWidth(56)),
+                        _title(),
+                        SizedBox(height: 20)
+                      ]),
+                    ),
+                    SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                        childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(726),
                       ),
-                    )
-                ],
+                      delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              if(index % 2 > 0) {
+                                return Padding(
+                                    padding: EdgeInsets.only(right: AppSpace.SPACE_52),
+                                    child: GoodsItem()
+                                );
+                              } else {
+                                return Padding(
+                                    padding: EdgeInsets.only(left: AppSpace.SPACE_52),
+                                    child: GoodsItem()
+                                );
+                              }
+
+                        },
+                        childCount: 20,
+                      ),
+                    ),
+                  ],
+                ),
               )),
             ))
           ],
@@ -85,7 +111,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       decoration: BoxDecoration(
           color: Colors.white,
-          boxShadow: [BoxShadow(color: AppColors.COLOR_GRAY_2, blurRadius: 1.0, spreadRadius: 0.0)]
+          border: Border(bottom: BorderSide(width: 1, color: AppColors.COLOR_GRAY_F7F7F7))
       ),
       child: Column(
         children: [
@@ -94,7 +120,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
               alignment: Alignment.center,
               child: Row(
                 children: [
-                  Expanded(child: Search()),
+                  Expanded(child: Search('搜索商品')),
                   Container(
                       alignment: Alignment.centerRight,
                       width: 50,
@@ -103,7 +129,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image.asset(AppImages.SCAN_ICON,  width: ScreenUtil().setWidth(56), height: ScreenUtil().setWidth(56)),
-                          Text(AppStrings.SCAN, style: TextStyle(fontSize: ScreenUtil().setSp(42),color: AppColors.COLOR_BLACK_2))
+                          Text(AppStrings.SCAN, style: TextStyle(fontSize: ScreenUtil().setSp(42),color: AppColors.COLOR_BLACK_333333))
                         ],
                       )
                   )
@@ -130,7 +156,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
               builder: SwiperCustomPagination(builder: (BuildContext context, SwiperPluginConfig swiperPluginConfig) {
                 Color _activeCircleBg (int index) {
                   if ( swiperPluginConfig.activeIndex == index) {
-                    return AppColors.COLOR_PRIMARY_1;
+                    return AppColors.COLOR_PRIMARY_D22315;
                   } else {
                     return Colors.white;
                   }
@@ -168,7 +194,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
             children: [
               Image.asset(AppImages.ICON_1, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),
               SizedBox(height: ScreenUtil().setWidth(29)),
-              Text(AppStrings.STRING_1, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: AppColors.COLOR_BLACK_3))
+              Text(AppStrings.STRING_1, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: AppColors.COLOR_BLACK_000000))
             ],
           ),
         ),
@@ -177,7 +203,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
             children: [
               Image.asset(AppImages.ICON_2, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),
               SizedBox(height: ScreenUtil().setWidth(29)),
-              Text(AppStrings.STRING_2, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: AppColors.COLOR_BLACK_3))
+              Text(AppStrings.STRING_2, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: AppColors.COLOR_BLACK_000000))
             ],
           ),
         ),
@@ -186,7 +212,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
             children: [
               Image.asset(AppImages.ICON_3, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),
               SizedBox(height: ScreenUtil().setWidth(29)),
-              Text(AppStrings.STRING_3, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: AppColors.COLOR_BLACK_3))
+              Text(AppStrings.STRING_3, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: AppColors.COLOR_BLACK_000000))
             ],
           ),
         ),
@@ -195,7 +221,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
             children: [
               Image.asset(AppImages.ICON_4, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),
               SizedBox(height: ScreenUtil().setWidth(29)),
-              Text(AppStrings.STRING_4, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: AppColors.COLOR_BLACK_3))
+              Text(AppStrings.STRING_4, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: AppColors.COLOR_BLACK_000000))
             ],
           ),
         ),
@@ -207,11 +233,11 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(width: ScreenUtil().setWidth(234), color: AppColors.COLOR_GRAY_7, height: 1),
+        Container(width: ScreenUtil().setWidth(234), color: AppColors.COLOR_GRAY_D2D2D2, height: 1),
         Padding(
           padding: EdgeInsets.only(left: _padding_lr, right: _padding_lr),
-            child: Text(AppStrings.STRING_5, style: TextStyle(color: AppColors.COLOR_BLACK_2, fontSize: ScreenUtil().setSp(48), fontWeight: FontWeight.bold))),
-        Container(width: ScreenUtil().setWidth(234), color: AppColors.COLOR_GRAY_7, height: 1),
+            child: Text(AppStrings.STRING_5, style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: ScreenUtil().setSp(48), fontWeight: FontWeight.bold))),
+        Container(width: ScreenUtil().setWidth(234), color: AppColors.COLOR_GRAY_D2D2D2, height: 1),
       ],
     );
   }
@@ -221,31 +247,4 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
-}
-
-
-class CustomIndicator extends Decoration{
-
-  @override
-  BoxPainter createBoxPainter([onChanged]) {
-    print(onChanged);
-    // TODO: implement createBoxPainter
-    return CustomPainer();
-  }
-
-}
-
-class CustomPainer extends BoxPainter {
-  @override
-  void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    final indicatorWidth = ScreenUtil().setWidth(40);
-    final startOffset = (configuration.size.width - indicatorWidth) / 2 + offset.dx;
-    final endOffset = startOffset + indicatorWidth;
-    // TODO: implement paint
-    final Paint painer = Paint();
-    painer.strokeWidth = ScreenUtil().setHeight(10);
-    painer.strokeCap = StrokeCap.square;
-    painer.color = AppColors.COLOR_PRIMARY_1;
-    canvas.drawLine(Offset(startOffset, ScreenUtil().setHeight(150)), Offset(endOffset, ScreenUtil().setHeight(150)), painer);
-  }
 }
