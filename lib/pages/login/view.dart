@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
               return AppStrings.LOGIN_FORM_PHONE_LABELTEXT_1;
             }
             return '';
-          }, labelText: AppStrings.LOGIN_FORM_PHONE_LABELTEXT),
+          }, labelText: AppStrings.LOGIN_FORM_PHONE_LABELTEXT, contentPaddingBottom: 5, labelHeight: 8,),
       SizedBox(height: 10),
       TextFormFieldWidget('password', key: GlobalKey(),leftSolt:
       Text('密码', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_BLACK_000000)), validate: (String val){
@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
           return AppStrings.LOGIN_FORM_PWD_LABELTEXT;
         }
         return '';
-      }, labelText: AppStrings.LOGIN_FORM_PWD_LABELTEXT),
+      }, labelText: AppStrings.LOGIN_FORM_PWD_LABELTEXT, contentPaddingBottom: 5, labelHeight: 8),
     ];
 
     return  Scaffold(
