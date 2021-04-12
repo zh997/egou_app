@@ -229,7 +229,7 @@ class MyPage extends StatelessWidget {
         children: [
           Image.asset(AppImages.ICON_9, width: ScreenUtil().setWidth(81),height:  ScreenUtil().setWidth(81)),
           SizedBox(height: AppSpace.SPACE_35),
-          Text('待付款', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+          Text(text, style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
         ],
       ),
     );

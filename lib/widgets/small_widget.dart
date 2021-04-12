@@ -10,12 +10,13 @@ class Price extends StatelessWidget {
   final double size;
   final double unitSize;
   final double bottom;
-  Price({this.color, Key key, this.price, this.size, this.bottom = 1.8, this.unitSize}): super(key: key);
+  final MainAxisAlignment mainAxisAlignment;
+  Price({this.color, Key key, this.price, this.size, this.bottom = 1.8, this.unitSize, this.mainAxisAlignment}): super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
       children: [
         Padding(padding: EdgeInsets.only(bottom: bottom),
             child: Text('￥',  style: TextStyle(fontSize:

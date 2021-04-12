@@ -5,6 +5,7 @@ import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:egou_app/widgets/tab_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -41,10 +42,7 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(bottom: BorderSide(
-                width: 1, color: AppColors.COLOR_GRAY_CCCCCC
-              ))
+              color: Colors.white, boxShadow: [BoxShadow(color: AppColors.COLOR_GRAY_848484, blurRadius: 1.0, spreadRadius: 0.0)]
             ),
             child: TabBarWidget(labelList, tabController, itemPadding: 40),
           ),
@@ -66,6 +64,7 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
   Widget _OrderItem() {
     return Container(
       padding: EdgeInsets.only(left: AppSpace.SPACE_52, top:  AppSpace.SPACE_40, bottom:  AppSpace.SPACE_40, right: AppSpace.SPACE_52 ),
+      margin: EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
         color: Colors.white,
           boxShadow: [BoxShadow(color: AppColors.COLOR_GRAY_E7E8E8, blurRadius: 10.0, spreadRadius: 0)],

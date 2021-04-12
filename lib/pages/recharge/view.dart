@@ -75,7 +75,7 @@ class RechargePage extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadius.RADIUS_30),
         boxShadow: [BoxShadow(color: AppColors.COLOR_GRAY_E7E8E8, blurRadius: 10.0, spreadRadius: 0)],
       ),
-      child: Price(color: AppColors.COLOR_BLACK_000000, size: AppFontsize.SIZE_88, price: price, unitSize: AppFontsize.SIZE_56),
+      child: Price(color: AppColors.COLOR_BLACK_000000, size: AppFontsize.SIZE_88, price: price, unitSize: AppFontsize.SIZE_56, mainAxisAlignment: MainAxisAlignment.center),
     );
   }
 }
