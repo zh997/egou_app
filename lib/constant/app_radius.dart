@@ -5,4 +5,5 @@ class AppRadius{
   static double RADIUS_8 = ScreenUtil().setWidth(8);
   static double RADIUS_11 = ScreenUtil().setWidth(11);
   static double RADIUS_20 = ScreenUtil().setWidth(20);
+  static double RADIUS_16 = ScreenUtil().setWidth(16);
 }

@@ -1,3 +1,4 @@
+import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
@@ -17,7 +18,6 @@ import 'logic.dart';
 import 'state.dart';
 
 final double _padding_lr = ScreenUtil().setWidth(52);
-double _status_bar_height (BuildContext context) => MediaQuery.of(context).padding.top;
 
 class HomePage extends StatefulWidget {
   @override
@@ -51,56 +51,56 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
             _HeaderSearch(),
             Expanded(child: TabBarView(
               controller: tabController,
-              children: List.generate(labelList.length, (index) => Padding(
-                padding: EdgeInsets.only(bottom: AppSpace.SPACE_52),
-                child: CustomScrollView(
-                  slivers: [
-                    SliverList(
-                      delegate: SliverChildListDelegate([
-                        Container(
-                          color: Colors.white,
-                          padding: EdgeInsets.only(top: ScreenUtil().setWidth(44)),
-                          child: Column(
-                            children: [
-                              _Swiper(),
-                              _GridItems()
-                            ],
-                          ),
+              children: List.generate(labelList.length, (index) => CustomScrollView(
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildListDelegate([
+                      Container(
+                        color: Colors.white,
+                        padding: EdgeInsets.only(top: ScreenUtil().setWidth(44)),
+                        child: Column(
+                          children: [
+                            _Swiper(),
+                            _GridItems()
+                          ],
                         ),
-                        SizedBox(height: ScreenUtil().setWidth(56)),
-                        _title(),
-                        SizedBox(height: 20)
-                      ]),
-                    ),
-                    SliverGrid(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 20,
-                        crossAxisSpacing: 20,
-                        childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(726),
                       ),
-                      delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              if(index % 2 > 0) {
-                                return Padding(
-                                    padding: EdgeInsets.only(right: AppSpace.SPACE_52),
-                                    child: GoodsItem()
-                                );
-                              } else {
-                                return Padding(
-                                    padding: EdgeInsets.only(left: AppSpace.SPACE_52),
-                                    child: GoodsItem()
-                                );
-                              }
+                      SizedBox(height: ScreenUtil().setWidth(56)),
+                      _title(),
+                      SizedBox(height: 20)
+                    ]),
+                  ),
+                  SliverGrid(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 20,
+                      childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(726),
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        if(index % 2 > 0) {
+                          return Padding(
+                              padding: EdgeInsets.only(right: AppSpace.SPACE_52),
+                              child: GoodsItem()
+                          );
+                        } else {
+                          return Padding(
+                              padding: EdgeInsets.only(left: AppSpace.SPACE_52),
+                              child: GoodsItem()
+                          );
+                        }
 
-                        },
-                        childCount: 20,
-                      ),
+                      },
+                      childCount: 20,
                     ),
-                  ],
-                ),
+                  ),
+                  SliverList(delegate: SliverChildListDelegate([
+                    SizedBox(height: 20)
+                  ]))
+                ],
               )),
-            ))
+            )),
           ],
         )
     );
@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
       ),
       child: Column(
         children: [
-          Container(padding: EdgeInsets.only(left: _padding_lr,right: _padding_lr),
+          Container(padding: EdgeInsets.only(left: AppSpace.SPACE_52,right: AppSpace.SPACE_52),
               height: ScreenUtil().setHeight(171),
               alignment: Alignment.center,
               child: Row(
@@ -176,7 +176,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
               })
           ),
           itemBuilder: (BuildContext context,int index) =>  Container(
-            margin: EdgeInsets.only(left: _padding_lr, right: _padding_lr),
+            margin: EdgeInsets.only(left: AppSpace.SPACE_52, right: AppSpace.SPACE_52),
             decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(20)))),
             clipBehavior: Clip.hardEdge,
             child: Image.asset(state.BannerList.value[index].url, fit: BoxFit.fill),
@@ -190,6 +190,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         GestureDetector(
+          onTap: () {
+            Get.toNamed(RouteConfig.recharge_page);
+          },
           child: Column(
             children: [
               Image.asset(AppImages.ICON_1, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),
@@ -199,6 +202,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
           ),
         ),
         GestureDetector(
+          onTap: () {
+            Get.toNamed(RouteConfig.points_mall);
+          },
           child: Column(
             children: [
               Image.asset(AppImages.ICON_2, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),
@@ -208,6 +214,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
           ),
         ),
         GestureDetector(
+          onTap: (){
+            Get.toNamed(RouteConfig.shop_settled);
+          },
           child: Column(
             children: [
               Image.asset(AppImages.ICON_3, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),
@@ -235,7 +244,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
       children: [
         Container(width: ScreenUtil().setWidth(234), color: AppColors.COLOR_GRAY_D2D2D2, height: 1),
         Padding(
-          padding: EdgeInsets.only(left: _padding_lr, right: _padding_lr),
+          padding: EdgeInsets.only(left: AppSpace.SPACE_52, right: AppSpace.SPACE_52),
             child: Text(AppStrings.STRING_5, style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: ScreenUtil().setSp(48), fontWeight: FontWeight.bold))),
         Container(width: ScreenUtil().setWidth(234), color: AppColors.COLOR_GRAY_D2D2D2, height: 1),
       ],

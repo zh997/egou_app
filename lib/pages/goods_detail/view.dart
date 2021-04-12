@@ -113,14 +113,14 @@ class GoodsDetailPage extends StatelessWidget {
                 _goodsTab(),
                 Container(
                   height: 500,
-                  child:  Image.asset(AppImages.GOODS_DETAIL, fit: BoxFit.cover)
+                  color: Colors.white,
+                  child:  Image.network(AppImages.GOODS_IMG_1, fit: BoxFit.cover)
                 )
               ],
             ),
           )),
           Container(
             height: ScreenUtil().setWidth(250),
-            padding: EdgeInsets.only(bottom: 15),
             decoration: BoxDecoration(
                 color: Colors.white,
               border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
@@ -310,7 +310,7 @@ class GoodsDetailPage extends StatelessWidget {
                 );
               })
           ),
-          itemBuilder: (BuildContext context,int index) =>  Image.asset(state.BannerList.value[index].url, fit: BoxFit.cover)
+          itemBuilder: (BuildContext context,int index) =>  Image.network(state.BannerList.value[index].url, fit: BoxFit.cover)
       ),
     );
   }

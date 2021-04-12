@@ -6,7 +6,8 @@ import 'package:flutter_screenutil/screen_util.dart';
 class TabBarWidget extends StatefulWidget {
   final TabController tabController;
   final List<String> labelList;
-  TabBarWidget(this.labelList,  this.tabController, {Key key}):super(key: key);
+  final double itemPadding;
+  TabBarWidget(this.labelList,  this.tabController, {Key key, this.itemPadding}):super(key: key);
   @override
   _TabBarWidgetState createState() => _TabBarWidgetState();
 }
@@ -27,8 +28,8 @@ class _TabBarWidgetState extends State<TabBarWidget> {
             labelPadding: EdgeInsets.only(),
             indicator: CustomIndicator(),
             tabs: List.generate(widget.labelList.length, (index) {
-              final paddingLeftValue = index == 0 ? 52 : 26;
-              final paddingRightValue = index == widget.labelList.length - 1 ? 52 : 26;
+              final paddingLeftValue = index == 0 ? 52 : widget.itemPadding ?? 26;
+              final paddingRightValue = index == widget.labelList.length - 1 ? 52 :  widget.itemPadding ?? 26;
               return Container(
                 padding: EdgeInsets.only(left: ScreenUtil().setWidth(paddingLeftValue), right: ScreenUtil().setWidth(paddingRightValue)),
                 alignment: Alignment.center,

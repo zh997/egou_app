@@ -1,8 +1,10 @@
+import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/widgets/small_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
@@ -13,6 +15,10 @@ import 'state.dart';
 class MyPage extends StatelessWidget {
   final MyLogic logic = Get.put(MyLogic());
   final MyState state = Get.find<MyLogic>().state;
+
+  void _onRedirectOrder (){
+    Get.toNamed(RouteConfig.my_order);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,48 +116,27 @@ class MyPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('我的订单', style: TextStyle(fontSize: AppFontsize.SIZE_56, color: AppColors.COLOR_BLACK_000000)),
-                      Row(
-                        children: [
-                          Padding(padding: EdgeInsets.only(right: 5), child: Text('全部订单',style: TextStyle(
-                              fontSize: AppFontsize.SIZE_36,
-                              color: AppColors.COLOR_GRAY_999999
-                          )),),
-                          Image.asset(AppImages.ARROW_RIGHT_ICON, width: ScreenUtil().setWidth(20), height: ScreenUtil().setWidth(32))
-                        ],
+                      GestureDetector(
+                        onTap: _onRedirectOrder,
+                        child: Row(
+                          children: [
+                            Padding(padding: EdgeInsets.only(right: 5), child: Text('全部订单',style: TextStyle(
+                                fontSize: AppFontsize.SIZE_36,
+                                color: AppColors.COLOR_GRAY_999999
+                            )),),
+                            Image.asset(AppImages.ARROW_RIGHT_ICON, width: ScreenUtil().setWidth(20), height: ScreenUtil().setWidth(32))
+                          ],
+                        ),
                       )
                     ],
                   )),
                   Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 0), child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        children: [
-                          Image.asset(AppImages.ICON_9, width: ScreenUtil().setWidth(81),height:  ScreenUtil().setWidth(81)),
-                          SizedBox(height: AppSpace.SPACE_35),
-                          Text('待付款', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Image.asset(AppImages.ICON_10, width: ScreenUtil().setWidth(81),height:  ScreenUtil().setWidth(81)),
-                          SizedBox(height: AppSpace.SPACE_35),
-                          Text('待收货', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Image.asset(AppImages.ICON_11, width: ScreenUtil().setWidth(81),height:  ScreenUtil().setWidth(81)),
-                          SizedBox(height: AppSpace.SPACE_35),
-                          Text('待评价', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Image.asset(AppImages.ICON_12, width: ScreenUtil().setWidth(81),height:  ScreenUtil().setWidth(81)),
-                          SizedBox(height: AppSpace.SPACE_35),
-                          Text('待退货', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                        ],
-                      ),
+                      _orderEntryItem(AppImages.ICON_9, '待付款'),
+                      _orderEntryItem(AppImages.ICON_10, '待收货'),
+                      _orderEntryItem(AppImages.ICON_11, '待评价'),
+                      _orderEntryItem(AppImages.ICON_12, '待退货'),
                     ],
                   ))
                 ],
@@ -160,15 +145,17 @@ class MyPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: AppSpace.SPACE_52),
               height: ScreenUtil().setWidth(598),
+              alignment: Alignment.center,
               color: Colors.white,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: GridView(
-                  physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                    ),
-                  children: [
+              child: GridView(
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.all(15),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20
+                ),
+                children: [
                   Column(
                     children: [
                       Image.asset(AppImages.ICON_13, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
@@ -225,11 +212,25 @@ class MyPage extends StatelessWidget {
                       Text('设置中心', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
                     ],
                   ),
-                ],)
-              ),
-            )
+                ]),
+            ),
+            SizedBox(height: 20)
           ],
         ),
+      ),
+    );
+  }
+
+
+  Widget _orderEntryItem(icon, text) {
+    return GestureDetector(
+      onTap: _onRedirectOrder,
+      child: Column(
+        children: [
+          Image.asset(AppImages.ICON_9, width: ScreenUtil().setWidth(81),height:  ScreenUtil().setWidth(81)),
+          SizedBox(height: AppSpace.SPACE_35),
+          Text('待付款', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+        ],
       ),
     );
   }

@@ -19,45 +19,65 @@ class PayResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '支付结果'),
-      body: ListView(
-        padding: EdgeInsets.only(),
-        children: [
-          Container(
-            height: ScreenUtil().setWidth(400),
-            alignment: Alignment.center,
-            color: Colors.white,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(AppImages.PAY_SUCCESS_ICON, width: ScreenUtil().setWidth(100), height:  ScreenUtil().setWidth(100)),
-                SizedBox(height: 10),
-                Text('支付成功', style: TextStyle(
-                  fontSize: AppFontsize.SIZE_56, color: AppColors.COLOR_BLACK_333333
-                ))
-              ],
+      body: CustomScrollView(
+        slivers: [
+          SliverList(delegate: SliverChildListDelegate([
+            Container(
+              height: ScreenUtil().setWidth(400),
+              alignment: Alignment.center,
+              color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(AppImages.PAY_SUCCESS_ICON, width: ScreenUtil().setWidth(100), height:  ScreenUtil().setWidth(100)),
+                  SizedBox(height: 10),
+                  Text('支付成功', style: TextStyle(
+                      fontSize: AppFontsize.SIZE_56, color: AppColors.COLOR_BLACK_333333
+                  ))
+                ],
+              ),
+            ),
+            Container(
+                padding: EdgeInsets.all(AppSpace.SPACE_52),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('猜你喜欢', style: TextStyle(
+                        fontSize: AppFontsize.SIZE_56,
+                        color: AppColors.COLOR_BLACK_333333,
+                        fontWeight: FontWeight.bold
+                    )),
+                  ],
+                )
+            )
+          ])),
+          SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
+              childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(726),
+            ),
+            delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                if(index % 2 > 0) {
+                  return Padding(
+                      padding: EdgeInsets.only(right: AppSpace.SPACE_52),
+                      child: GoodsItem()
+                  );
+                } else {
+                  return Padding(
+                      padding: EdgeInsets.only(left: AppSpace.SPACE_52),
+                      child: GoodsItem()
+                  );
+                }
+              },
+              childCount: 20,
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(AppSpace.SPACE_52),
-            child: Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
-                 Text('猜你喜欢', style: TextStyle(
-                   fontSize: AppFontsize.SIZE_56,
-                   color: AppColors.COLOR_BLACK_333333,
-                   fontWeight: FontWeight.bold
-                 )),
-               ],
-            )
-          ),
-          Container(
-              padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, 0),
-              child: Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  runSpacing: ScreenUtil().setWidth(40),
-                  children: List.generate(10, (index) => GoodsItem())
-              )
-          )
+          SliverList(delegate: SliverChildListDelegate([
+            SizedBox(height: 20)
+          ]))
         ],
       ),
     );

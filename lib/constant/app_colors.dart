@@ -6,6 +6,8 @@ class AppColors {
   // 主色
   static Color COLOR_PRIMARY_D22315 = Utils.getColor('#D22315');
   static Color COLOR_PRIMARY_FFF2F1 = Utils.getColor('#FFF2F1');
+  static Color COLOR_PRIMARY_FF733E = Utils.getColor('#FF733E');
+
 
   // 黑色
   static Color COLOR_BLACK_848484 = Utils.getColor('#848484');
@@ -31,6 +33,7 @@ class AppColors {
   static Color COLOR_GRAY_C9C9C9 = Utils.getColor('#C9C9C9');
   static Color COLOR_GRAY_9E9E9E = Utils.getColor('#9E9E9E');
   static Color COLOR_GRAY_EEEEEE = Utils.getColor('#EEEEEE');
+  static Color COLOR_GRAY_F6F6F6 = Utils.getColor('#F6F6F6');
 
 
   // 其他

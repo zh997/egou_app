@@ -8,15 +8,18 @@ class Price extends StatelessWidget {
   final Color color;
   final String price;
   final double size;
-  Price({this.color, Key key, this.price, this.size}): super(key: key);
+  final double unitSize;
+  final double bottom;
+  Price({this.color, Key key, this.price, this.size, this.bottom = 1.8, this.unitSize}): super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(padding: EdgeInsets.only(bottom: 1.8),
+        Padding(padding: EdgeInsets.only(bottom: bottom),
             child: Text('￥',  style: TextStyle(fontSize:
-            AppFontsize.SIZE_32, color:
+            unitSize ?? AppFontsize.SIZE_32, color:
             color ?? AppColors.COLOR_PRIMARY_D22315,fontWeight: FontWeight.bold))),
         Text('${price ?? '0.00'}',  style: TextStyle(
             fontSize: size ?? AppFontsize.SIZE_56,

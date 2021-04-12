@@ -39,36 +39,39 @@ class _BillPageState extends State<BillPage> with AutomaticKeepAliveClientMixin,
           _HeaderSearch(),
           Expanded(child: TabBarView(
             controller: tabController,
-            children: List.generate(labelList.length, (index) => Padding(
-              padding: EdgeInsets.only(bottom: AppSpace.SPACE_52,top: AppSpace.SPACE_52),
-              child: CustomScrollView(
-                slivers: [
-                  SliverGrid(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(726),
-                    ),
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                            if(index % 2 > 0) {
-                              return Padding(
-                                  padding: EdgeInsets.only(right: AppSpace.SPACE_52),
-                                  child: GoodsItem()
-                              );
-                            } else {
-                              return Padding(
-                                  padding: EdgeInsets.only(left: AppSpace.SPACE_52),
-                                  child: GoodsItem()
-                              );
-                            }
-                      },
-                      childCount: 20,
-                    ),
+            children: List.generate(labelList.length, (index) => CustomScrollView(
+              slivers: [
+                SliverList(delegate: SliverChildListDelegate([
+                  SizedBox(height: 20)
+                ])),
+                SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 20,
+                    childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(726),
                   ),
-                ],
-              ),
+                  delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                      if(index % 2 > 0) {
+                        return Padding(
+                            padding: EdgeInsets.only(right: AppSpace.SPACE_52),
+                            child: GoodsItem()
+                        );
+                      } else {
+                        return Padding(
+                            padding: EdgeInsets.only(left: AppSpace.SPACE_52),
+                            child: GoodsItem()
+                        );
+                      }
+                    },
+                    childCount: 20,
+                  ),
+                ),
+                SliverList(delegate: SliverChildListDelegate([
+                  SizedBox(height: 20)
+                ]))
+              ],
             )),
           ))
         ],

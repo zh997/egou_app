@@ -25,7 +25,7 @@ class ConfirmOrderPage extends StatelessWidget {
       appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '确认订单'),
       body: Column(
         children: [
-          Expanded(child: Column(
+          Expanded(child:  ListView(
             children: [
               Container(
                 color: Colors.white,
@@ -83,11 +83,11 @@ class ConfirmOrderPage extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 20)
             ],
           )),
           Container(
             height: ScreenUtil().setWidth(250),
-            padding: EdgeInsets.only(bottom: 15),
             decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))

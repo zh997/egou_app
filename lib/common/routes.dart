@@ -1,8 +1,12 @@
 import 'package:egou_app/pages/confirm_order/view.dart';
 import 'package:egou_app/pages/goods_detail/view.dart';
+import 'package:egou_app/pages/my_order/view.dart';
 import 'package:egou_app/pages/pay_mode/view.dart';
 import 'package:egou_app/pages/pay_result/view.dart';
+import 'package:egou_app/pages/points_mall/view.dart';
+import 'package:egou_app/pages/recharge/view.dart';
 import 'package:egou_app/pages/shop_detail/view.dart';
+import 'package:egou_app/pages/shop_settled/view.dart';
 import 'package:get/get.dart';
 import 'package:egou_app/pages/guide/view.dart';
 import 'package:egou_app/pages/home/view.dart';
@@ -21,6 +25,10 @@ class RouteConfig {
   static final String confirm_order = '/confirm_order';
   static final String pay_mode = '/pay_mode';
   static final String pay_result = '/pay_result';
+  static final String shop_settled = '/shop_settled';
+  static final String my_order = '/my_order';
+  static final String recharge_page = '/recharge_page';
+  static final String points_mall = '/points_mall';
 
   static final List<GetPage> getPages = [
     GetPage(name: launch_page, page: () => LaunchPage()),
@@ -33,5 +41,9 @@ class RouteConfig {
     GetPage(name: confirm_order, page: () => ConfirmOrderPage()),
     GetPage(name: pay_mode, page: () => PayModePage()),
     GetPage(name: pay_result, page: () => PayResultPage()),
+    GetPage(name: shop_settled, page: () => ShopSettledPage()),
+    GetPage(name: my_order, page: () => MyOrderPage()),
+    GetPage(name: recharge_page, page: () => RechargePage()),
+    GetPage(name: points_mall, page: () => PointsMallPage()),
   ];
 }

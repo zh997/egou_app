@@ -23,6 +23,28 @@ class _PayModePageState extends State<PayModePage> {
   final PayModeLogic logic = Get.put(PayModeLogic());
   final PayModeState state = Get.find<PayModeLogic>().state;
 
+  final FocusNode _focusNode = FocusNode();
+  bool isFocus = false;
+  String pwd = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus){
+        setState(() {
+          isFocus = true;
+        });
+
+      } else {
+        setState(() {
+          isFocus = false;
+        });
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,26 +84,43 @@ class _PayModePageState extends State<PayModePage> {
                       SizedBox(height: 20),
                       Container(
                         alignment: Alignment.center,
+                        width: ScreenUtil().setWidth(895),
                         decoration: BoxDecoration(
                             border: Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
                             borderRadius: BorderRadius.circular(AppRadius.RADIUS_20)
                         ),
-                        child: TextFormField(
-                          textInputAction: TextInputAction.next,
-                          maxLines: 1,
-                          cursorColor: AppColors.COLOR_PRIMARY_D22315,
-                          style: TextStyle(fontSize: ScreenUtil().setSp(60), color: AppColors.COLOR_BLACK_333333),
-                          obscureText: false,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(bottom: 15),
-                              hasFloatingPlaceholder: false,
-                              focusColor:  AppColors.COLOR_PRIMARY_D22315,
-                              border: InputBorder.none,
-                              labelText:  '请填写6-20位交易密码',
-                              labelStyle: TextStyle(fontSize: ScreenUtil().setSp(60), color: AppColors.COLOR_PRIMARY_D22315,  height: ScreenUtil().setHeight(4))
-                          ),
-                          keyboardType: TextInputType.text,
+                        child: Stack(
+                          alignment: const FractionalOffset(0.5, 0.5),
+                          children: [
+                            !isFocus && !pwd.isNotEmpty ? Text('请填写6-20位交易密码',
+                                style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(60),
+                                    color: AppColors.COLOR_PRIMARY_D22315,
+                                    height: ScreenUtil().setHeight(4)
+                                )
+                            ): Text(''),
+                            TextFormField(
+                              focusNode: _focusNode,
+                              onChanged: (String val) {setState(() {
+                                pwd = val;
+                              });},
+                              textInputAction: TextInputAction.next,
+                              maxLines: 1,
+                              cursorColor: AppColors.COLOR_PRIMARY_D22315,
+                              style: TextStyle(fontSize: ScreenUtil().setSp(60), color: AppColors.COLOR_BLACK_333333),
+                              obscureText: true,
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(15),
+                                  hasFloatingPlaceholder: false,
+                                  focusColor:  AppColors.COLOR_PRIMARY_D22315,
+                                  border: InputBorder.none,
+                                  // labelText:  '请填写6-20位交易密码',
+                                  // labelStyle: TextStyle(fontSize: ScreenUtil().setSp(60), color: AppColors.COLOR_PRIMARY_D22315,  height: ScreenUtil().setHeight(0))
+                              ),
+                              keyboardType: TextInputType.text,
+                            )
+                          ],
                         ),
                       )
                     ],
@@ -92,7 +131,6 @@ class _PayModePageState extends State<PayModePage> {
           )),
           Container(
               height: ScreenUtil().setWidth(250),
-              padding: EdgeInsets.only(bottom: 15),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   color: Colors.white,
