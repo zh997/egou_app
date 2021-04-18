@@ -226,6 +226,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
           ),
         ),
         GestureDetector(
+          onTap: (){
+            Get.toNamed(RouteConfig.share_page);
+          },
           child: Column(
             children: [
               Image.asset(AppImages.ICON_4, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),

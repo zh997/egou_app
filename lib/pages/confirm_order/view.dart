@@ -131,45 +131,50 @@ class ConfirmOrderPage extends StatelessWidget {
   }
 
   Widget _CurrentSelectedAddress() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text('姓名', style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Text('17623144342', style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
-                ),
-                Container(
-                  width: ScreenUtil().setWidth(137),
-                  height: ScreenUtil().setWidth(79),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: AppColors.COLOR_PRIMARY_FFF2F1,
-                      borderRadius: BorderRadius.circular(AppRadius.RADIUS_11),
-                      border: Border.all(width: 1, color: AppColors.COLOR_PRIMARY_FFF2F1)
+    return InkWell(
+      onTap: () {
+        Get.toNamed(RouteConfig.address_page);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text('姓名', style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Text('17623144342', style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
                   ),
-                  child: Text('默认', style: TextStyle(
-                    color: AppColors.COLOR_PRIMARY_D22315,
-                    fontSize: AppFontsize.SIZE_36,
-                  ),),
-                )
-              ],
-            ),
-            SizedBox(height: 10),
-            Text('深圳市龙华区龙华街道116号3楼', style: TextStyle(
-                color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_36
-            ), maxLines: 1, overflow: TextOverflow.ellipsis,)
-          ],
-        ),
-        Image.asset(AppImages.ARROW_RIGHT_ICON, width: ScreenUtil().setWidth(23), height: ScreenUtil().setWidth(52))
-      ],
+                  Container(
+                    width: ScreenUtil().setWidth(137),
+                    height: ScreenUtil().setWidth(79),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: AppColors.COLOR_PRIMARY_FFF2F1,
+                        borderRadius: BorderRadius.circular(AppRadius.RADIUS_11),
+                        border: Border.all(width: 1, color: AppColors.COLOR_PRIMARY_FFF2F1)
+                    ),
+                    child: Text('默认', style: TextStyle(
+                      color: AppColors.COLOR_PRIMARY_D22315,
+                      fontSize: AppFontsize.SIZE_36,
+                    ),),
+                  )
+                ],
+              ),
+              SizedBox(height: 10),
+              Text('深圳市龙华区龙华街道116号3楼', style: TextStyle(
+                  color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_36
+              ), maxLines: 1, overflow: TextOverflow.ellipsis,)
+            ],
+          ),
+          Image.asset(AppImages.ARROW_RIGHT_ICON, width: ScreenUtil().setWidth(23), height: ScreenUtil().setWidth(52))
+        ],
+      )
     );
   }
 

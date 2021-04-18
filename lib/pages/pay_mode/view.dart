@@ -72,7 +72,7 @@ class _PayModePageState extends State<PayModePage> {
                 ),
                 Container(
                   color: Colors.white,
-                  padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, 0),
+                  padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, AppSpace.SPACE_52),
                   margin: EdgeInsets.only(top: AppSpace.SPACE_40),
                   child: Column(
                     children: [

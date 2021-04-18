@@ -19,12 +19,21 @@ class Utils {
     bool isPass = true;
     for(var i in formItems) {
       if (!(i is SizedBox)) {
-        final String errorText = i.validate(i.controller.text);
-        if (errorText.isNotEmpty) {
-          i.key.currentState.setErrorText(errorText);
+        if (i.validate != null && validate is Function) {
+          final String errorText = i.validate(i.controller.text);
+          if (errorText.isNotEmpty) {
+            // FocusScope.of(context).requestFocus(i.focusNode);
+            i.key.currentState.setErrorText(errorText);
+            isPass = false;
+            break;
+          } else {
+            i.key.currentState.setErrorText('');
+            isPass = true;
+          }
+        } else if(i.isRequired && !i.controller.text.isNotEmpty) {
+          i.key.currentState.setErrorText(i.labelText);
           isPass = false;
-          break;
-        } else {
+        } else if(i.isRequired && i.controller.text.isNotEmpty) {
           i.key.currentState.setErrorText('');
           isPass = true;
         }

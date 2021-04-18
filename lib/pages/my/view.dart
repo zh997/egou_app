@@ -105,6 +105,9 @@ class MyPage extends StatelessWidget {
                     ],
                   )),
                   GestureDetector(
+                    onTap:(){
+                      Get.toNamed(RouteConfig.share_page);
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         // boxShadow: [BoxShadow(color: AppColors.COLOR_GRAY_B7B7B7, blurRadius:1, spreadRadius: 0)]
@@ -156,61 +159,102 @@ class MyPage extends StatelessWidget {
                   mainAxisSpacing: 20
                 ),
                 children: [
-                  Column(
-                    children: [
-                      Image.asset(AppImages.ICON_13, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                      SizedBox(height: AppSpace.SPACE_35),
-                      Text('我的团队', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                    ],
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(RouteConfig.my_team);
+                    },
+                    child:Column(
+                      children: [
+                        Image.asset(AppImages.ICON_13, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                        SizedBox(height: AppSpace.SPACE_35),
+                        Text('我的团队', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                      ],
+                    )
                   ),
-                  Column(
-                    children: [
-                      Image.asset(AppImages.ICON_14, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                      SizedBox(height: AppSpace.SPACE_35),
-                      Text('邀请好友', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                    ],
+                  InkWell(
+                      onTap: (){
+                        Get.toNamed(RouteConfig.share_page);
+                      },
+                      child:Column(
+                        children: [
+                          Image.asset(AppImages.ICON_14, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                          SizedBox(height: AppSpace.SPACE_35),
+                          Text('邀请好友', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                        ],
+                      ),
                   ),
-                  Column(
-                    children: [
-                      Image.asset(AppImages.ICON_15, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                      SizedBox(height: AppSpace.SPACE_35),
-                      Text('我的收藏', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                    ],
+
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(RouteConfig.my_store);
+                    },
+                    child:Column(
+                      children: [
+                        Image.asset(AppImages.ICON_15, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                        SizedBox(height: AppSpace.SPACE_35),
+                        Text('我的收藏', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Image.asset(AppImages.ICON_16, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                      SizedBox(height: AppSpace.SPACE_35),
-                      Text('我的店铺', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                    ],
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(RouteConfig.my_shop);
+                    },
+                    child:Column(
+                      children: [
+                        Image.asset(AppImages.ICON_16, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                        SizedBox(height: AppSpace.SPACE_35),
+                        Text('我的店铺', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Image.asset(AppImages.ICON_17, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                      SizedBox(height: AppSpace.SPACE_35),
-                      Text('关于我们', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                    ],
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(RouteConfig.about_us);
+                    },
+                    child:Column(
+                      children: [
+                        Image.asset(AppImages.ICON_17, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                        SizedBox(height: AppSpace.SPACE_35),
+                        Text('关于我们', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Image.asset(AppImages.ICON_18, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                      SizedBox(height: AppSpace.SPACE_35),
-                      Text('地址管理', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                    ],
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(RouteConfig.address_page);
+                    },
+                    child:Column(
+                      children: [
+                        Image.asset(AppImages.ICON_18, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                        SizedBox(height: AppSpace.SPACE_35),
+                        Text('地址管理', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Image.asset(AppImages.ICON_19, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                      SizedBox(height: AppSpace.SPACE_35),
-                      Text('联系我们', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                    ],
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(RouteConfig.concat_us);
+                    },
+                    child:Column(
+                      children: [
+                        Image.asset(AppImages.ICON_19, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                        SizedBox(height: AppSpace.SPACE_35),
+                        Text('联系我们', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      Image.asset(AppImages.ICON_20, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                      SizedBox(height: AppSpace.SPACE_35),
-                      Text('设置中心', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                    ],
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(RouteConfig.setting_center);
+                    },
+                    child:Column(
+                      children: [
+                        Image.asset(AppImages.ICON_20, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                        SizedBox(height: AppSpace.SPACE_35),
+                        Text('设置中心', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                      ],
+                    ),
                   ),
                 ]),
             ),
@@ -227,7 +271,7 @@ class MyPage extends StatelessWidget {
       onTap: _onRedirectOrder,
       child: Column(
         children: [
-          Image.asset(AppImages.ICON_9, width: ScreenUtil().setWidth(81),height:  ScreenUtil().setWidth(81)),
+          Image.asset(icon, width: ScreenUtil().setWidth(81),height:  ScreenUtil().setWidth(81)),
           SizedBox(height: AppSpace.SPACE_35),
           Text(text, style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
         ],

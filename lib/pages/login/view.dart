@@ -1,3 +1,4 @@
+import 'package:egou_app/widgets/app_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,55 +31,52 @@ class _LoginPageState extends State<LoginPage> {
     );
     final Widget countDownText = Obx(() => Text('${state.CountDownSeconds.value}s', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_PRIMARY_D22315)));
     final List<Widget> textFieldItems = [
-      TextFormFieldWidget('user_name', key: GlobalKey(), leftSolt:
-      Text('+86', style: TextStyle(fontSize: ScreenUtil().setSp(48), fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_000000)),
-          rightSolt: Obx(() => state.isStartCountdown.value ? countDownText : getCodeBtn) ,
-          validate: (String val){
-            if (val.isEmpty) {
-              return AppStrings.LOGIN_FORM_PHONE_LABELTEXT;
-            }
-            if (!Utils.isChinaPhoneLegal(val)) {
-              return AppStrings.LOGIN_FORM_PHONE_LABELTEXT_1;
-            }
-            return '';
-          }, labelText: AppStrings.LOGIN_FORM_PHONE_LABELTEXT, contentPaddingBottom: 5, labelHeight: 8,),
+      RowTextField(name: 'username', key: GlobalKey(), controller: TextEditingController(),
+        labelText: '请输入手机号', icon: Text('+86', style: TextStyle(fontSize: ScreenUtil().setSp(48),
+              fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_000000)),
+        contentPaddingLeft: 0, labelLeft: 50, suffixIcon: Obx(() => state.isStartCountdown.value ? countDownText : getCodeBtn),
+          isRequired: true
+      ),
       SizedBox(height: 10),
-      TextFormFieldWidget('password', key: GlobalKey(),leftSolt:
-      Text('密码', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_BLACK_000000)), validate: (String val){
-        if (val.isEmpty) {
-          return AppStrings.LOGIN_FORM_PWD_LABELTEXT;
-        }
-        return '';
-      }, labelText: AppStrings.LOGIN_FORM_PWD_LABELTEXT, contentPaddingBottom: 5, labelHeight: 8),
+      RowTextField(name: 'password', key: GlobalKey(), controller: TextEditingController(),
+        labelText: '请输入密码', icon: Text('密码', style: TextStyle(fontSize: ScreenUtil().setSp(48),
+            fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_000000)),
+        contentPaddingLeft: 0, labelLeft: 50,isRequired: true, obscureText: true,
+      ),
     ];
 
     return  Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-            child: Container(
-              width: ScreenUtil().setWidth(960),
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _HeaderLogo(),
-                  SizedBox(height: 50),
-                  Form(child: Column(
-                    children: textFieldItems,
-                  ), onChanged: () {
-                    final formData = Utils.validate(context, textFieldItems);
-                    logic.onChangeDisabled(!formData);
-                  }),
-                  SizedBox(height: 40),
-                  Obx(() => RadiusButton('登录', width: 960, onTap: () {
-                    Get.toNamed(RouteConfig.main_page);
-                  }, disabled: state.disabled.value)),
-                ],
-              ),
-            )
+      body: SafeArea(
+        child: Container(
+          alignment: Alignment.topCenter,
+          child: SingleChildScrollView(
+              child: Container(
+                width: ScreenUtil().setWidth(960),
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 50),
+                    _HeaderLogo(),
+                    SizedBox(height: 50),
+                    Form(child: Column(
+                      children: textFieldItems,
+                    ), onChanged: () {
+                      final formData = Utils.validate(context, textFieldItems);
+                      print(formData);
+                      logic.onChangeDisabled(!formData);
+                    }),
+                    SizedBox(height: 40),
+                    Obx(() => RadiusButton('登录', width: 960, onTap: () {
+                      Get.toNamed(RouteConfig.main_page);
+                    }, disabled: state.disabled.value)),
+                  ],
+                ),
+              )
+          ),
         ),
-      ) ,
+      )  ,
     );
   }
 

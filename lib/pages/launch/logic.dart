@@ -14,7 +14,7 @@ class LaunchLogic extends GetxController {
       if (state.CountDownSeconds <= 1) {
         _timer.cancel();
         // 跳转页面
-        Get.offNamed(RouteConfig.login_page);
+        Get.offNamed(RouteConfig.main_page);
       } else {
         --state.CountDownSeconds;
       }

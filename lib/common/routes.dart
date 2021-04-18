@@ -1,10 +1,20 @@
+import 'package:egou_app/pages/about_us/view.dart';
+import 'package:egou_app/pages/address/view.dart';
+import 'package:egou_app/pages/concat_us/view.dart';
 import 'package:egou_app/pages/confirm_order/view.dart';
+import 'package:egou_app/pages/edit_address/view.dart';
 import 'package:egou_app/pages/goods_detail/view.dart';
 import 'package:egou_app/pages/my_order/view.dart';
+import 'package:egou_app/pages/my_shop/view.dart';
+import 'package:egou_app/pages/my_store/view.dart';
+import 'package:egou_app/pages/my_team/view.dart';
 import 'package:egou_app/pages/pay_mode/view.dart';
 import 'package:egou_app/pages/pay_result/view.dart';
 import 'package:egou_app/pages/points_mall/view.dart';
+import 'package:egou_app/pages/pwd_update/view.dart';
 import 'package:egou_app/pages/recharge/view.dart';
+import 'package:egou_app/pages/setting_center/view.dart';
+import 'package:egou_app/pages/share/view.dart';
 import 'package:egou_app/pages/shop_detail/view.dart';
 import 'package:egou_app/pages/shop_settled/view.dart';
 import 'package:get/get.dart';
@@ -29,6 +39,16 @@ class RouteConfig {
   static final String my_order = '/my_order';
   static final String recharge_page = '/recharge_page';
   static final String points_mall = '/points_mall';
+  static final String my_team = '/my_team';
+  static final String share_page = '/share_page';
+  static final String my_store = '/my_store';
+  static final String my_shop = '/my_shop';
+  static final String about_us = '/about_us';
+  static final String address_page = '/address_page';
+  static final String concat_us = '/concat_us';
+  static final String setting_center = '/setting_center';
+  static final String edit_address = '/edit_address';
+  static final String pwd_update = '/pwd_update';
 
   static final List<GetPage> getPages = [
     GetPage(name: launch_page, page: () => LaunchPage()),
@@ -45,5 +65,15 @@ class RouteConfig {
     GetPage(name: my_order, page: () => MyOrderPage()),
     GetPage(name: recharge_page, page: () => RechargePage()),
     GetPage(name: points_mall, page: () => PointsMallPage()),
+    GetPage(name: my_team, page: () => MyTeamPage()),
+    GetPage(name: share_page, page: () => SharePage()),
+    GetPage(name: my_store, page: () => MyStorePage()),
+    GetPage(name: my_shop, page: () => MyShopPage()),
+    GetPage(name: about_us, page: () => AboutUsPage()),
+    GetPage(name: address_page, page: () => AddressPage()),
+    GetPage(name: concat_us, page: () => ConcatUsPage()),
+    GetPage(name: setting_center, page: () => SettingCenterPage()),
+    GetPage(name: edit_address, page: () => EditAddressPage()),
+    GetPage(name: pwd_update, page: () => PwdUpdatePage()),
   ];
 }
