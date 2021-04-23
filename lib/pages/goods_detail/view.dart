@@ -31,7 +31,7 @@ class GoodsDetailPage extends StatelessWidget {
           Expanded(child: SingleChildScrollView(
             child: Column(
               children: [
-                _Swiper(),
+                DetailSwiper(state.BannerList.value),
                 Container(
                   color: Colors.white,
                   padding: EdgeInsets.all(AppSpace.SPACE_52),
@@ -285,32 +285,6 @@ class GoodsDetailPage extends StatelessWidget {
             ),
           )
         ],
-      ),
-    );
-  }
-
-
-  Widget _Swiper() {
-    return Container(
-      height: ScreenUtil().setWidth(1134),
-      child: Swiper(
-          key: UniqueKey(),
-          index: 0,
-          duration: 1000,
-          onIndexChanged: logic.onSwiperChange,
-          itemCount: state.BannerList.value.length,
-          autoplay: true,
-          pagination: SwiperPagination(
-              builder: SwiperCustomPagination(builder: (BuildContext context, SwiperPluginConfig swiperPluginConfig) {
-                return Container(
-                  margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(950), 0, 0, 60),
-                  child: Text('${swiperPluginConfig.activeIndex + 1} | ${state.BannerList.value.length}', style: TextStyle(
-                      color: AppColors.COLOR_GRAY_848484, fontSize: AppFontsize.SIZE_36
-                  )),
-                );
-              })
-          ),
-          itemBuilder: (BuildContext context,int index) =>  Image.network(state.BannerList.value[index].url, fit: BoxFit.cover)
       ),
     );
   }

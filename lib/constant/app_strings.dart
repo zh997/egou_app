@@ -5,7 +5,7 @@ class AppStrings {
     static String LOGIN_FORM_PWD_LABELTEXT = '请输入登录密码';
     static String LOGIN_FORM_CODE_LABELTEXT = '请输入验证码';
     static String SCAN = '扫一扫';
-    static String STRING_1 = '会员充值';
+    static String STRING_1 = '成为创客';
     static String STRING_2 = '积分商城';
     static String STRING_3 = '商家入驻';
     static String STRING_4 = '邀请分享';

@@ -40,6 +40,7 @@ class AppImages {
   static String ICON_21 = 'static/images/collect_icon.png';
   static String ICON_22 = 'static/images/collect_checked_icon.png';
   static String ICON_23 = 'static/images/black_cart_icon.png';
+  static String ICON_24 = 'static/images/icon_17.png';
   static String ADD_ADDRESS_ICON = 'static/images/add_address_icon.png';
   static String PAY_MODE_ICON_1 = 'static/images/pay_mode_icon_1.png';
   static String PAY_MODE_ICON_2 = 'static/images/pay_mode_icon_2.png';
@@ -49,4 +50,17 @@ class AppImages {
   static String PAY_SUCCESS_ICON = 'static/images/pay_success_icon.png';
   static String GOODS_DETAIL = 'static/images/goods_detail.jpeg';
   static String SHARE_BG = 'static/images/share_bg.jpg';
+  static String SHOP_GRID_ICON_1 = 'static/images/shop_grid_icon_1.png';
+  static String SHOP_GRID_ICON_2 = 'static/images/shop_grid_icon_2.png';
+  static String SHOP_GRID_ICON_3 = 'static/images/shop_grid_icon_3.png';
+  static String SHOP_GRID_ICON_4 = 'static/images/shop_grid_icon_4.png';
+  static String SHOP_GRID_ICON_5 = 'static/images/shop_grid_icon_5.png';
+  static String SHOP_GRID_ICON_6 = 'static/images/shop_grid_icon_6.png';
+  static String SHOP_GRID_ICON_7 = 'static/images/shop_grid_icon_7.png';
+  static String SHOP_GRID_ICON_8 = 'static/images/shop_grid_icon_8.png';
+  static String SHOP_GRID_ICON_9 = 'static/images/shop_grid_icon_9.png';
+  static String SHOP_GRID_ICON_10 = 'static/images/shop_grid_icon_10.png';
+  static String SHOP_GRID_ICON_11 = 'static/images/shop_grid_icon_11.png';
+  static String SHOP_GRID_ICON_12 = 'static/images/shop_grid_icon_12.png';
+
 }

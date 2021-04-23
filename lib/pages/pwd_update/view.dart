@@ -23,57 +23,47 @@ class PwdUpdatePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(child: Container(
-            width: ScreenUtil().setWidth(903),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 50),
-                Text('修改登陆密码', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_70)),
-                SizedBox(height: 50),
-                RowTextField(
-                  title: '旧密码',
-                  key: GlobalKey(),
-                  controller: TextEditingController(),
-                  labelText: '请填写6-20位旧登录密码',
-                  titleFlexType: TitleFlexType.Column,
-                  contentPaddingTop: 15,
-                  labelTop: 17,
-                  height: 80,
-                ),
-                SizedBox(height: 30),
-                RowTextField(
-                  title: '新密码',
-                  key: GlobalKey(),
-                  controller: TextEditingController(),
-                  labelText: '请填写6-20位新登录密码',
-                  titleFlexType: TitleFlexType.Column,
-                  contentPaddingTop: 15,
-                  labelTop: 17,
-                  height: 80,
-                ),
-                SizedBox(height: 30),
-                RowTextField(
-                  title: '确认密码',
-                  key: GlobalKey(),
-                  controller: TextEditingController(),
-                  labelText: '请填写6-20位新登录密码',
-                  titleFlexType: TitleFlexType.Column,
-                  contentPaddingTop: 15,
-                  labelTop: 17,
-                  height: 80,
-                ),
-              ]
-            )
-          )),
-          Container(
-            alignment: Alignment.center,
-            height: ScreenUtil().setWidth(250),
-            decoration: BoxDecoration(
-                color: Colors.white,
+          Expanded(child: ListView(
+            padding: EdgeInsets.fromLTRB(50, 20, 50, 20),
+          children: [
+            SizedBox(height: 50),
+            Text('修改登陆密码', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_70)),
+            SizedBox(height: 50),
+            RowTextField(
+              title: '旧密码',
+              key: GlobalKey(),
+              controller: TextEditingController(),
+              labelText: '请填写6-20位旧登录密码',
+              titleFlexType: TitleFlexType.Column,
+              contentPaddingTop: 15,
+              labelTop: 20,
+              height: 80,
             ),
-            child: RadiusButton('确定', width: 903, height: 156, onTap: (){Get.toNamed(RouteConfig.edit_address);}),
-          )
+            SizedBox(height: 30),
+            RowTextField(
+              title: '新密码',
+              key: GlobalKey(),
+              controller: TextEditingController(),
+              labelText: '请填写6-20位新登录密码',
+              titleFlexType: TitleFlexType.Column,
+              contentPaddingTop: 15,
+              labelTop: 20,
+              height: 80,
+            ),
+            SizedBox(height: 30),
+            RowTextField(
+              title: '确认密码',
+              key: GlobalKey(),
+              controller: TextEditingController(),
+              labelText: '请填写6-20位新登录密码',
+              titleFlexType: TitleFlexType.Column,
+              contentPaddingTop: 15,
+              labelTop: 20,
+              height: 80,
+            ),
+            SizedBox(height: 50),
+            RadiusButton('确定', width: 903, height: 156, onTap: (){Get.toNamed(RouteConfig.edit_address);})
+          ]))
         ]
       )
     );

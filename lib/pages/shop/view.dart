@@ -4,9 +4,12 @@ import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_space.dart';
+import 'package:egou_app/models/global.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/search.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -19,24 +22,63 @@ class ShopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-       appBar: CustomAppBar(title: '商家'),
-       body: Column(
-         children: [
-           Container(
-               padding: EdgeInsets.only(left: AppSpace.SPACE_52, right: AppSpace.SPACE_52, bottom: 10),
-               color: Colors.white , child: Search('搜索商家')
-           ),
-           Expanded(child: ListView(
-             padding: EdgeInsets.all(AppSpace.SPACE_52),
-             children: [
-               _ShopItem(),
-               _ShopItem()
-             ],
-           ))
-         ],
-       ),
-    );
+    return Obx(() {
+      final List<ShopGridListItem> gridList = state.gridList.value;
+      return Scaffold(
+        appBar: CustomAppBar(title: '商家'),
+        body: Column(
+          children: [
+            Container(
+                padding: EdgeInsets.only(left: AppSpace.SPACE_52, right: AppSpace.SPACE_52, bottom: 10),
+                color: Colors.white , child: Search('搜索商家')
+            ),
+            Expanded(child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(child: Container(color: Colors.white, padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, AppSpace.SPACE_52, AppSpace.SPACE_52, 0),
+                    child: Text('分类', style: TextStyle(color: Colors.black, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)))),
+                SliverGrid(delegate: SliverChildBuilderDelegate(
+                      (BuildContext context,int index) {
+                    return Container(
+                      color: Colors.white,
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(gridList[index].icon, width: ScreenUtil().setWidth(120), height: ScreenUtil().setWidth(120)),
+                          SizedBox(height: 10),
+                          Text(gridList[index].text, style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_36))
+                        ],
+                    ),);
+                  },
+                  childCount: gridList.length,
+                ), gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    // mainAxisSpacing: 10,
+                    // crossAxisSpacing: 10
+                )),
+                SliverPadding(padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, AppSpace.SPACE_52, AppSpace.SPACE_52, 0), sliver: SliverToBoxAdapter(
+                  child: Text('商家', style: TextStyle(color: Colors.black, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
+                )),
+                SliverPadding(padding: EdgeInsets.all(AppSpace.SPACE_52), sliver:  SliverList(delegate: SliverChildBuilderDelegate(
+                      (BuildContext context,int index) {
+                    return  _ShopItem();
+                  },
+                  childCount: 3,
+                ))),
+              ],
+            )),
+            // Expanded(child: ListView(
+            //   padding: EdgeInsets.all(AppSpace.SPACE_52),
+            //   children: [
+            //     Text('分类', style: TextStyle(color: Colors.black, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
+            //     _ShopItem(),
+            //     _ShopItem()
+            //   ],
+            // ))
+          ],
+        ),
+      );
+    });
   }
 
   Widget _ShopItem(){

@@ -3,6 +3,7 @@ import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_space.dart';
+import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -75,33 +76,54 @@ class MyPage extends StatelessWidget {
                   Padding(padding: EdgeInsets.fromLTRB(0, AppSpace.SPACE_64, 0, AppSpace.SPACE_24), child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Column(
-                        children: [
-                          Text('余额', style: TextStyle(
-                              fontSize: AppFontsize.SIZE_36,
-                              color: AppColors.COLOR_GRAY_B7B7B7
-                          )),
-                          Price(color: AppColors.COLOR_BLACK_000000)
-                        ],
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          Get.toNamed(RouteConfig.balance_page);
+                        },
+                        child: Column(
+                          children: [
+                            Text('余额', style: TextStyle(
+                                fontSize: AppFontsize.SIZE_36,
+                                color: AppColors.COLOR_GRAY_B7B7B7
+                            )),
+                            SizedBox(height: 10,),
+                            Price(color: AppColors.COLOR_BLACK_000000)
+                          ],
+                        ),
                       ),
-                      Column(
-                        children: [
-                          Text('余额', style: TextStyle(
-                              fontSize: AppFontsize.SIZE_36,
-                              color: AppColors.COLOR_GRAY_B7B7B7
-                          )),
-                          Price(color: AppColors.COLOR_BLACK_000000)
-                        ],
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          Get.toNamed(RouteConfig.balance_page);
+                        },
+                        child: Column(
+                          children: [
+                            Text('金币', style: TextStyle(
+                                fontSize: AppFontsize.SIZE_36,
+                                color: AppColors.COLOR_GRAY_B7B7B7
+                            )),
+                            SizedBox(height: 10,),
+                            Price(color: AppColors.COLOR_BLACK_000000)
+                          ],
+                        ),
                       ),
-                      Column(
-                        children: [
-                          Text('余额', style: TextStyle(
-                              fontSize: AppFontsize.SIZE_36,
-                              color: AppColors.COLOR_GRAY_B7B7B7
-                          )),
-                          Price(color: AppColors.COLOR_BLACK_000000)
-                        ],
-                      )
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          Get.toNamed(RouteConfig.balance_page);
+                        },
+                        child: Column(
+                          children: [
+                            Text('银币', style: TextStyle(
+                                fontSize: AppFontsize.SIZE_36,
+                                color: AppColors.COLOR_GRAY_B7B7B7
+                            )),
+                            SizedBox(height: 10,),
+                            Price(color: AppColors.COLOR_BLACK_000000)
+                          ],
+                        ),
+                      ),
                     ],
                   )),
                   GestureDetector(
@@ -115,33 +137,9 @@ class MyPage extends StatelessWidget {
                       child: Image.asset(AppImages.SHARE_BANNER, width: ScreenUtil().setWidth(1087),height: ScreenUtil().setWidth(298),),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 20), child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('我的订单', style: TextStyle(fontSize: AppFontsize.SIZE_56, color: AppColors.COLOR_BLACK_000000)),
-                      GestureDetector(
-                        onTap: _onRedirectOrder,
-                        child: Row(
-                          children: [
-                            Padding(padding: EdgeInsets.only(right: 5), child: Text('全部订单',style: TextStyle(
-                                fontSize: AppFontsize.SIZE_36,
-                                color: AppColors.COLOR_GRAY_999999
-                            )),),
-                            Image.asset(AppImages.ARROW_RIGHT_ICON, width: ScreenUtil().setWidth(20), height: ScreenUtil().setWidth(32))
-                          ],
-                        ),
-                      )
-                    ],
-                  )),
-                  Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 0), child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _orderEntryItem(AppImages.ICON_9, '待付款'),
-                      _orderEntryItem(AppImages.ICON_10, '待收货'),
-                      _orderEntryItem(AppImages.ICON_11, '待评价'),
-                      _orderEntryItem(AppImages.ICON_12, '待退货'),
-                    ],
-                  ))
+                  Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 0), child: RadiusButton('我的订单', width: 987, onTap: () {
+                    Get.toNamed(RouteConfig.my_order);
+                  })),
                 ],
               ),
             ),
