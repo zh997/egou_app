@@ -24,6 +24,12 @@ class _BalancePageState extends State<BalancePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        leading: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
+        title:  '余额',
+        backgroundColor: AppColors.COLOR_PRIMARY_D22315,
+        textColor:Colors.white ,
+      ),
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -59,7 +65,7 @@ class _BalancePageState extends State<BalancePage> {
               )))
             ],
           ),
-          _AppBar(context)
+          // _AppBar(context)
         ],
       ),
     );
@@ -74,7 +80,8 @@ class _BalancePageState extends State<BalancePage> {
         child: CustomAppBar(
           leading: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
           title:  '余额',
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.COLOR_PRIMARY_D22315,
+          textColor: AppColors.COLOR_BLACK_333333 ,
         )
     );
   }

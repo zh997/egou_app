@@ -25,9 +25,9 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         child: leading ?? Text(''),
       ),
       centerTitle: true,
-      title: Text(title),
-      titleTextStyle: TextStyle(color: textColor ?? AppColors.COLOR_BLACK_333333,
-          fontWeight: FontWeight.bold, fontSize: AppFontsize.SIZE_56),
+      title: Text(title, style: TextStyle(color: textColor != null ? textColor:  AppColors.COLOR_BLACK_333333,
+          fontWeight: FontWeight.bold, fontSize: AppFontsize.SIZE_56),),
+
       actions: actions,
     );
   }
