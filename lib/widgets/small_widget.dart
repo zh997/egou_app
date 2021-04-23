@@ -1,8 +1,11 @@
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
+import 'package:egou_app/models/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_screenutil/screen_util.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 class Price extends StatelessWidget {
   final Color color;
@@ -56,6 +59,38 @@ class Counter extends StatelessWidget{
             child: Icon(Icons.add, size: 15,),
           )
         ],
+      ),
+    );
+  }
+}
+
+
+class DetailSwiper extends StatelessWidget {
+  final List<SwiperItemModel> list;
+  DetailSwiper(this.list);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Container(
+      height: ScreenUtil().setWidth(1134),
+      child: Swiper(
+          key: UniqueKey(),
+          index: 0,
+          duration: 1000,
+          itemCount: list.length,
+          autoplay: true,
+          pagination: SwiperPagination(
+              builder: SwiperCustomPagination(builder: (BuildContext context, SwiperPluginConfig swiperPluginConfig) {
+                return Container(
+                  margin: EdgeInsets.fromLTRB(ScreenUtil().setWidth(950), 0, 0, 60),
+                  child: Text('${swiperPluginConfig.activeIndex + 1} | ${list.length}', style: TextStyle(
+                      color: AppColors.COLOR_GRAY_848484, fontSize: AppFontsize.SIZE_36
+                  )),
+                );
+              })
+          ),
+          itemBuilder: (BuildContext context,int index) =>  Image.network(list[index].url, fit: BoxFit.cover)
       ),
     );
   }

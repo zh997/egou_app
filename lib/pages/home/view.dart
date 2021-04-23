@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
                       crossAxisCount: 2,
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
-                      childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(726),
+                      childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(660),
                     ),
                     delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
@@ -190,18 +190,20 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
-            Get.toNamed(RouteConfig.recharge_page);
+            Get.toNamed(RouteConfig.be_guest);
           },
           child: Column(
             children: [
-              Image.asset(AppImages.ICON_1, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),
+              Image.asset(AppImages.ICON_24, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),
               SizedBox(height: ScreenUtil().setWidth(29)),
               Text(AppStrings.STRING_1, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: AppColors.COLOR_BLACK_000000))
             ],
           ),
         ),
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             Get.toNamed(RouteConfig.points_mall);
           },
@@ -214,6 +216,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
           ),
         ),
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: (){
             Get.toNamed(RouteConfig.shop_settled);
           },
@@ -226,6 +229,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
           ),
         ),
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: (){
             Get.toNamed(RouteConfig.share_page);
           },

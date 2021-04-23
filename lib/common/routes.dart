@@ -1,5 +1,7 @@
 import 'package:egou_app/pages/about_us/view.dart';
 import 'package:egou_app/pages/address/view.dart';
+import 'package:egou_app/pages/balance/view.dart';
+import 'package:egou_app/pages/be_guest/view.dart';
 import 'package:egou_app/pages/concat_us/view.dart';
 import 'package:egou_app/pages/confirm_order/view.dart';
 import 'package:egou_app/pages/edit_address/view.dart';
@@ -49,6 +51,8 @@ class RouteConfig {
   static final String setting_center = '/setting_center';
   static final String edit_address = '/edit_address';
   static final String pwd_update = '/pwd_update';
+  static final String be_guest = '/be_guest';
+  static final String balance_page = '/balance_page';
 
   static final List<GetPage> getPages = [
     GetPage(name: launch_page, page: () => LaunchPage()),
@@ -75,5 +79,7 @@ class RouteConfig {
     GetPage(name: setting_center, page: () => SettingCenterPage()),
     GetPage(name: edit_address, page: () => EditAddressPage()),
     GetPage(name: pwd_update, page: () => PwdUpdatePage()),
+    GetPage(name: be_guest, page: () => BeGuestPage()),
+    GetPage(name: balance_page, page: () => BalancePage()),
   ];
 }
