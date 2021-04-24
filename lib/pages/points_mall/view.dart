@@ -2,6 +2,7 @@ import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/constant/app_strings.dart';
+import 'package:egou_app/pages/main/logic.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/goods_item.dart';
 import 'package:egou_app/widgets/search.dart';
@@ -21,6 +22,7 @@ class PointsMallPage extends StatefulWidget {
 class _PointsMallPageState extends State<PointsMallPage> with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
 
   final PointsMallLogic logic = Get.put(PointsMallLogic());
+  final MainLogic mainLogic = Get.put(MainLogic());
   final PointsMallState state = Get.find<PointsMallLogic>().state;
 
   final List<String> labelList = ['精选', '手机', '运动', '饰品', '母婴用品','家居', '彩妆', '电脑', '箱包', '学习用品'];
@@ -42,7 +44,7 @@ class _PointsMallPageState extends State<PointsMallPage> with AutomaticKeepAlive
     // TODO: implement initState
     super.initState();
     tabController = TabController(length: labelList.length, vsync: this);
-    logic.onSetShopType(int.parse(type));
+    mainLogic.onSetShopType(int.parse(type));
   }
 
   @override

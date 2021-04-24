@@ -195,18 +195,18 @@ class MyPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  InkWell(
-                    onTap: (){
-                      Get.toNamed(RouteConfig.my_shop);
-                    },
-                    child:Column(
-                      children: [
-                        Image.asset(AppImages.ICON_16, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                        SizedBox(height: AppSpace.SPACE_35),
-                        Text('我的店铺', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                      ],
-                    ),
-                  ),
+                  // InkWell(
+                  //   onTap: (){
+                  //     Get.toNamed(RouteConfig.my_shop);
+                  //   },
+                  //   child:Column(
+                  //     children: [
+                  //       Image.asset(AppImages.ICON_16, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                  //       SizedBox(height: AppSpace.SPACE_35),
+                  //       Text('我的店铺', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                  //     ],
+                  //   ),
+                  // ),
                   InkWell(
                     onTap: (){
                       Get.toNamed(RouteConfig.about_us);

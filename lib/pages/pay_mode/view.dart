@@ -4,6 +4,8 @@ import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_space.dart';
+import 'package:egou_app/pages/main/logic.dart';
+import 'package:egou_app/pages/main/state.dart';
 import 'package:egou_app/pages/points_mall/logic.dart';
 import 'package:egou_app/pages/points_mall/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
@@ -24,7 +26,7 @@ class PayModePage extends StatefulWidget {
 class _PayModePageState extends State<PayModePage> {
   final PayModeLogic logic = Get.put(PayModeLogic());
   final PayModeState state = Get.find<PayModeLogic>().state;
-  final PointsMallState pointsMallState = Get.find<PointsMallLogic>().state;
+  final MainState mainState = Get.find<MainLogic>().state;
 
   final FocusNode _focusNode = FocusNode();
   bool isFocus = false;
@@ -51,7 +53,7 @@ class _PayModePageState extends State<PayModePage> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final int  shopType = pointsMallState.shopType.value;
+      final int shopType = mainState.shopType.value;
       print(shopType);
       return Scaffold(
         appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '支付方式'),
