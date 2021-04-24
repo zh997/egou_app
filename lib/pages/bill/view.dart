@@ -33,7 +33,7 @@ class _BillPageState extends State<BillPage> with AutomaticKeepAliveClientMixin,
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: '报单区'),
+      appBar: CustomAppBar(title: '社区商城'),
       body:  Column(
         children: [
           _HeaderSearch(),

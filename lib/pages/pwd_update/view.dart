@@ -37,7 +37,7 @@ class PwdUpdatePage extends StatelessWidget {
               titleFlexType: TitleFlexType.Column,
               contentPaddingTop: 15,
               labelTop: 20,
-              height: 80,
+              height: 90,
             ),
             SizedBox(height: 30),
             RowTextField(
@@ -48,7 +48,7 @@ class PwdUpdatePage extends StatelessWidget {
               titleFlexType: TitleFlexType.Column,
               contentPaddingTop: 15,
               labelTop: 20,
-              height: 80,
+              height: 90,
             ),
             SizedBox(height: 30),
             RowTextField(
@@ -59,7 +59,7 @@ class PwdUpdatePage extends StatelessWidget {
               titleFlexType: TitleFlexType.Column,
               contentPaddingTop: 15,
               labelTop: 20,
-              height: 80,
+              height: 90,
             ),
             SizedBox(height: 50),
             RadiusButton('确定', width: 903, height: 156, onTap: (){Get.toNamed(RouteConfig.edit_address);})

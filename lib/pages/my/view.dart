@@ -1,5 +1,6 @@
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
+import 'package:egou_app/constant/app_enums.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_space.dart';
@@ -79,7 +80,7 @@ class MyPage extends StatelessWidget {
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          Get.toNamed(RouteConfig.balance_page);
+                          Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.balance.toString());
                         },
                         child: Column(
                           children: [
@@ -95,7 +96,7 @@ class MyPage extends StatelessWidget {
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          Get.toNamed(RouteConfig.balance_page);
+                          Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.goldcoin.toString());
                         },
                         child: Column(
                           children: [
@@ -111,7 +112,7 @@ class MyPage extends StatelessWidget {
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          Get.toNamed(RouteConfig.balance_page);
+                          Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.silvercoin.toString());
                         },
                         child: Column(
                           children: [
@@ -126,42 +127,42 @@ class MyPage extends StatelessWidget {
                       ),
                     ],
                   )),
-                  GestureDetector(
-                    onTap:(){
-                      Get.toNamed(RouteConfig.share_page);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        // boxShadow: [BoxShadow(color: AppColors.COLOR_GRAY_B7B7B7, blurRadius:1, spreadRadius: 0)]
-                      ),
-                      child: Image.asset(AppImages.SHARE_BANNER, width: ScreenUtil().setWidth(1087),height: ScreenUtil().setWidth(298),),
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 0), child: RadiusButton('我的订单', width: 987, onTap: () {
-                    Get.toNamed(RouteConfig.my_order);
-                  })),
+                  // GestureDetector(
+                  //   onTap:(){
+                  //     Get.toNamed(RouteConfig.share_page);
+                  //   },
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //       // boxShadow: [BoxShadow(color: AppColors.COLOR_GRAY_B7B7B7, blurRadius:1, spreadRadius: 0)]
+                  //     ),
+                  //     child: Image.asset(AppImages.SHARE_BANNER, width: ScreenUtil().setWidth(1087),height: ScreenUtil().setWidth(298),),
+                  //   ),
+                  // ),
+                  // Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 0), child: RadiusButton('我的订单', width: 987, onTap: () {
+                  //   Get.toNamed(RouteConfig.my_order);
+                  // })),
                 ],
               ),
             ),
             Container(
               margin: EdgeInsets.only(top: AppSpace.SPACE_52),
-              height: ScreenUtil().setWidth(598),
+              height: ScreenUtil().setWidth(850),
               alignment: Alignment.center,
               color: Colors.white,
               child: GridView(
                 physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 15
                 ),
                 children: [
                   InkWell(
                     onTap: (){
                       Get.toNamed(RouteConfig.my_team);
                     },
-                    child:Column(
+                    child: Column(
                       children: [
                         Image.asset(AppImages.ICON_13, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
                         SizedBox(height: AppSpace.SPACE_35),
@@ -254,9 +255,50 @@ class MyPage extends StatelessWidget {
                       ],
                     ),
                   ),
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(RouteConfig.my_order);
+                    },
+                    child:Column(
+                      children: [
+                        Image.asset(AppImages.ORDER_ICON, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                        SizedBox(height: AppSpace.SPACE_35),
+                        Text('我的订单', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                      ],
+                    ),
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(RouteConfig.bank_card_list);
+                    },
+                    child:Column(
+                      children: [
+                        Image.asset(AppImages.QRCODE_ICON, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                        SizedBox(height: AppSpace.SPACE_35),
+                        Text('绑定收款码', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                      ],
+                    ),
+                  ),
                 ]),
             ),
-            SizedBox(height: 20)
+            SizedBox(height: 20),
+            // GestureDetector(
+            //   behavior: HitTestBehavior.opaque,
+            //   onTap: () {
+            //     Get.toNamed(RouteConfig.bank_card_list);
+            //   },
+            //   child: Container(
+            //     color: Colors.white,
+            //     padding: EdgeInsets.all(20),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Text('绑定银行卡/微信号/付宝账号', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
+            //         Image.asset(AppImages.ARROW_RIGHT_ICON, width: 8, height: 18)
+            //       ],
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),

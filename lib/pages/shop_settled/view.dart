@@ -68,6 +68,7 @@ class ShopSettledPage extends StatelessWidget {
         key: GlobalKey(), controller: TextEditingController(),
         isRequired: true, titleFlexType: TitleFlexType.Column,
         textFieldType: TextFieldType.Upload,
+        height: 200,
       ),
 
       SizedBox(height: 15),
@@ -76,10 +77,11 @@ class ShopSettledPage extends StatelessWidget {
         key: GlobalKey(), controller: TextEditingController(),
         isRequired: true, titleFlexType: TitleFlexType.Column,
         textFieldType: TextFieldType.Upload,
+        height: 200,
       ),
     ];
     return Scaffold(
-      appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '商家入驻'),
+      appBar: CustomAppBar(title: '商家入驻'),
       body: SafeArea(
         child: Column(
           children: [
@@ -93,18 +95,19 @@ class ShopSettledPage extends StatelessWidget {
                   child: Column(
                     children: TextFieldItems,
                   ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  height: ScreenUtil().setWidth(250),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
+                  ),
+                  child:  RadiusButton('立即入驻', width: 903, height: 159),
                 )
               ],
             )),
-            Container(
-              alignment: Alignment.center,
-              height: ScreenUtil().setWidth(250),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
-              ),
-              child:  RadiusButton('立即入驻', width: 903, height: 159),
-            )
+
           ],
         ),
       ),

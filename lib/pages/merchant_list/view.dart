@@ -5,27 +5,30 @@ import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/models/global.dart';
+import 'package:egou_app/pages/shop/logic.dart';
+import 'package:egou_app/pages/shop/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/search.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
 import 'state.dart';
 
-class ShopPage extends StatelessWidget {
-  final ShopLogic logic = Get.put(ShopLogic());
-  final ShopState state = Get.find<ShopLogic>().state;
+class MerchantListPage extends StatelessWidget {
+  final MerchantListLogic logic = Get.put(MerchantListLogic());
+  final MerchantListState state = Get.find<MerchantListLogic>().state;
+  final ShopState shopState = Get.find<ShopLogic>().state;
+  String id = Get.parameters['id'];
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final List<ShopGridListItem> gridList = state.gridList.value;
       return Scaffold(
-        appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '商家'),
+        appBar: CustomAppBar(title: shopState.gridList.value[int.parse(id)].text + '商家',
+            leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333)
+        ),
         body: Column(
           children: [
             Container(
@@ -34,42 +37,11 @@ class ShopPage extends StatelessWidget {
             ),
             Expanded(child: CustomScrollView(
               slivers: [
-                SliverToBoxAdapter(child: Container(color: Colors.white, padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, AppSpace.SPACE_52, AppSpace.SPACE_52, 0),
-                    child: Text('分类', style: TextStyle(color: Colors.black, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)))),
-                SliverGrid(delegate: SliverChildBuilderDelegate(
-                      (BuildContext context,int index) {
-                    return GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        Get.toNamed(RouteConfig.merchant_list+'?id=' + index.toString());
-                      },
-                      child: Container(
-                        color: Colors.white,
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(gridList[index].icon, width: ScreenUtil().setWidth(120), height: ScreenUtil().setWidth(120)),
-                            SizedBox(height: 10),
-                            Text(gridList[index].text, style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_36))
-                          ],
-                        ),),
-                    );
-                  },
-                  childCount: gridList.length,
-                ), gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    // mainAxisSpacing: 10,
-                    // crossAxisSpacing: 10
-                )),
-                SliverPadding(padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, AppSpace.SPACE_52, AppSpace.SPACE_52, 0), sliver: SliverToBoxAdapter(
-                  child: Text('商家', style: TextStyle(color: Colors.black, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
-                )),
                 SliverPadding(padding: EdgeInsets.all(AppSpace.SPACE_52), sliver:  SliverList(delegate: SliverChildBuilderDelegate(
                       (BuildContext context,int index) {
                     return  _ShopItem();
                   },
-                  childCount: 3,
+                  childCount: 10,
                 ))),
               ],
             )),

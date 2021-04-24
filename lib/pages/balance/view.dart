@@ -1,7 +1,9 @@
+import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/widgets/app_bar.dart';
+import 'package:egou_app/constant/app_enums.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,13 +22,34 @@ class BalancePage extends StatefulWidget {
 class _BalancePageState extends State<BalancePage> {
   final BalanceLogic logic = Get.put(BalanceLogic());
   final BalanceState state = Get.find<BalanceLogic>().state;
+  String type = Get.parameters['type'];
+
+  String getTitle(type) {
+    if (type == balanceType.balance.toString()) {
+      return '余额';
+    }
+    if (type == balanceType.goldcoin.toString()) {
+      return '金币';
+    }
+    if (type == balanceType.silvercoin.toString()) {
+      return '银币';
+    }
+  }
+
+  bool isShowWithDrawalBtn() {
+    if (type == balanceType.balance.toString()) {
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: CustomAppBar(
         leading: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
-        title:  '余额',
+        title:  getTitle(type),
         backgroundColor: AppColors.COLOR_PRIMARY_D22315,
         textColor:Colors.white ,
       ),
@@ -37,22 +60,28 @@ class _BalancePageState extends State<BalancePage> {
             slivers: [
               SliverToBoxAdapter(child: Container(
                   color: AppColors.COLOR_PRIMARY_D22315,
-                  height: ScreenUtil().setWidth(666),
+                  height: ScreenUtil().setWidth(500),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Price(price: '88888.00', color: Colors.white, mainAxisAlignment: MainAxisAlignment.center,),
+                      Price(price: '88888.00', color: Colors.white, mainAxisAlignment: MainAxisAlignment.center,size: AppFontsize.SIZE_67, unitSize: 15,),
                       SizedBox(height: 20,),
-                      Container(
-                        alignment: Alignment.center,
-                        width: ScreenUtil().setWidth(446),
-                        height: ScreenUtil().setWidth(140),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(AppRadius.RADIUS_20)
+                      isShowWithDrawalBtn() ? GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          Get.toNamed(RouteConfig.withdrawal_page);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: ScreenUtil().setWidth(446),
+                          height: ScreenUtil().setWidth(140),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(AppRadius.RADIUS_20)
+                          ),
+                          child: Text('去提现', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315)),
                         ),
-                        child: Text('去提现', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315)),
-                      )
+                      ): SizedBox()
                     ],
                   )
               )),

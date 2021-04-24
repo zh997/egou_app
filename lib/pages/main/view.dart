@@ -4,6 +4,7 @@ import 'package:egou_app/pages/bill/view.dart';
 import 'package:egou_app/pages/cart/view.dart';
 import 'package:egou_app/pages/my/view.dart';
 import 'package:egou_app/pages/shop/view.dart';
+import 'package:egou_app/pages/shop_settled/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,9 +41,9 @@ class _MainPageState extends State<MainPage> {
           controller: pageController,
           children: [
             HomePage(),
-            BillPage(),
+            ShopSettledPage(),
             CartPage(),
-            ShopPage(),
+            // ShopPage(),
             MyPage()
           ],
         ),
@@ -63,9 +64,9 @@ class _MainPageState extends State<MainPage> {
           },
           items: [
             _BottomNavigationBarItem(AppImages.TABBAR_HOME_ICON, AppImages.TABBAR_HOME_SELECTED_ICON, '首页'),
-            _BottomNavigationBarItem(AppImages.TABBAR_BILL_ICON, AppImages.TABBAR_BILL_SELECTED_ICON, '报单区'),
+            _BottomNavigationBarItem(AppImages.TABBAR_BILL_ICON, AppImages.TABBAR_BILL_SELECTED_ICON, '商家入驻'),
             _BottomNavigationBarItem(AppImages.TABBAR_CART_ICON, AppImages.TABBAR_CART_SELECTED_ICON, '购物车'),
-            _BottomNavigationBarItem(AppImages.TABBAR_SHOP_ICON, AppImages.TABBAR_SHOP_SELECTED_ICON, '商家'),
+            // _BottomNavigationBarItem(AppImages.TABBAR_SHOP_ICON, AppImages.TABBAR_SHOP_SELECTED_ICON, '商家'),
             _BottomNavigationBarItem(AppImages.TABBAR_MY_ICON, AppImages.TABBAR_MY_SELECTED_ICON, '我的')
           ],
         )

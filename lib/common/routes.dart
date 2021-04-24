@@ -1,11 +1,16 @@
 import 'package:egou_app/pages/about_us/view.dart';
 import 'package:egou_app/pages/address/view.dart';
 import 'package:egou_app/pages/balance/view.dart';
+import 'package:egou_app/pages/bank_card_list/view.dart';
 import 'package:egou_app/pages/be_guest/view.dart';
+import 'package:egou_app/pages/bind_card/view.dart';
 import 'package:egou_app/pages/concat_us/view.dart';
 import 'package:egou_app/pages/confirm_order/view.dart';
 import 'package:egou_app/pages/edit_address/view.dart';
+import 'package:egou_app/pages/forget_pwd/view.dart';
 import 'package:egou_app/pages/goods_detail/view.dart';
+import 'package:egou_app/pages/make_qrcode/view.dart';
+import 'package:egou_app/pages/merchant_list/view.dart';
 import 'package:egou_app/pages/my_order/view.dart';
 import 'package:egou_app/pages/my_shop/view.dart';
 import 'package:egou_app/pages/my_store/view.dart';
@@ -17,8 +22,11 @@ import 'package:egou_app/pages/pwd_update/view.dart';
 import 'package:egou_app/pages/recharge/view.dart';
 import 'package:egou_app/pages/setting_center/view.dart';
 import 'package:egou_app/pages/share/view.dart';
+import 'package:egou_app/pages/shop/view.dart';
 import 'package:egou_app/pages/shop_detail/view.dart';
 import 'package:egou_app/pages/shop_settled/view.dart';
+import 'package:egou_app/pages/with_drawal_record/view.dart';
+import 'package:egou_app/pages/withdrawal/view.dart';
 import 'package:get/get.dart';
 import 'package:egou_app/pages/guide/view.dart';
 import 'package:egou_app/pages/home/view.dart';
@@ -32,6 +40,7 @@ class RouteConfig {
   static final String guide_page = '/guide_page';
   static final String main_page = '/main_page';
   static final String home_page = '/home_page';
+  static final String shop_page = '/shop_page';
   static final String shop_detail = '/shop_detail';
   static final String goods_detail = '/goods_detail';
   static final String confirm_order = '/confirm_order';
@@ -53,6 +62,13 @@ class RouteConfig {
   static final String pwd_update = '/pwd_update';
   static final String be_guest = '/be_guest';
   static final String balance_page = '/balance_page';
+  static final String withdrawal_page = '/withdrawal_page';
+  static final String bind_card = '/bind_card';
+  static final String withdrawal_record = '/withdrawal_record';
+  static final String bank_card_list = '/bank_card_list';
+  static final String make_qrcode = '/make_qrcode';
+  static final String forget_pwd = '/forget_pwd';
+  static final String merchant_list = '/merchant_list';
 
   static final List<GetPage> getPages = [
     GetPage(name: launch_page, page: () => LaunchPage()),
@@ -81,5 +97,14 @@ class RouteConfig {
     GetPage(name: pwd_update, page: () => PwdUpdatePage()),
     GetPage(name: be_guest, page: () => BeGuestPage()),
     GetPage(name: balance_page, page: () => BalancePage()),
+    GetPage(name: withdrawal_page, page: () => WithdrawalPage()),
+    GetPage(name: bind_card, page: () => BindCardPage()),
+    GetPage(name: withdrawal_record, page: () => WithDrawalRecordPage()),
+    GetPage(name: bank_card_list, page: () => BankCardListPage()),
+    GetPage(name: make_qrcode, page: () => MakeQrcodePage()),
+    GetPage(name: forget_pwd, page: () => ForgetPwdPage()),
+    GetPage(name: merchant_list, page: () => MerchantListPage()),
+    GetPage(name: shop_page, page: () => ShopPage()),
+
   ];
 }

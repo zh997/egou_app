@@ -20,21 +20,35 @@ class PointsMallPage extends StatefulWidget {
 
 class _PointsMallPageState extends State<PointsMallPage> with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
 
+  final PointsMallLogic logic = Get.put(PointsMallLogic());
+  final PointsMallState state = Get.find<PointsMallLogic>().state;
+
   final List<String> labelList = ['精选', '手机', '运动', '饰品', '母婴用品','家居', '彩妆', '电脑', '箱包', '学习用品'];
+  String type = Get.parameters['type'];
 
   TabController tabController;
+
+  String _title() {
+    if (int.parse(type) == 1) {
+      return '场景商城';
+    }
+    if (int.parse(type) == 2) {
+      return '社区商城';
+    }
+  }
 
   @override
   void initState() {
     // TODO: implement initState
-    tabController = TabController(length: labelList.length, vsync: this);
     super.initState();
+    tabController = TabController(length: labelList.length, vsync: this);
+    logic.onSetShopType(int.parse(type));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '积分商城'),
+        appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: _title()),
         body:  Column(
           children: [
             _HeaderSearch(),

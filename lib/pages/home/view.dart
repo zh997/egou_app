@@ -205,7 +205,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
-            Get.toNamed(RouteConfig.points_mall);
+            Get.toNamed(RouteConfig.points_mall+ '?type=1');
           },
           child: Column(
             children: [
@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: (){
-            Get.toNamed(RouteConfig.shop_settled);
+            Get.toNamed(RouteConfig.points_mall+ '?type=2');
           },
           child: Column(
             children: [
@@ -231,7 +231,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: (){
-            Get.toNamed(RouteConfig.share_page);
+            Get.toNamed(RouteConfig.shop_page);
           },
           child: Column(
             children: [

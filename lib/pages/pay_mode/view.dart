@@ -4,6 +4,8 @@ import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_space.dart';
+import 'package:egou_app/pages/points_mall/logic.dart';
+import 'package:egou_app/pages/points_mall/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/small_widget.dart';
@@ -22,6 +24,7 @@ class PayModePage extends StatefulWidget {
 class _PayModePageState extends State<PayModePage> {
   final PayModeLogic logic = Get.put(PayModeLogic());
   final PayModeState state = Get.find<PayModeLogic>().state;
+  final PointsMallState pointsMallState = Get.find<PointsMallLogic>().state;
 
   final FocusNode _focusNode = FocusNode();
   bool isFocus = false;
@@ -47,100 +50,104 @@ class _PayModePageState extends State<PayModePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '支付方式'),
-      body: Column(
-        children: [
-          Expanded(child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, 0),
-                  margin: EdgeInsets.only(top: AppSpace.SPACE_40),
-                  height: ScreenUtil().setWidth(186),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('订单金额', style: TextStyle(
-                          fontSize: AppFontsize.SIZE_50,
-                          color: AppColors.COLOR_BLACK_000000
-                      )),
-                      Price()
-                    ],
-                  ) ,
-                ),
-                Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, AppSpace.SPACE_52),
-                  margin: EdgeInsets.only(top: AppSpace.SPACE_40),
-                  child: Column(
-                    children: [
-                      _payModeItem(AppImages.PAY_MODE_ICON_1, '余额支付', num: '3658.00'),
-                      _payModeItem(AppImages.PAY_MODE_ICON_2, '金币支付', num: '3658.00'),
-                      _payModeItem(AppImages.PAY_MODE_ICON_3, '银币支付', num: '3658.00'),
-                      _payModeItem(AppImages.PAY_MODE_ICON_4, '微信支付' ),
-                      _payModeItem(AppImages.PAY_MODE_ICON_5, '支付宝支付'),
-                      SizedBox(height: 20),
-                      Container(
-                        alignment: Alignment.center,
-                        width: ScreenUtil().setWidth(895),
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
-                            borderRadius: BorderRadius.circular(AppRadius.RADIUS_20)
-                        ),
-                        child: Stack(
-                          alignment: const FractionalOffset(0.5, 0.5),
-                          children: [
-                            !isFocus && !pwd.isNotEmpty ? Text('请填写6-20位交易密码',
-                                style: TextStyle(
-                                    fontSize: ScreenUtil().setSp(60),
-                                    color: AppColors.COLOR_PRIMARY_D22315,
-                                    height: ScreenUtil().setHeight(4)
-                                )
-                            ): Text(''),
-                            TextFormField(
-                              focusNode: _focusNode,
-                              onChanged: (String val) {setState(() {
-                                pwd = val;
-                              });},
-                              textInputAction: TextInputAction.next,
-                              maxLines: 1,
-                              cursorColor: AppColors.COLOR_PRIMARY_D22315,
-                              style: TextStyle(fontSize: ScreenUtil().setSp(60), color: AppColors.COLOR_BLACK_333333),
-                              obscureText: true,
-                              textAlign: TextAlign.center,
-                              decoration: InputDecoration(
+    return Obx(() {
+      final int  shopType = pointsMallState.shopType.value;
+      print(shopType);
+      return Scaffold(
+        appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '支付方式'),
+        body: Column(
+          children: [
+            Expanded(child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, 0),
+                    margin: EdgeInsets.only(top: AppSpace.SPACE_40),
+                    height: ScreenUtil().setWidth(186),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('订单金额', style: TextStyle(
+                            fontSize: AppFontsize.SIZE_50,
+                            color: AppColors.COLOR_BLACK_000000
+                        )),
+                        Price()
+                      ],
+                    ) ,
+                  ),
+                  Container(
+                    color: Colors.white,
+                    padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, AppSpace.SPACE_52),
+                    margin: EdgeInsets.only(top: AppSpace.SPACE_40),
+                    child: Column(
+                      children: [
+                        _payModeItem(AppImages.PAY_MODE_ICON_1, '余额支付', num: '3658.00'),
+                        shopType != 1 && shopType != 2 ? _payModeItem(AppImages.PAY_MODE_ICON_2, '金币支付', num: '3658.00') : SizedBox(),
+                        shopType != 2 ?  _payModeItem(AppImages.PAY_MODE_ICON_3, '银币支付', num: '3658.00') : SizedBox(),
+                        _payModeItem(AppImages.PAY_MODE_ICON_4, '微信支付' ),
+                        _payModeItem(AppImages.PAY_MODE_ICON_5, '支付宝支付'),
+                        SizedBox(height: 20),
+                        Container(
+                          alignment: Alignment.center,
+                          width: ScreenUtil().setWidth(895),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
+                              borderRadius: BorderRadius.circular(AppRadius.RADIUS_20)
+                          ),
+                          child: Stack(
+                            alignment: const FractionalOffset(0.5, 0.5),
+                            children: [
+                              !isFocus && !pwd.isNotEmpty ? Text('请填写6-20位交易密码',
+                                  style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(60),
+                                      color: AppColors.COLOR_PRIMARY_D22315,
+                                      height: ScreenUtil().setHeight(4)
+                                  )
+                              ): Text(''),
+                              TextFormField(
+                                focusNode: _focusNode,
+                                onChanged: (String val) {setState(() {
+                                  pwd = val;
+                                });},
+                                textInputAction: TextInputAction.next,
+                                maxLines: 1,
+                                cursorColor: AppColors.COLOR_PRIMARY_D22315,
+                                style: TextStyle(fontSize: ScreenUtil().setSp(60), color: AppColors.COLOR_BLACK_333333),
+                                obscureText: true,
+                                textAlign: TextAlign.center,
+                                decoration: InputDecoration(
                                   contentPadding: EdgeInsets.all(15),
                                   hasFloatingPlaceholder: false,
                                   focusColor:  AppColors.COLOR_PRIMARY_D22315,
                                   border: InputBorder.none,
                                   // labelText:  '请填写6-20位交易密码',
                                   // labelStyle: TextStyle(fontSize: ScreenUtil().setSp(60), color: AppColors.COLOR_PRIMARY_D22315,  height: ScreenUtil().setHeight(0))
-                              ),
-                              keyboardType: TextInputType.text,
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ) ,
-                )
-              ],
-            ),
-          )),
-          Container(
-              height: ScreenUtil().setWidth(250),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
+                                ),
+                                keyboardType: TextInputType.text,
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ) ,
+                  )
+                ],
               ),
-              child: RadiusButton('结算', onTap: (){Get.toNamed(RouteConfig.pay_result);})
-          )
-        ],
-      ),
-    );
+            )),
+            Container(
+                height: ScreenUtil().setWidth(250),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
+                ),
+                child: RadiusButton('结算', onTap: (){Get.toNamed(RouteConfig.pay_result);})
+            )
+          ],
+        ),
+      );
+    });
   }
 
   Widget _payModeItem(icon, text, {num}) {

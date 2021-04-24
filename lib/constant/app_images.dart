@@ -62,5 +62,19 @@ class AppImages {
   static String SHOP_GRID_ICON_10 = 'static/images/shop_grid_icon_10.png';
   static String SHOP_GRID_ICON_11 = 'static/images/shop_grid_icon_11.png';
   static String SHOP_GRID_ICON_12 = 'static/images/shop_grid_icon_12.png';
+  static String CARD_LOGO_1 = 'static/images/card_logo_1.png';
+  static String CARD_LOGO_2 = 'static/images/card_logo_2.png';
+  static String CARD_LOGO_3 = 'static/images/card_logo_3.png';
+  static String CARD_LOGO_4 = 'static/images/card_logo_4.png';
+  static String CARD_QRCODE = 'static/images/card_qrcode.png';
+  static String ADD_CARD_ICON = 'static/images/add_card_icon.png';
+  static String CAMARA_ICON = 'static/images/camra_icon.png';
+  static String BE_GUEST_BG = 'static/images/be_guest_bg.png';
+  static String BE_GUEST_TITLE_BG = 'static/images/be_guest_title_bg.png';
+  static String GIFT_1 = 'static/images/gift_1.png';
+  static String GIFT_2 = 'static/images/gift_2.png';
+  static String GIFT_3 = 'static/images/gift_3.png';
+  static String ORDER_ICON = 'static/images/order_icon.png';
+  static String QRCODE_ICON = 'static/images/qrcode_icon.png';
 
 }

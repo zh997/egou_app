@@ -20,19 +20,29 @@ class SettingCenterPage extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(height: 15),
-          _listItem('登陆密码修改'),
+          _listItem('登陆密码修改', onTap: () {
+            Get.toNamed(RouteConfig.pwd_update);
+          }),
           SizedBox(height: 15),
-          _listItem('交易密码修改')
+          _listItem('找回登录密码', onTap: () {
+            Get.toNamed(RouteConfig.forget_pwd);
+          }),
+          SizedBox(height: 15),
+          _listItem('交易密码修改',onTap: () {
+            Get.toNamed(RouteConfig.pwd_update);
+          }),
+          SizedBox(height: 15),
+          _listItem('找回交易密码',onTap: () {
+            Get.toNamed(RouteConfig.forget_pwd);
+          })
         ]
       )
     );
   }
 
-  Widget _listItem(text, {rightText}) {
+  Widget _listItem(text, {rightText, Function onTap}) {
     return InkWell(
-        onTap: () {
-          Get.toNamed(RouteConfig.pwd_update);
-        },
+        onTap: onTap != null ? onTap : (){},
         child: Container(
             padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
             color: Colors.white,

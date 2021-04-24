@@ -43,6 +43,7 @@ class RowTextField extends StatefulWidget {
   final EdgeInsetsGeometry padding;
   final TextAlign textAlign;
   final TextFieldType textFieldType ;
+  final bool showBorder;
   String Function(dynamic value) validate;
   RowTextField({
     this.key,
@@ -71,7 +72,8 @@ class RowTextField extends StatefulWidget {
     this.padding,
     this.height, this.textAlign = TextAlign.start,
     this.textFieldType = TextFieldType.Input,
-    this.labelTop
+    this.labelTop,
+    this.showBorder = true
   }) : super(key: key);
 
   @override
@@ -225,25 +227,29 @@ class _RowTextFieldState extends State<RowTextField> {
 
     if (widget.textFieldType == TextFieldType.Upload) {
       textFieldItem = [
-        _upload()
+        Expanded(child:_upload())
       ];
     }
 
-    if (widget.title != null) {
-      textFieldItem.insert(0, Row(
-        children: title,
-      ));
-    }
 
     final Widget RowItem = Container(
       padding: widget.padding,
       decoration: BoxDecoration(
-          border: Border(bottom: bottomLine)
+          border: widget.showBorder ? Border(bottom: bottomLine) : Border(bottom: BorderSide.none)
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: textFieldItem,
+        children: [
+          widget.title != null ? Row(
+            children: title,
+          ) : SizedBox(),
+          Expanded(
+            child: Row(
+              children: textFieldItem,
+            ),
+          )
+        ],
       )
     );
 
@@ -251,12 +257,19 @@ class _RowTextFieldState extends State<RowTextField> {
         padding: widget.padding,
         height: widget.height,
         decoration: BoxDecoration(
-            border: Border(bottom: bottomLine)
+            border: widget.showBorder ? Border(bottom: bottomLine) : Border(bottom: BorderSide.none)
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: textFieldItem,
+          children: [
+            widget.title != null ? Row(
+              children: title,
+            ) : SizedBox(),
+            Expanded(child: Row(
+              children: textFieldItem,
+            ))
+          ],
         )
     );
 
