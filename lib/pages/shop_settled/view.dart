@@ -57,10 +57,9 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
 
     String path = image.path;
     var name = path.substring(path.lastIndexOf("/") + 1, path.length);
-
+    var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);
     FormData formdata = FormData.fromMap({
-      "user_id": "10000024",
-      "file": await MultipartFile.fromFile(path, filename:name)
+      "file": await MultipartFile.fromFile(path, filename: name)
     });
 
    await logic.uploadImg(formdata, key);
