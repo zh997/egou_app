@@ -18,9 +18,17 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'logic.dart';
 import 'state.dart';
 
-class GoodsDetailPage extends StatelessWidget {
+
+class GoodsDetailPage extends StatefulWidget {
+  @override
+  _GoodsDetailPageState createState() => _GoodsDetailPageState();
+}
+
+class _GoodsDetailPageState extends State<GoodsDetailPage> {
   final GoodsDetailLogic logic = Get.put(GoodsDetailLogic());
   final GoodsDetailState state = Get.find<GoodsDetailLogic>().state;
+
+  int tabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -111,11 +119,11 @@ class GoodsDetailPage extends StatelessWidget {
                   ),
                 ),
                 _goodsTab(),
-                Container(
-                  height: 500,
-                  color: Colors.white,
-                  child:  Image.network(AppImages.GOODS_IMG_1, fit: BoxFit.cover)
-                )
+                tabIndex == 0 ? Container(
+                    height: 500,
+                    color: Colors.white,
+                    child:  Image.network(AppImages.GOODS_IMG_1, fit: BoxFit.cover)
+                ) : _Comment()
               ],
             ),
           )),
@@ -123,164 +131,164 @@ class GoodsDetailPage extends StatelessWidget {
             height: ScreenUtil().setWidth(250),
             decoration: BoxDecoration(
                 color: Colors.white,
-              border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
+                border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                 GestureDetector(
-                   child: Column(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                       Image.asset(AppImages.ICON_21, width: ScreenUtil().setWidth(71), height: ScreenUtil().setWidth(71)),
-                       Text('收藏', style: TextStyle(
-                         fontSize: AppFontsize.SIZE_32, color: AppColors.COLOR_BLACK_000000
-                       ))
-                     ],
-                   ),
-                 ),
-                  GestureDetector(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(AppImages.ICON_23, width: ScreenUtil().setWidth(71), height: ScreenUtil().setWidth(71)),
-                        Text('购物车', style: TextStyle(
-                            fontSize: AppFontsize.SIZE_32, color: AppColors.COLOR_BLACK_000000
-                        ))
-                      ],
-                    ),
-                  ),
-                  Row(
+                GestureDetector(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          showMaterialModalBottomSheet(
+                      Image.asset(AppImages.ICON_21, width: ScreenUtil().setWidth(71), height: ScreenUtil().setWidth(71)),
+                      Text('收藏', style: TextStyle(
+                          fontSize: AppFontsize.SIZE_32, color: AppColors.COLOR_BLACK_000000
+                      ))
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(AppImages.ICON_23, width: ScreenUtil().setWidth(71), height: ScreenUtil().setWidth(71)),
+                      Text('购物车', style: TextStyle(
+                          fontSize: AppFontsize.SIZE_32, color: AppColors.COLOR_BLACK_000000
+                      ))
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        showMaterialModalBottomSheet(
                             context: context,
                             duration: Duration(milliseconds: 200),
                             builder: (BuildContext context) => Container(
-                              height: 500,
-                              color: Colors.white,
-                              child: Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Expanded(child: SingleChildScrollView(
-                                        padding: EdgeInsets.all(AppSpace.SPACE_40),
-                                        child:  Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              crossAxisAlignment:CrossAxisAlignment.end,
-                                              children: [
-                                                Container(
-                                                  width: ScreenUtil().setWidth(366),
-                                                  height: ScreenUtil().setWidth(366),
-                                                  margin: EdgeInsets.only(right: 20),
-                                                  child: Image.network(AppImages.GOODS_IMG_1, fit:BoxFit.cover),
-                                                ),
-                                                Price()
-                                              ],
+                                height: 500,
+                                color: Colors.white,
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Expanded(child: SingleChildScrollView(
+                                          padding: EdgeInsets.all(AppSpace.SPACE_40),
+                                          child:  Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                crossAxisAlignment:CrossAxisAlignment.end,
+                                                children: [
+                                                  Container(
+                                                    width: ScreenUtil().setWidth(366),
+                                                    height: ScreenUtil().setWidth(366),
+                                                    margin: EdgeInsets.only(right: 20),
+                                                    child: Image.network(AppImages.GOODS_IMG_1, fit:BoxFit.cover),
+                                                  ),
+                                                  Price()
+                                                ],
+                                              ),
+                                              SizedBox(height: 20),
+                                              Text('尺码', style: TextStyle(
+                                                  fontSize: AppFontsize.SIZE_48,
+                                                  color: AppColors.COLOR_BLACK_000000
+                                              )),
+                                              SizedBox(height: 20),
+                                              Wrap(
+                                                spacing: 10,
+                                                runSpacing: 10,
+                                                children: [
+                                                  _specItem(),
+                                                  _specItem(),
+                                                  _specItem(),
+                                                  _specItem(),
+                                                  _specItem(),
+                                                  _specItem(),
+                                                  _specItem(),
+                                                  _specItem(),
+                                                  _specItem(),
+                                                ],
+                                              ),
+                                              SizedBox(height: 20),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text('购买数量', style: TextStyle(
+                                                      fontSize: AppFontsize.SIZE_48,
+                                                      color: AppColors.COLOR_BLACK_000000
+                                                  )),
+                                                  Counter()
+                                                ],
+                                              )
+                                            ],
+                                          ) ,
+                                        )),
+                                        GestureDetector(
+                                          onTap: (){
+                                            Get.toNamed(RouteConfig.confirm_order);
+                                          },
+                                          child: Container(
+                                            height: ScreenUtil().setWidth(282),
+                                            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                                border: Border(top:BorderSide(color: AppColors.COLOR_GRAY_C9C9C9, width: 1))
                                             ),
-                                            SizedBox(height: 20),
-                                            Text('尺码', style: TextStyle(
-                                                fontSize: AppFontsize.SIZE_48,
-                                                color: AppColors.COLOR_BLACK_000000
-                                            )),
-                                            SizedBox(height: 20),
-                                            Wrap(
-                                              spacing: 10,
-                                              runSpacing: 10,
-                                              children: [
-                                                _specItem(),
-                                                _specItem(),
-                                                _specItem(),
-                                                _specItem(),
-                                                _specItem(),
-                                                _specItem(),
-                                                _specItem(),
-                                                _specItem(),
-                                                _specItem(),
-                                              ],
-                                            ),
-                                            SizedBox(height: 20),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text('购买数量', style: TextStyle(
-                                                    fontSize: AppFontsize.SIZE_48,
-                                                    color: AppColors.COLOR_BLACK_000000
-                                                )),
-                                                Counter()
-                                              ],
-                                            )
-                                          ],
-                                        ) ,
-                                      )),
-                                      GestureDetector(
-                                        onTap: (){
-                                          Get.toNamed(RouteConfig.confirm_order);
-                                        },
-                                        child: Container(
-                                          height: ScreenUtil().setWidth(282),
-                                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              border: Border(top:BorderSide(color: AppColors.COLOR_GRAY_C9C9C9, width: 1))
+                                            child: RadiusButton('立即购买'),
                                           ),
-                                          child: RadiusButton('立即购买'),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  Positioned(
-                                    top: 15,
-                                    right: 15,
-                                    child: GestureDetector(
-                                      onTap: () {Get.back(result: 'success');},
-                                      child: Icon(Icons.close, color: AppColors.COLOR_GRAY_707070,),
+                                        )
+                                      ],
+                                    ),
+                                    Positioned(
+                                        top: 15,
+                                        right: 15,
+                                        child: GestureDetector(
+                                          onTap: () {Get.back(result: 'success');},
+                                          child: Icon(Icons.close, color: AppColors.COLOR_GRAY_707070,),
+                                        )
                                     )
-                                  )
-                                ],
-                              )
+                                  ],
+                                )
                             )
-                          );
-                        },
-                        child: Container(
+                        );
+                      },
+                      child: Container(
                           width: ScreenUtil().setWidth(339),
                           height: ScreenUtil().setWidth(158),
-                            alignment: Alignment.center,
+                          alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: AppColors.COLOR_BLACK_000000,
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(AppRadius.RADIUS_8),bottomLeft: Radius.circular(AppRadius.RADIUS_8) )
+                              color: AppColors.COLOR_BLACK_000000,
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(AppRadius.RADIUS_8),bottomLeft: Radius.circular(AppRadius.RADIUS_8) )
                           ),
                           child: Text('加入购物车', style: TextStyle(
-                            fontSize: AppFontsize.SIZE_48,
-                            color: Colors.white
+                              fontSize: AppFontsize.SIZE_48,
+                              color: Colors.white
                           ))
-                        ),
                       ),
-                      GestureDetector(
-                        onTap: (){
-                          Get.toNamed(RouteConfig.confirm_order);
-                        },
-                        child: Container(
-                            width: ScreenUtil().setWidth(339),
-                            height: ScreenUtil().setWidth(158),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: AppColors.COLOR_PRIMARY_D22315,
-                                borderRadius: BorderRadius.only(topRight: Radius.circular(AppRadius.RADIUS_8),bottomRight: Radius.circular(AppRadius.RADIUS_8) )
-                            ),
-                            child: Text('立即购买', style: TextStyle(
-                                fontSize: AppFontsize.SIZE_48,
-                                color: Colors.white
-                            ))
-                        ),
-                      )
-                    ],
-                  )
+                    ),
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(RouteConfig.confirm_order);
+                      },
+                      child: Container(
+                          width: ScreenUtil().setWidth(339),
+                          height: ScreenUtil().setWidth(158),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: AppColors.COLOR_PRIMARY_D22315,
+                              borderRadius: BorderRadius.only(topRight: Radius.circular(AppRadius.RADIUS_8),bottomRight: Radius.circular(AppRadius.RADIUS_8) )
+                          ),
+                          child: Text('立即购买', style: TextStyle(
+                              fontSize: AppFontsize.SIZE_48,
+                              color: Colors.white
+                          ))
+                      ),
+                    )
+                  ],
+                )
               ],
             ),
           )
@@ -295,8 +303,8 @@ class GoodsDetailPage extends StatelessWidget {
       height: ScreenUtil().setWidth(13),
       margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
       decoration: BoxDecoration(
-        color: AppColors.COLOR_BLACK_222222,
-        borderRadius: BorderRadius.circular(ScreenUtil().setWidth(13))
+          color: AppColors.COLOR_BLACK_222222,
+          borderRadius: BorderRadius.circular(ScreenUtil().setWidth(13))
       ),
     );
   }
@@ -313,6 +321,12 @@ class GoodsDetailPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: (){
+              setState(() {
+                this.tabIndex = 0;
+              });
+            },
             child: Padding(
               padding: EdgeInsets.all(15),
               child: Column(
@@ -322,30 +336,45 @@ class GoodsDetailPage extends StatelessWidget {
                         color: AppColors.COLOR_BLACK_222222
                     )),
                     SizedBox(height: 10),
-                    Container(
+                    tabIndex == 0 ? Container(
                       width: ScreenUtil().setWidth(102),
                       height: ScreenUtil().setWidth(10),
                       decoration: BoxDecoration(
                           color: AppColors.COLOR_PRIMARY_D22315,
                           borderRadius: BorderRadius.circular(ScreenUtil().setWidth(10))
                       ),
-                    )
+                    ): SizedBox()
                   ]
               ) ,
             ),
           ),
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: (){
+              setState(() {
+                this.tabIndex = 1;
+              });
+            },
             child:Padding(
-              padding: EdgeInsets.all(15),
+                padding: EdgeInsets.all(15),
                 child: Column(
                     children: [
                       Text('评价', style: TextStyle(
                           fontSize: AppFontsize.SIZE_54,
                           color: AppColors.COLOR_BLACK_222222
                       )),
+                      SizedBox(height: 10),
+                      tabIndex == 1 ? Container(
+                        width: ScreenUtil().setWidth(102),
+                        height: ScreenUtil().setWidth(10),
+                        decoration: BoxDecoration(
+                            color: AppColors.COLOR_PRIMARY_D22315,
+                            borderRadius: BorderRadius.circular(ScreenUtil().setWidth(10))
+                        ),
+                      ): SizedBox()
                     ]
                 )
-              ),
+            ),
           )
         ],
       ),
@@ -354,16 +383,171 @@ class GoodsDetailPage extends StatelessWidget {
 
   Widget _specItem() {
     return GestureDetector(
-      child: Container(
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-          decoration: BoxDecoration(
-            border: Border.all(color:AppColors.COLOR_GRAY_C9C9C9)
+        child: Container(
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+            decoration: BoxDecoration(
+                border: Border.all(color:AppColors.COLOR_GRAY_C9C9C9)
+            ),
+            child: Text('英码1', style: TextStyle(
+                color: AppColors.COLOR_BLACK_000000,
+                fontSize: AppFontsize.SIZE_42
+            ))
+        )
+    );
+  }
+
+
+  Widget _Comment() {
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.all(15),
+      alignment: Alignment.center,
+      child: Column(
+        children: [
+          Wrap(
+            spacing: 20,
+            runSpacing: 20,
+            children: [
+              Container(
+                padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                decoration: BoxDecoration(
+                  border:Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
+                  borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
+                ),
+                child: Text('性价比高(4)', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                decoration: BoxDecoration(
+                    border:Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
+                    borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
+                ),
+                child: Text('质量超好(4)', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                decoration: BoxDecoration(
+                    border:Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
+                    borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
+                ),
+                child: Text('手感不多(8)', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                decoration: BoxDecoration(
+                    border:Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
+                    borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
+                ),
+                child: Text('性价比高(7)', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                decoration: BoxDecoration(
+                    border:Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
+                    borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
+                ),
+                child: Text('性价比高(4)', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
+              )
+            ],
           ),
-         child: Text('英码1', style: TextStyle(
-           color: AppColors.COLOR_BLACK_000000,
-           fontSize: AppFontsize.SIZE_42
-         ))
-      )
+          SizedBox(height: 15),
+          Divider(height: 1, color: AppColors.COLOR_GRAY_DDDDDD,),
+          SizedBox(height: 15),
+          Container(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                            width: ScreenUtil().setWidth(128),
+                            height: ScreenUtil().setWidth(128),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular( ScreenUtil().setWidth(128)),
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.asset(AppImages.APP_LOGO, fit: BoxFit.cover)
+                        ),
+                        SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('麻**夜', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
+                            Text('9天前 | 尺码：英码4', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40))
+                          ],
+                        )
+                      ],
+                    ),
+                    Text('浏览12次', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40)),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Text('物美价廉物美价廉物美价廉物美价廉物美价廉物美价廉物美价廉', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
+                SizedBox(height: 10),
+                Wrap(
+                  spacing: 5,
+                  runSpacing: 5,
+                  children: [
+                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),),
+                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),),
+                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),)
+                  ],
+                )
+              ],
+            ),
+          ),
+          SizedBox(height: 30),
+          Container(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                            width: ScreenUtil().setWidth(128),
+                            height: ScreenUtil().setWidth(128),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular( ScreenUtil().setWidth(128)),
+                            ),
+                            clipBehavior: Clip.hardEdge,
+                            child: Image.asset(AppImages.APP_LOGO, fit: BoxFit.cover)
+                        ),
+                        SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('麻**夜', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
+                            Text('9天前 | 尺码：英码4', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40))
+                          ],
+                        )
+                      ],
+                    ),
+                    Text('浏览12次', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40)),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Text('物美价廉物美价廉物美价廉物美价廉物美价廉物美价廉物美价廉', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
+                SizedBox(height: 10),
+                Wrap(
+                  spacing: 5,
+                  runSpacing: 5,
+                  children: [
+                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),),
+                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),),
+                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),)
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

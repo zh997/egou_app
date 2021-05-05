@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
   final HomeLogic logic = Get.put(HomeLogic());
   final HomeState state = Get.find<HomeLogic>().state;
 
-  final List<String> labelList = ['精选', '手机', '运动', '饰品', '母婴用品','家居', '彩妆', '电脑', '箱包', '学习用品'];
+  final List<String> labelList = ['食品', '家电', '饰品', '服饰箱包', '个人彩妆','茶叶酒水', '健康保健', '生活日用', '生鲜', '建材家具','五金百货','家纺家装','其他'];
 
   TabController tabController;
 

@@ -76,5 +76,12 @@ class AppImages {
   static String GIFT_3 = 'static/images/gift_3.png';
   static String ORDER_ICON = 'static/images/order_icon.png';
   static String QRCODE_ICON = 'static/images/qrcode_icon.png';
-
+  static String COMMENT_ICON_11 = 'static/images/comment_icon_1_1.png';
+  static String COMMENT_ICON_12 = 'static/images/comment_icon_1_2.png';
+  static String COMMENT_ICON_21 = 'static/images/comment_icon_2_1.png';
+  static String COMMENT_ICON_22 = 'static/images/comment_icon_2_2.png';
+  static String COMMENT_ICON_31 = 'static/images/comment_icon_3_1.png';
+  static String COMMENT_ICON_32 = 'static/images/comment_icon_3_2.png';
+  static String STAR_ICON = 'static/images/star_icon.png';
+  static String STAR_ICON_SELECTED = 'static/images/star_icon_selected.png';
 }
