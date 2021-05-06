@@ -1,6 +1,7 @@
 import 'dart:io';
-
+import 'dart:html' as html;
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/constant/app_colors.dart';
@@ -40,15 +41,36 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
 
   Future getImage(String key) async {
     EasyLoading.show(status: '正在上传');
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        print(_image);
-        _upLoadImage(_image, key);
-      } else {
-        print('No image selected.');
-        EasyLoading.dismiss();
+    // final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    // setState(() {
+    //   if (pickedFile != null) {
+    //     _image = File(pickedFile.path);
+    //     print(_image);
+    //     _upLoadImage(_image, key);
+    //   } else {
+    //     print('No image selected.');
+    //     EasyLoading.dismiss();
+    //   }
+    // });
+
+    html.InputElement uploadInput = html.FileUploadInputElement();
+
+    uploadInput.click();
+    uploadInput.onChange.listen((e) async {
+      final files = uploadInput.files;
+      var formData = html.FormData();
+      formData.appendBlob("file", files[0].slice(), files[0].name);
+      await logic.uploadImg(formData, key);
+      if (key == 'shop_photo') {
+        setState(() {
+          shop_photo.add(files[0].relativePath);
+        });
+
+      }
+      if (key == 'other_img') {
+        setState(() {
+          other_img.add(files[0].relativePath);
+        });
       }
     });
   }
@@ -62,19 +84,22 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
       "file": await MultipartFile.fromFile(path, filename: name)
     });
 
-   await logic.uploadImg(formdata, key);
-   if (key == 'shop_photo') {
-     setState(() {
-       shop_photo.add(path);
-     });
+    await logic.uploadImg(formdata, key);
+    if (key == 'shop_photo') {
+      setState(() {
+        shop_photo.add(path);
+      });
 
-   }
+    }
     if (key == 'other_img') {
       setState(() {
         other_img.add(path);
       });
     }
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {

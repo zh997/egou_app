@@ -75,6 +75,7 @@ class HttpRequest{
   }
 
   static RealResponseData catchError(ResponseData response) {
+    print(response);
     if (response.code != 1) {
       EasyLoading.showError(response.msg);
       // 未登录

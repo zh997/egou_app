@@ -12,7 +12,7 @@ import 'state.dart';
 class ShopSettledLogic extends getx.GetxController {
   final state = ShopSettledState();
 
-  void uploadImg(FormData data, String key) async {
+  void uploadImg(data, String key) async {
     final RealResponseData response = await CommonService.uploadImg(data);
     if (response.result) {
       if (key == 'shop_photo') {
