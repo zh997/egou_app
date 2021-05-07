@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         onInit: AppMiddleWare.onInit,
         onReady: AppMiddleWare.onReady(),
         routingCallback: AppMiddleWare.RoutingCallback,
-        defaultTransition: Transition.rightToLeftWithFade,
+        defaultTransition: Transition.noTransition,
         getPages: RouteConfig.getPages,
       ),
     );
