@@ -34,13 +34,10 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _collection_typeController = TextEditingController();
   final TextEditingController _business_contentController = TextEditingController();
-  final List<String> shop_photo = [];
-  final List<String> other_img = [];
   File _image;
   final picker = ImagePicker();
 
   Future getImage(String key) async {
-    EasyLoading.show(status: '正在上传');
     // final pickedFile = await picker.getImage(source: ImageSource.gallery);
     // setState(() {
     //   if (pickedFile != null) {
@@ -60,18 +57,8 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
       final files = uploadInput.files;
       var formData = html.FormData();
       formData.appendBlob("file", files[0].slice(), files[0].name);
+      EasyLoading.show(status: '正在上传');
       await logic.uploadImg(formData, key);
-      if (key == 'shop_photo') {
-        setState(() {
-          shop_photo.add(files[0].relativePath);
-        });
-
-      }
-      if (key == 'other_img') {
-        setState(() {
-          other_img.add(files[0].relativePath);
-        });
-      }
     });
   }
 
@@ -85,17 +72,6 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
     });
 
     await logic.uploadImg(formdata, key);
-    if (key == 'shop_photo') {
-      setState(() {
-        shop_photo.add(path);
-      });
-
-    }
-    if (key == 'other_img') {
-      setState(() {
-        other_img.add(path);
-      });
-    }
 
   }
 
@@ -237,20 +213,17 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
                      color: Colors.white,
                      child: Column(
                        children: [
-                         UploadBtn(titleText:'门头照片',maxImgLength: 2, imgList: shop_photo, onTap: (){
+                         UploadBtn(titleText:'门头照片',maxImgLength: 2, imgList: state.shop_photo.value, onTap: (){
                            getImage('shop_photo');
                          }, isRequired: true, onDelete: (index) {
                            setState(() {
-                             shop_photo.removeAt(index);
-                             print(shop_photo);
                              logic.removeImg('shop_photo', index);
                            });
                          }, ),
-                         UploadBtn(titleText:'产品或服务照片',maxImgLength: 2, imgList: other_img, onTap: (){
+                         UploadBtn(titleText:'产品或服务照片',maxImgLength: 2, imgList: state.other_img.value, onTap: (){
                            getImage('other_img');
                          },isRequired: true, onDelete: (index) {
                            setState(() {
-                             other_img.removeAt(index);
                              logic.removeImg('other_img', index);
                            });
 

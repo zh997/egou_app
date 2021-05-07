@@ -11,10 +11,26 @@ import 'package:get/get.dart';
 import 'logic.dart';
 import 'state.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
   final RegisterLogic logic = Get.put(RegisterLogic());
   final RegisterState state = Get.find<RegisterLogic>().state;
   final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _invitationContriller = TextEditingController();
+  String invitation = Get.parameters['invitation'];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    if (invitation != null) {
+      _invitationContriller.text = invitation;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +42,7 @@ class RegisterPage extends StatelessWidget {
     final List<Widget> textFieldItems  = [
       RowTextField(
           title: '手机',
+          name: 'mobile',
           key: GlobalKey(),
           controller: _mobileController,
           labelText: '请填写手机号码',
@@ -42,6 +59,7 @@ class RegisterPage extends StatelessWidget {
       SizedBox(height: 30),
       RowTextField(
           title: '短信验证码',
+          name: 'code',
           key: GlobalKey(),
           controller: TextEditingController(),
           labelText: '请填写验证码',
@@ -59,6 +77,7 @@ class RegisterPage extends StatelessWidget {
       RowTextField(
         title: '密码',
         key: GlobalKey(),
+        name: 'password',
         controller: TextEditingController(),
         labelText: '请填写6-20位登录密码',
         titleFlexType: TitleFlexType.Column,
@@ -67,22 +86,23 @@ class RegisterPage extends StatelessWidget {
         height: 90,
         isRequired: true, obscureText: true,
       ),
-      SizedBox(height: 30),
-      RowTextField(
-        title: '确认密码',
-        key: GlobalKey(),
-        controller: TextEditingController(),
-        labelText: '请确认登录密码',
-        titleFlexType: TitleFlexType.Column,
-        contentPaddingTop: 15,
-        labelTop: 20,
-        height: 90,
-        isRequired: true, obscureText: true,
-      ),
+      // SizedBox(height: 30),
+      // RowTextField(
+      //   title: '确认密码',
+      //   key: GlobalKey(),
+      //   controller: TextEditingController(),
+      //   labelText: '请确认登录密码',
+      //   titleFlexType: TitleFlexType.Column,
+      //   contentPaddingTop: 15,
+      //   labelTop: 20,
+      //   height: 90,
+      //   isRequired: true, obscureText: true,
+      // ),
       SizedBox(height: 30),
       RowTextField(
         title: '交易密码 ',
         key: GlobalKey(),
+        name: 'pay_password',
         controller: TextEditingController(),
         labelText: '请输入交易密码',
         titleFlexType: TitleFlexType.Column,
@@ -93,15 +113,16 @@ class RegisterPage extends StatelessWidget {
       ),
       SizedBox(height: 30),
       RowTextField(
-        title: '邀请码 ',
-        key: GlobalKey(),
-        controller: TextEditingController(),
-        labelText: '请填写邀请码',
-        titleFlexType: TitleFlexType.Column,
-        contentPaddingTop: 15,
-        labelTop: 20,
-        height: 90,
-        isRequired: true
+          title: '邀请码 ',
+          key: GlobalKey(),
+          name: 'invitation',
+          controller: _invitationContriller,
+          labelText: '请填写邀请码',
+          titleFlexType: TitleFlexType.Column,
+          contentPaddingTop: 15,
+          labelTop: 20,
+          height: 90,
+          isRequired: true
       )
     ];
     return Scaffold(
@@ -117,11 +138,17 @@ class RegisterPage extends StatelessWidget {
                     Form(child: Column(
                       children: textFieldItems,
                     ), onChanged: () {
-                      final isPass = Utils.validate(context, textFieldItems);
+                      final isPass = Utils.validate(context, textFieldItems, false);
                       logic.onChangeDisabled(!isPass);
                     }),
                     SizedBox(height: 50),
-                    Obx(() => RadiusButton('立即注册', disabled: state.disabled.value, width: 903, height: 156, onTap: (){Get.toNamed(RouteConfig.edit_address);})),
+                    Obx(() => RadiusButton('立即注册', disabled: state.disabled.value, width: 903, height: 156, onTap: (){
+                      final isPass = Utils.validate(context, textFieldItems, false);
+                      if (isPass) {
+                        final data = Utils.getFormValue(textFieldItems);
+                        logic.onAccountRegister(data);
+                      }
+                    })),
                     SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

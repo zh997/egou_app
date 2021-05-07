@@ -15,7 +15,7 @@ class Utils {
     return new RegExp('^((13[0-9])|(15[^4])|(166)|(17[0-8])|(18[0-9])|(19[8-9])|(147,145))\\d{8}\$').hasMatch(str);
   }
 
-  static bool validate( BuildContext context, List formItems) {
+  static bool validate( BuildContext context, List formItems, bool isShowErrorText) {
     bool isPass = true;
     for(var i in formItems) {
       if (!(i is SizedBox)) {
@@ -23,18 +23,18 @@ class Utils {
           final String errorText = i.validate(i.controller.text);
           if (errorText.isNotEmpty) {
             // FocusScope.of(context).requestFocus(i.focusNode);
-            i.key.currentState.setErrorText(errorText);
+            isShowErrorText && i.key.currentState.setErrorText(errorText);
             isPass = false;
             break;
           } else {
-            i.key.currentState.setErrorText('');
+            isShowErrorText && i.key.currentState.setErrorText('');
             isPass = true;
           }
         } else if(i.isRequired && !i.controller.text.isNotEmpty) {
-          i.key.currentState.setErrorText(i.labelText);
+          isShowErrorText && i.key.currentState.setErrorText(i.labelText);
           isPass = false;
         } else if(i.isRequired && i.controller.text.isNotEmpty) {
-          i.key.currentState.setErrorText('');
+          isShowErrorText && i.key.currentState.setErrorText('');
           isPass = true;
         }
       }

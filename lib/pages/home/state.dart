@@ -1,21 +1,13 @@
 import 'package:get/get.dart';
+import 'package:egou_app/models/home.dart';
 class HomeState {
-  RxList<SwiperItemModel> BannerList;
+  RxList BannerList = [].obs;
   RxInt current;
+  RxList Category = [].obs;
+  RxList goodsList = [].obs;
+  RxInt hasMore = 0.obs;
   HomeState() {
     ///Initialize variables
     current = 0.obs;
-    BannerList = [
-      SwiperItemModel({'url': 'static/images/banner.jpg', 'color': '#000000'})
-    ].obs;
-  }
-}
-
-class SwiperItemModel {
-  String url;
-  String color;
-  SwiperItemModel(Map<String, dynamic> json) {
-    this.url = json['url'];
-    this.color = json['color'];
   }
 }

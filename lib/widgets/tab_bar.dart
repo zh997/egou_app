@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/screen_util.dart';
 
 class TabBarWidget extends StatefulWidget {
   final TabController tabController;
-  final List<String> labelList;
+  final List labelList;
   final double itemPadding;
   TabBarWidget(this.labelList,  this.tabController, {Key key, this.itemPadding}):super(key: key);
   @override
@@ -33,7 +33,7 @@ class _TabBarWidgetState extends State<TabBarWidget> {
               return Container(
                 padding: EdgeInsets.only(left: ScreenUtil().setWidth(paddingLeftValue), right: ScreenUtil().setWidth(paddingRightValue)),
                 alignment: Alignment.center,
-                child: Text(widget.labelList[index]),
+                child: Text(widget.labelList[index].name),
               );
             })
         ),

@@ -23,8 +23,6 @@ class HttpRequest{
 
   static Future<DioResponseData> request(url, params, String method) async {
 
-    EasyLoading.show(status: '加载中');
-
     Response response;
     Response errorResponse;
 
@@ -45,7 +43,7 @@ class HttpRequest{
     Dio dio = new Dio(options);
 
     try {
-      response = await dio.request(url,data: params);
+      response = await dio.request(url,data: params, queryParameters: params );
     } on DioError catch(e) {
       if (e.response != null) {
         errorResponse = e.response;
@@ -63,8 +61,6 @@ class HttpRequest{
       return DioResponseData(errorResponse.statusCode, '' , false, errorResponse.statusMessage);
     }
 
-    EasyLoading.dismiss();
-
     if (response.statusCode == 200 || response.statusCode == 201) {
       return DioResponseData(response.statusCode, response.data , true, response.statusMessage);
     }
@@ -75,7 +71,6 @@ class HttpRequest{
   }
 
   static RealResponseData catchError(ResponseData response) {
-    print(response);
     if (response.code != 1) {
       EasyLoading.showError(response.msg);
       // 未登录
@@ -84,7 +79,7 @@ class HttpRequest{
       }
       return RealResponseData(result: false, data: null);
     } else {
-      return RealResponseData(result: true, data: response.data);
+      return RealResponseData(result: true, data: response.data, more: response.more);
     }
   }
 }

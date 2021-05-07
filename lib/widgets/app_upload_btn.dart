@@ -57,7 +57,7 @@ class UploadBtn extends StatelessWidget {
                 color: AppColors.COLOR_GRAY_F6F6F6,
                 borderRadius: BorderRadius.circular(AppRadius.RADIUS_16)
                 ),
-                child: Image.asset(imgList[index], fit: BoxFit.cover),
+                child: Image.network(imgList[index], fit: BoxFit.cover),
               ),
               Positioned(top: 10, right: 10, child: GestureDetector(
                 onTap: () {

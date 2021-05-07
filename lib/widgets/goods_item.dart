@@ -9,6 +9,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 class GoodsItem extends StatelessWidget {
 
+  final dynamic item;
+
+  const GoodsItem({Key key, this.item}) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,12 +37,12 @@ class GoodsItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(ScreenUtil().setWidth(20)),
               ),
               clipBehavior: Clip.hardEdge,
-              child: Image.network(AppImages.GOODS_IMG_1, fit: BoxFit.cover),
+              child: Image.network(item.image, fit: BoxFit.cover, headers: {'Access-Control-Allow-Origin ': '*'}),
             ),
             SizedBox(height: ScreenUtil().setHeight(14)),
-            Text('商品介绍商品介绍商商品介绍商品介绍商商品介绍商品介绍商', style: TextStyle(fontSize: AppFontsize.SIZE_44, color: AppColors.COLOR_BLACK_333333), maxLines: 1, overflow: TextOverflow.ellipsis,),
+            Text(item.name, style: TextStyle(fontSize: AppFontsize.SIZE_44, color: AppColors.COLOR_BLACK_333333), maxLines: 1, overflow: TextOverflow.ellipsis,),
             SizedBox(height: ScreenUtil().setHeight(14)),
-            Price(),
+            Price(price: item.price),
             SizedBox(height: ScreenUtil().setHeight(14)),
             Text('已售: 968', style: TextStyle(fontSize: AppFontsize.SIZE_36, color: AppColors.COLOR_GRAY_999999)),
           ],

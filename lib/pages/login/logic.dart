@@ -28,6 +28,7 @@ class LoginLogic extends GetxController {
   }
 
   void sendSms(String mobile) async {
+    EasyLoading.show(status: '加载中');
     final RealResponseData response = await LoginService.getSms(mobile);
     if (response.result) {
       StartCountDown();
@@ -36,11 +37,14 @@ class LoginLogic extends GetxController {
   }
 
   void onLogin(data) async {
+    EasyLoading.show(status: '加载中');
     RealResponseData response = await LoginService.smsLogin(data);
     if (response.result) {
       AppStorage.setString('token', response.data.token);
       EasyLoading.showToast('登录成功!');
       Get.offAllNamed(RouteConfig.main_page);
+    }else {
+      EasyLoading.dismiss();
     }
   }
 
@@ -50,6 +54,8 @@ class LoginLogic extends GetxController {
       AppStorage.setString('token', response.data.token);
       EasyLoading.showToast('登录成功!');
       Get.offAllNamed(RouteConfig.main_page);
+    }else {
+      EasyLoading.dismiss();
     }
   }
 }

@@ -14,43 +14,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return ScreenUtilInit(
-      designSize: Size(1125, 2346),
-      allowFontScaling: false,
-      builder: () => GetMaterialApp(
-        title: 'egou app',
-        builder: (context, child){
-          return EasyLoading.init()(context, Scaffold(
-              // Global GestureDetector that will dismiss the keyboard
-              body: GestureDetector(
-              onTap: () {
-                hideKeyboard(context);
-              },
-              child:  child,
-          )));
-        },
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blue,
-        ),
-        initialRoute: RouteConfig.launch_page,
-        onInit: AppMiddleWare.onInit,
-        onReady: AppMiddleWare.onReady(),
-        routingCallback: AppMiddleWare.RoutingCallback,
-        defaultTransition: Transition.noTransition,
-        getPages: RouteConfig.getPages,
-      ),
-    );
-=======
     return FutureBuilder(future: AppStorage.getInstance(), builder: (BuildContext context, AsyncSnapshot snapshot){
       if (snapshot.connectionState == ConnectionState.done) {
         return ScreenUtilInit(
@@ -91,7 +54,6 @@ class MyApp extends StatelessWidget {
       }
       return SizedBox();
     });
->>>>>>> f6a2959c6e1269792d6875f0126fda2cf9fc9a1b
   }
 }
 

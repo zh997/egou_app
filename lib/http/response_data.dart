@@ -11,18 +11,34 @@ class DioResponseData<T> {
 
 class ResponseData<T>{
   String msg;
-  T data;
+  dynamic data;
   int code;
-
-  ResponseData({this.msg, this.data, this.code});
+  int more;
+  ResponseData({this.msg, this.data, this.code, this.more});
 
   ResponseData.fromJson(Map<String, dynamic> json, { fromJson }) {
-    print('----------------------');
-    print(json);
-    print('----------------------');
+    // print('----------------------');
+    // print(json);
+    // print('----------------------');
     msg = json['msg'];
     if (fromJson != null && json['code'] == 1) {
-      data = json['data'] != null ? fromJson(json['data']) : null;
+      if (json['data'] is List) {
+        data = new List();
+        json['data'].forEach((v) {
+          data.add(fromJson(v));
+        });
+      } else if(json['data'] is Map) {
+        if (json['data']['more'] != null) {
+          data = new List();
+          json['data']['list'].forEach((v) {
+            data.add(fromJson(v));
+          });
+          more = json['data']['more'];
+        } else {
+          data = json['data'] != null ? fromJson(json['data']) : null;
+        }
+
+      }
     }
     code = json['code'];
   }
@@ -32,5 +48,6 @@ class ResponseData<T>{
 class RealResponseData<T> {
   final bool result;
   final T data;
-  RealResponseData({@required this.result, @required this.data});
+  final int more;
+  RealResponseData({@required this.result, @required this.data, this.more});
 }

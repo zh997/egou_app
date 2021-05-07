@@ -36,74 +36,84 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
   @override
   void initState() {
     // TODO: implement initState
-    tabController = TabController(length: labelList.length, vsync: this);
+
     super.initState();
   }
 
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: AppColors.COLOR_GRAY_F8F8F8,
-        body: Column(
-          children: [
-            _HeaderSearch(),
-            Expanded(child: TabBarView(
-              controller: tabController,
-              children: List.generate(labelList.length, (index) => CustomScrollView(
-                slivers: [
-                  SliverList(
-                    delegate: SliverChildListDelegate([
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.only(top: ScreenUtil().setWidth(44)),
-                        child: Column(
-                          children: [
-                            _Swiper(),
-                            _GridItems()
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: ScreenUtil().setWidth(56)),
-                      _title(),
-                      SizedBox(height: 20)
-                    ]),
-                  ),
-                  SliverGrid(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(660),
-                    ),
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        if(index % 2 > 0) {
-                          return Padding(
-                              padding: EdgeInsets.only(right: AppSpace.SPACE_52),
-                              child: GoodsItem()
-                          );
-                        } else {
-                          return Padding(
-                              padding: EdgeInsets.only(left: AppSpace.SPACE_52),
-                              child: GoodsItem()
-                          );
-                        }
+    return FutureBuilder(
+       future: logic.onInitData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Obx(() {
+              print( state.goodsList.value[0].name);
+              tabController = TabController(length: state.Category.value.length, vsync: this);
+              return Scaffold(
+                  backgroundColor: AppColors.COLOR_GRAY_F8F8F8,
+                  body: Column(
+                    children: [
+                      _HeaderSearch(),
+                      Expanded(child: TabBarView(
+                        controller: tabController,
+                        children: List.generate(state.Category.value.length, (index) => CustomScrollView(
+                          slivers: [
+                            SliverList(
+                              delegate: SliverChildListDelegate([
+                                Container(
+                                  color: Colors.white,
+                                  padding: EdgeInsets.only(top: ScreenUtil().setWidth(44)),
+                                  child: Column(
+                                    children: [
+                                      state.BannerList.value.length > 0 ? _Swiper() : SizedBox(),
+                                      _GridItems()
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: ScreenUtil().setWidth(56)),
+                                _title(),
+                                SizedBox(height: 20)
+                              ]),
+                            ),
+                            SliverGrid(
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 20,
+                                crossAxisSpacing: 20,
+                                childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(660),
+                              ),
+                              delegate: SliverChildBuilderDelegate(
+                                    (BuildContext context, int index) {
+                                  if(index % 2 > 0) {
+                                    return Padding(
+                                        padding: EdgeInsets.only(right: AppSpace.SPACE_52),
+                                        child: GoodsItem(item: state.goodsList.value[index])
+                                    );
+                                  } else {
+                                    return Padding(
+                                        padding: EdgeInsets.only(left: AppSpace.SPACE_52),
+                                        child: GoodsItem(item: state.goodsList.value[index])
+                                    );
+                                  }
 
-                      },
-                      childCount: 20,
-                    ),
-                  ),
-                  SliverList(delegate: SliverChildListDelegate([
-                    SizedBox(height: 20)
-                  ]))
-                ],
-              )),
-            )),
-          ],
-        )
-    );
+                                },
+                                childCount: state.goodsList.value.length,
+                              ),
+                            ),
+                            SliverList(delegate: SliverChildListDelegate([
+                              SizedBox(height: 20)
+                            ]))
+                          ],
+                        )),
+                      )),
+                    ],
+                  )
+              );
+            });
+          }
+          return SizedBox();
+    });
   }
 
   Widget _HeaderSearch() {
@@ -135,7 +145,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
                   )
                 ],
               )),
-              TabBarWidget(labelList, tabController)
+              TabBarWidget(state.Category.value, tabController)
         ],
       ),
     );
@@ -179,7 +189,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
             margin: EdgeInsets.only(left: AppSpace.SPACE_52, right: AppSpace.SPACE_52),
             decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setWidth(20)))),
             clipBehavior: Clip.hardEdge,
-            child: Image.asset(state.BannerList.value[index].url, fit: BoxFit.fill),
+            child: Image.network(state.BannerList.value[index].image, fit: BoxFit.fill),
           )
       ),
     );

@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     Form(child: Column(
                       children: textFieldItems,
                     ), onChanged: () {
-                      final isPass = Utils.validate(context, textFieldItems);
+                      final isPass = Utils.validate(context, textFieldItems, false);
                       logic.onChangeDisabled(!isPass);
                     }),
                     SizedBox(height: 40),
