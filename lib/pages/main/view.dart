@@ -1,3 +1,5 @@
+import 'package:egou_app/common/routes.dart';
+import 'package:egou_app/common/storage.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/pages/bill/view.dart';
@@ -57,10 +59,14 @@ class _MainPageState extends State<MainPage> {
           selectedFontSize: 12.0,
           backgroundColor: Colors.white,
           onTap: (int index) {
-            setState(() {
-              pageIndex = index;
-            });
-            pageController.jumpToPage(index);
+            if(AppStorage.getString('token') == null ) {
+              Get.toNamed(RouteConfig.login_page);
+            } else {
+              setState(() {
+                pageIndex = index;
+              });
+              pageController.jumpToPage(index);
+            }
           },
           items: [
             _BottomNavigationBarItem(AppImages.TABBAR_HOME_ICON, AppImages.TABBAR_HOME_SELECTED_ICON, '首页'),

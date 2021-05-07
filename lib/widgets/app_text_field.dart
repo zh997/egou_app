@@ -44,6 +44,8 @@ class RowTextField extends StatefulWidget {
   final TextAlign textAlign;
   final TextFieldType textFieldType ;
   final bool showBorder;
+  final List<String> imgList;
+  final int maxImgLength;
   String Function(dynamic value) validate;
   RowTextField({
     this.key,
@@ -73,7 +75,7 @@ class RowTextField extends StatefulWidget {
     this.height, this.textAlign = TextAlign.start,
     this.textFieldType = TextFieldType.Input,
     this.labelTop,
-    this.showBorder = true
+    this.showBorder = true, this.imgList, this.maxImgLength = 2
   }) : super(key: key);
 
   @override
@@ -255,7 +257,7 @@ class _RowTextFieldState extends State<RowTextField> {
 
     final Widget ColumnItem = Container(
         padding: widget.padding,
-        height: widget.height,
+        height: widget.height ,
         decoration: BoxDecoration(
             border: widget.showBorder ? Border(bottom: bottomLine) : Border(bottom: BorderSide.none)
         ),
@@ -300,16 +302,38 @@ class _RowTextFieldState extends State<RowTextField> {
         Text('最多可上传两张', style: TextStyle(color: AppColors.COLOR_GRAY_CCCCCC, fontSize: AppFontsize.SIZE_42))
       ],
     );
-    return Container(
-      width: ScreenUtil().setWidth(1044),
-      height: ScreenUtil().setWidth(460),
-      margin: EdgeInsets.only(top: 15, bottom: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          color: AppColors.COLOR_GRAY_F6F6F6,
-          borderRadius: BorderRadius.circular(AppRadius.RADIUS_16)
-      ),
-      child: uploadBtn,
+    return Column(
+      children: [
+        widget.imgList != null && widget.imgList.length > 0 ? Column(
+          children: List.generate(widget.imgList.length, (index) => Container(
+            width: ScreenUtil().setWidth(1044),
+            height: ScreenUtil().setWidth(460),
+            margin: EdgeInsets.only(top: 15, bottom: 15),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: AppColors.COLOR_GRAY_F6F6F6,
+                borderRadius: BorderRadius.circular(AppRadius.RADIUS_16)
+            ),
+            child: Image.network(widget.imgList[index], fit: BoxFit.cover),
+          )),
+        ) : SizedBox(),
+        widget.imgList != null && widget.imgList.length < widget.maxImgLength ?
+        GestureDetector(
+          onTap: widget.onTap,
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            width: ScreenUtil().setWidth(1044),
+            height: ScreenUtil().setWidth(460),
+            margin: EdgeInsets.only(top: 15, bottom: 15),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: AppColors.COLOR_GRAY_F6F6F6,
+                borderRadius: BorderRadius.circular(AppRadius.RADIUS_16)
+            ),
+            child: uploadBtn,
+          ),
+        ) : SizedBox()
+      ],
     );
   }
 }

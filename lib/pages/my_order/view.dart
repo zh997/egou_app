@@ -1,3 +1,4 @@
+import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
@@ -23,6 +24,8 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
   final MyOrderLogic logic = Get.put(MyOrderLogic());
   final MyOrderState state = Get.find<MyOrderLogic>().state;
 
+  int tabIndex = 0;
+
   final List<String> labelList = ['全部订单', '待付款', '待发货', '待收货', '待评价'];
 
   TabController tabController;
@@ -31,7 +34,19 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
   void initState() {
     // TODO: implement initState
     tabController = TabController(length: labelList.length, vsync: this);
+    tabController.addListener(() {
+      setState(() {
+        this.tabIndex = tabController.index;
+      });
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    tabController.dispose();
   }
 
   @override
@@ -140,8 +155,9 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    _Button('查看物流', AppColors.COLOR_GRAY_666666),
-                    _Button('确认收获', AppColors.COLOR_PRIMARY_D22315)
+                    tabIndex != 4 ? _Button('查看物流', AppColors.COLOR_GRAY_666666) : SizedBox(),
+                    tabIndex != 4 ? _Button('确认收货', AppColors.COLOR_PRIMARY_D22315) : SizedBox(),
+                    tabIndex == 4 ? _Button('去评价', AppColors.COLOR_PRIMARY_D22315) : SizedBox()
                   ],
                 )
               ],
@@ -153,16 +169,22 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
   }
 
   Widget _Button(text, color) {
-    return Container(
-      width: ScreenUtil().setWidth(243),
-      height: ScreenUtil().setWidth(92),
-      margin: EdgeInsets.only(left: 10),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(ScreenUtil().setWidth(92)),
-        border:Border.all(width: 1 , color: color)
-      ),
-      child: Text(text, style: TextStyle(color: color, fontSize: AppFontsize.SIZE_44))
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        Get.toNamed(RouteConfig.publish_comments);
+      },
+      child: Container(
+          width: ScreenUtil().setWidth(243),
+          height: ScreenUtil().setWidth(92),
+          margin: EdgeInsets.only(left: 10),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(ScreenUtil().setWidth(92)),
+              border:Border.all(width: 1 , color: color)
+          ),
+          child: Text(text, style: TextStyle(color: color, fontSize: AppFontsize.SIZE_44))
+      ) ,
     );
   }
 

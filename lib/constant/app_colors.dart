@@ -34,6 +34,7 @@ class AppColors {
   static Color COLOR_GRAY_9E9E9E = Utils.getColor('#9E9E9E');
   static Color COLOR_GRAY_EEEEEE = Utils.getColor('#EEEEEE');
   static Color COLOR_GRAY_F6F6F6 = Utils.getColor('#F6F6F6');
+  static Color COLOR_GRAY_F5F5F5 = Utils.getColor('#F5F5F5');
 
 
   // 其他

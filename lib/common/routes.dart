@@ -1,3 +1,4 @@
+import 'package:egou_app/middleware/app_middleware.dart';
 import 'package:egou_app/pages/about_us/view.dart';
 import 'package:egou_app/pages/address/view.dart';
 import 'package:egou_app/pages/balance/view.dart';
@@ -18,8 +19,10 @@ import 'package:egou_app/pages/my_team/view.dart';
 import 'package:egou_app/pages/pay_mode/view.dart';
 import 'package:egou_app/pages/pay_result/view.dart';
 import 'package:egou_app/pages/points_mall/view.dart';
+import 'package:egou_app/pages/publish_comments/view.dart';
 import 'package:egou_app/pages/pwd_update/view.dart';
 import 'package:egou_app/pages/recharge/view.dart';
+import 'package:egou_app/pages/register/view.dart';
 import 'package:egou_app/pages/setting_center/view.dart';
 import 'package:egou_app/pages/share/view.dart';
 import 'package:egou_app/pages/shop/view.dart';
@@ -69,6 +72,8 @@ class RouteConfig {
   static final String make_qrcode = '/make_qrcode';
   static final String forget_pwd = '/forget_pwd';
   static final String merchant_list = '/merchant_list';
+  static final String publish_comments = '/publish_comments';
+  static final String register_page = '/register_page';
 
   static final List<GetPage> getPages = [
     GetPage(name: launch_page, page: () => LaunchPage()),
@@ -81,7 +86,7 @@ class RouteConfig {
     GetPage(name: confirm_order, page: () => ConfirmOrderPage()),
     GetPage(name: pay_mode, page: () => PayModePage()),
     GetPage(name: pay_result, page: () => PayResultPage()),
-    GetPage(name: shop_settled, page: () => ShopSettledPage()),
+    GetPage(name: shop_settled, page: () => ShopSettledPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: my_order, page: () => MyOrderPage()),
     GetPage(name: recharge_page, page: () => RechargePage()),
     GetPage(name: points_mall, page: () => PointsMallPage()),
@@ -105,6 +110,7 @@ class RouteConfig {
     GetPage(name: forget_pwd, page: () => ForgetPwdPage()),
     GetPage(name: merchant_list, page: () => MerchantListPage()),
     GetPage(name: shop_page, page: () => ShopPage()),
-
+    GetPage(name: publish_comments, page: () => PublishCommentsPage()),
+    GetPage(name: register_page, page: () => RegisterPage()),
   ];
 }

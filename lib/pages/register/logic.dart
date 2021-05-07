@@ -1,16 +1,17 @@
 import 'dart:async';
+
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/common/storage.dart';
 import 'package:egou_app/http/response_data.dart';
+import 'package:egou_app/services/login.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:egou_app/services/login.dart';
 
 import 'state.dart';
 
-class LoginLogic extends GetxController {
+class RegisterLogic extends GetxController {
+  final state = RegisterState();
   Timer _timer;
-  final state = LoginState();
   void onChangeDisabled (bool disabled) => state.disabled.value = disabled;
   void StartCountDown() {
     state.isStartCountdown.value = true;
@@ -37,15 +38,6 @@ class LoginLogic extends GetxController {
 
   void onLogin(data) async {
     RealResponseData response = await LoginService.smsLogin(data);
-    if (response.result) {
-      AppStorage.setString('token', response.data.token);
-      EasyLoading.showToast('登录成功!');
-      Get.offAllNamed(RouteConfig.main_page);
-    }
-  }
-
-  void onAccountLogin(data) async {
-    RealResponseData response = await LoginService.accountLogin(data);
     if (response.result) {
       AppStorage.setString('token', response.data.token);
       EasyLoading.showToast('登录成功!');

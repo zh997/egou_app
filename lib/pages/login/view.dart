@@ -23,25 +23,30 @@ class _LoginPageState extends State<LoginPage> {
   final LoginLogic logic = Get.put(LoginLogic());
   final LoginState state = Get.find<LoginLogic>().state;
 
+  final TextEditingController _mobileController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final Widget getCodeBtn = GestureDetector(
-      onTap: logic.StartCountDown,
-      child: Text('获取验证码', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_PRIMARY_D22315)),
+    final Widget getCodeBtn = Padding(
+      padding: EdgeInsets.only(bottom: 10),
+      child: GestureDetector(
+        onTap: () { logic.sendSms(_mobileController.text); },
+        child: Text('获取验证码', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_PRIMARY_D22315)),
+      ),
     );
     final Widget countDownText = Obx(() => Text('${state.CountDownSeconds.value}s', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_PRIMARY_D22315)));
     final List<Widget> textFieldItems = [
-      RowTextField(name: 'username', key: GlobalKey(), controller: TextEditingController(),
+      RowTextField(name: 'account', key: GlobalKey(), controller: _mobileController,
         labelText: '请输入手机号', icon: Text('+86', style: TextStyle(fontSize: ScreenUtil().setSp(48),
               fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_000000)),
-        contentPaddingLeft: 0, labelLeft: 50, suffixIcon: Obx(() => state.isStartCountdown.value ? countDownText : getCodeBtn),
+        contentPaddingLeft: 20, labelLeft: 70, suffixIcon: Obx(() => state.isStartCountdown.value ? countDownText : getCodeBtn),
           isRequired: true
       ),
       SizedBox(height: 10),
       RowTextField(name: 'password', key: GlobalKey(), controller: TextEditingController(),
-        labelText: '请输入密码', icon: Text('密码', style: TextStyle(fontSize: ScreenUtil().setSp(48),
+        labelText: '请输入验证码', icon: Text('验证码', style: TextStyle(fontSize: ScreenUtil().setSp(48),
             fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_000000)),
-        contentPaddingLeft: 0, labelLeft: 50,isRequired: true, obscureText: true,
+        contentPaddingLeft: 4 , labelLeft: 70,isRequired: true,
       ),
     ];
 
@@ -63,13 +68,13 @@ class _LoginPageState extends State<LoginPage> {
                     Form(child: Column(
                       children: textFieldItems,
                     ), onChanged: () {
-                      final formData = Utils.validate(context, textFieldItems);
-                      print(formData);
-                      logic.onChangeDisabled(!formData);
+                      final isPass = Utils.validate(context, textFieldItems);
+                      logic.onChangeDisabled(!isPass);
                     }),
                     SizedBox(height: 40),
                     Obx(() => RadiusButton('登录', width: 960, onTap: () {
-                      Get.toNamed(RouteConfig.main_page);
+                      final data = Utils.getFormValue(textFieldItems);
+                      logic.onAccountLogin(data);
                     }, disabled: state.disabled.value)),
                   ],
                 ),
@@ -100,7 +105,10 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Text('还没有账号? 立即', style: TextStyle(color: AppColors.COLOR_GRAY_848484, fontSize: ScreenUtil().setSp(48))),
             GestureDetector(
-              onTap: (){},
+              behavior: HitTestBehavior.opaque,
+              onTap: (){
+                Get.toNamed(RouteConfig.register_page);
+              },
               child: Text('注册', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: ScreenUtil().setSp(48))),
             )
           ],
