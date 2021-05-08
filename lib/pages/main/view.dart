@@ -25,13 +25,12 @@ class _MainPageState extends State<MainPage> {
 
   final MainLogic logic = Get.put(MainLogic());
   final MainState state = Get.find<MainLogic>().state;
-  int pageIndex = 0;
   PageController pageController;
 
   @override
   void initState() {
     // TODO: implement setState
-    pageController = PageController(initialPage: pageIndex);
+    pageController = PageController(initialPage: state.pageIndex.value);
     super.initState();
   }
 
@@ -49,9 +48,9 @@ class _MainPageState extends State<MainPage> {
             MyPage()
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
+        bottomNavigationBar: Obx(() => BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          currentIndex: pageIndex,
+          currentIndex: state.pageIndex.value,
           showSelectedLabels: true,
           showUnselectedLabels: true,
           selectedItemColor: AppColors.COLOR_PRIMARY_D22315,
@@ -59,14 +58,14 @@ class _MainPageState extends State<MainPage> {
           selectedFontSize: 12.0,
           backgroundColor: Colors.white,
           onTap: (int index) {
-            if(AppStorage.getString('token') == null ) {
-              Get.toNamed(RouteConfig.login_page);
-            } else {
-              setState(() {
-                pageIndex = index;
-              });
-              pageController.jumpToPage(index);
-            }
+            // if(AppStorage.getString('token') == null ) {
+            //   Get.toNamed(RouteConfig.login_page);
+            // } else {
+            //   logic.onChangePageIndex(index);
+            //   pageController.jumpToPage(index);
+            // }
+            logic.onChangePageIndex(index);
+            pageController.jumpToPage(index);
           },
           items: [
             _BottomNavigationBarItem(AppImages.TABBAR_HOME_ICON, AppImages.TABBAR_HOME_SELECTED_ICON, '首页'),
@@ -75,7 +74,7 @@ class _MainPageState extends State<MainPage> {
             // _BottomNavigationBarItem(AppImages.TABBAR_SHOP_ICON, AppImages.TABBAR_SHOP_SELECTED_ICON, '商家'),
             _BottomNavigationBarItem(AppImages.TABBAR_MY_ICON, AppImages.TABBAR_MY_SELECTED_ICON, '我的')
           ],
-        )
+        ))
     );
   }
 

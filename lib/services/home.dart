@@ -9,7 +9,7 @@ class HomeService {
 
   // 轮播图
   static Future<RealResponseData> banner(Map<String, dynamic> data) async {
-    data['client'] = 2;
+    data['client'] = 1;
     final DioResponseData response = await HttpRequest.request(AppApiUrls.AD_LISTS, data, 'GET');
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: HomeBannerModelFromJson));
@@ -18,8 +18,8 @@ class HomeService {
 
 
   // 商品列表
-  static Future<RealResponseData> goodsList(int page_no, int brand_id) async {
-    final DioResponseData response = await HttpRequest.request(AppApiUrls.GET_BESTLIST, {'page_no': page_no, 'brand_id': brand_id}, 'GET');
+  static Future<RealResponseData> goodsList(int page_no, int category_id) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.GET_BESTLIST, {'page_no': page_no, 'category_id': category_id}, 'GET');
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: GoodsListModelFromJson));
     }
