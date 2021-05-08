@@ -39,7 +39,8 @@ class Price extends StatelessWidget {
 class Counter extends StatelessWidget{
   final Function leftTap;
   final Function rightTap;
-  Counter({Key key, this.leftTap, this.rightTap}): super(key: key);
+  final int num;
+  Counter({Key key, this.leftTap, this.rightTap, this.num}): super(key: key);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -54,7 +55,7 @@ class Counter extends StatelessWidget{
             onTap: leftTap,
             child: Icon(Icons.remove, size: 15,),
           ),
-          Padding(padding: EdgeInsets.only(left: 15, right: 15), child: Text('1', style: TextStyle(color: AppColors.COLOR_BLACK_000000, fontSize: AppFontsize.SIZE_46))),
+          Padding(padding: EdgeInsets.only(left: 15, right: 15), child: Text(num.toString(), style: TextStyle(color: AppColors.COLOR_BLACK_000000, fontSize: AppFontsize.SIZE_46))),
           GestureDetector(
             onTap: rightTap,
             child: Icon(Icons.add, size: 15,),

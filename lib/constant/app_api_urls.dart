@@ -13,5 +13,9 @@ class AppApiUrls  {
   static String GET_GOODS_CATEORY = '/api/goods_category/lists';
   static String GET_GOODS_DETAIL = '/api/goods/getGoodsDetail';
   static String GET_ADDRESS = '/api/user_address/lists';
-  static String ADDRESS_NAME_TO_ID = 'api/user_address/handleregion';
+  static String ADDRESS_NAME_TO_ID = '/api/user_address/handleregion';
+  static String ADD_ADDRESS = '/api/user_address/add';
+  static String UPDATE_ADDRESS = '/api/user_address/update';
+
+
 }

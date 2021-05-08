@@ -113,7 +113,7 @@ class GoodsListModel {
     image = json['image'];
     price = json['price'];
     marketPrice = json['market_price'];
-    salesVolume = json['sales_volumn'];
+    salesVolume = json['sales_volume'];
   }
 
   Map<String, dynamic> toJson() {

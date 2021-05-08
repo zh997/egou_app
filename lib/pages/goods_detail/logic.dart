@@ -15,6 +15,16 @@ class GoodsDetailLogic extends GetxController {
     await onGetGoodsDetail();
   }
 
+  void onChangeSelectSpecId (int index) {
+    state.selectSpecId.value = index;
+  }
+  void onChangeTabIndex (int index) {
+    state.tabIndex.value = index;
+  }
+  void onChangeNum (int index) {
+    state.num.value = index;
+  }
+
   Future onGetGoodsDetail() async {
     final RealResponseData response = await GoodsDetailService.goodsDetail({'id': int.parse(id)});
     if (response.result) {

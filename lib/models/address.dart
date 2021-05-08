@@ -61,9 +61,9 @@ class AddressListModel {
 
 
 class AddressNameToIdModel {
-  int province;
-  int city;
-  int district;
+  dynamic province;
+  dynamic city;
+  dynamic district;
 
   AddressNameToIdModel({this.province, this.city, this.district});
 

@@ -1,7 +1,11 @@
 import 'package:egou_app/common/routes.dart';
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
+import 'package:egou_app/models/address.dart';
+import 'package:egou_app/pages/address/logic.dart';
+import 'package:egou_app/pages/address/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/app_text_field.dart';
@@ -20,13 +24,45 @@ class EditAddressPage extends StatefulWidget {
 
 class _EditAddressPageState extends State<EditAddressPage>{
   final EditAddressLogic logic = Get.put(EditAddressLogic());
+  final AddressLogic addressLogic = Get.put(AddressLogic());
   final EditAddressState state = Get.find<EditAddressLogic>().state;
-
+  final AddressState addressState = Get.find<AddressLogic>().state;
+  String id = Get.parameters['id'];
   int is_default  = 1;
-
   final TextEditingController _contactController = TextEditingController();
   final TextEditingController _telephoneController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+
+  @override
+  void initState(){
+    super.initState();
+    if (id != null) {
+      addressState.addressList.value.forEach((element) {
+        if (int.parse(id) == element.id) {
+          _contactController.text = element.contact;
+          _telephoneController.text = element.telephone;
+          _cityController.text = element.province + element.city + element.district;
+          _addressController.text = element.address;
+          logic.onChangeAddressIds(AddressNameToIdModel(
+              province: element.provinceId,
+              city: element.cityId,
+              district: element.districtId
+          ));
+          setState(() {
+            is_default = element.isDefault;
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    addressLogic.onGetAddressList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +114,7 @@ class _EditAddressPageState extends State<EditAddressPage>{
         padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
         labelAlignment: AlignmentDirectional.topStart,
         key: GlobalKey(),
-        controller: TextEditingController(),
+        controller: _addressController,
         labelTop: 10,
       )
     ];
@@ -121,7 +157,20 @@ class _EditAddressPageState extends State<EditAddressPage>{
                     color: Colors.white,
                     border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
                 ),
-                child: RadiusButton('保存', width: 903, height: 156, onTap: (){Get.offNamed(RouteConfig.address_page);}),
+                child: RadiusButton('保存', width: 903, height: 156, onTap: (){
+                  final data = Utils.getFormValue(textFieldItems);
+                  data.remove('city');
+                  data['province_id'] = state.AddressIds.value.province;
+                  data['city_id'] = state.AddressIds.value.city;
+                  data['district_id'] = state.AddressIds.value.district;
+                  data['is_default'] = is_default;
+                  if(id != null) {
+                    data['id'] = int.parse(id);
+                    logic.onUpdateAddress(data);
+                  } else {
+                    logic.onAddAddress(data);
+                  }
+                }),
               )
             ]
         )
@@ -130,18 +179,20 @@ class _EditAddressPageState extends State<EditAddressPage>{
 
   Widget _listItem(text, {rightText}) {
     return Container(
-      // padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+        padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
         color: Colors.white,
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(text, style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
-              Switch(value: true, onChanged: (bool val){
-               if (val){
-                 is_default = 1;
-               } else {
-                 is_default = 0;
-               }
+              Switch(value: is_default == 1, onChanged: (bool val){
+                setState(() {
+                  if (val){
+                    is_default = 1;
+                  } else {
+                    is_default = 0;
+                  }
+                });
               })
             ]
         )

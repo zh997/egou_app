@@ -16,18 +16,25 @@ class AddressService {
 
   // 省市区名称转id
   static Future<RealResponseData> nameToId(Map<String, String> data) async {
-    final DioResponseData response = await HttpRequest.request(AppApiUrls.ADDRESS_NAME_TO_ID, data, 'GET');
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.ADDRESS_NAME_TO_ID, data, 'POST');
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: AddressNameToIdModelFromJson));
     }
   }
 
   // 添加地址
-  static Future<RealResponseData> addAddress() async {
-    final DioResponseData response = await HttpRequest.request(AppApiUrls.GET_ADDRESS, {'client': 1}, 'GET');
+  static Future<RealResponseData> addAddress(Map<String, dynamic> data) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.ADD_ADDRESS, data, 'POST');
     if (response.result && response.data != null) {
-      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: AddressListModelFromJson));
+      return HttpRequest.catchError(ResponseData.fromJson(response.data));
     }
   }
 
+  // 修改地址
+  static Future<RealResponseData> updateAddress(Map<String, dynamic> data) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.UPDATE_ADDRESS, data, 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data));
+    }
+  }
 }
