@@ -77,7 +77,7 @@ class RouteConfig {
 
   static final List<GetPage> getPages = [
     GetPage(name: launch_page, page: () => LaunchPage()),
-    GetPage(name: login_page, page: () => LoginPage()),
+    GetPage(name: login_page, page: () => LoginPage(), transition: Transition.downToUp),
     GetPage(name: guide_page, page: () => GuidePage()),
     GetPage(name: main_page, page: () => MainPage()),
     GetPage(name: home_page, page: () => HomePage()),

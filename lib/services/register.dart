@@ -11,7 +11,7 @@ class RegisterService {
   // 获取验证码
   static Future<RealResponseData> getSms(String mobile) async {
     print( sendMsgKey.ZCYZ);
-    final DioResponseData response = await HttpRequest.request(AppApiUrls.SEND_CODE, {'mobile': mobile, 'key': 'ZCYZ' , 'client': 2}, 'POST');
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.SEND_CODE, {'mobile': mobile, 'key': 'ZCYZ' , 'client': 1}, 'POST');
     print(response.data);
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data));
@@ -20,7 +20,7 @@ class RegisterService {
 
   // 密码登陆
   static Future<RealResponseData> register(Map<String, dynamic> data) async {
-    data['client'] = 2;
+    data['client'] = 1;
     final DioResponseData response = await HttpRequest.request(AppApiUrls.ACCOUNT_REGISTER, data, 'POST');
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data));

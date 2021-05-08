@@ -18,7 +18,7 @@ class GoodsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(RouteConfig.goods_detail);
+        Get.toNamed(RouteConfig.goods_detail + '?id=' + item.id.toString());
       },
       child: Container(
         padding: EdgeInsets.all(ScreenUtil().setWidth(29)),
@@ -44,7 +44,7 @@ class GoodsItem extends StatelessWidget {
             SizedBox(height: ScreenUtil().setHeight(14)),
             Price(price: item.price),
             SizedBox(height: ScreenUtil().setHeight(14)),
-            Text('已售: 968', style: TextStyle(fontSize: AppFontsize.SIZE_36, color: AppColors.COLOR_GRAY_999999)),
+            Text('已售: ${item.salesVolume}', style: TextStyle(fontSize: AppFontsize.SIZE_36, color: AppColors.COLOR_GRAY_999999)),
           ],
         ),
       ),

@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
@@ -32,28 +32,29 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333), title: '商品名称'),
+    return Obx(() => Scaffold(
+      appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333), title: state.goodsDetail.value.name),
       body: Column(
         children: [
           Expanded(child: SingleChildScrollView(
             child: Column(
               children: [
-                DetailSwiper(state.BannerList.value),
+                DetailSwiper(state.goodsDetail.value.goodsImage),
                 Container(
                   color: Colors.white,
                   padding: EdgeInsets.all(AppSpace.SPACE_52),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('商品介绍商品介绍商商品介绍商品介绍商商品介绍商品介绍商商品介绍商品介绍商', style: TextStyle(
+                      Text(state.goodsDetail.value.name, style: TextStyle(
                           fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_333333
                       )),
                       SizedBox(height:15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Price(),
-                          Text('已售: 208', style: TextStyle(
+                          Price(price: state.goodsDetail.value.price,),
+                          Text('已售: ${state.goodsDetail.value.salesSum}', style: TextStyle(
                               fontSize: AppFontsize.SIZE_41,
                               color: AppColors.COLOR_BLACK_333333
                           ))
@@ -120,9 +121,9 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                 ),
                 _goodsTab(),
                 tabIndex == 0 ? Container(
-                    height: 500,
                     color: Colors.white,
-                    child:  Image.network(AppImages.GOODS_IMG_1, fit: BoxFit.cover)
+                    child: HtmlWidget(state.goodsDetail.value.content,textStyle: TextStyle(fontSize: 14),
+                    )
                 ) : _Comment()
               ],
             ),
@@ -294,7 +295,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
           )
         ],
       ),
-    );
+    ));
   }
 
   Widget _dot() {

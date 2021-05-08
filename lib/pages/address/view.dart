@@ -7,6 +7,7 @@ import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
+import 'package:egou_app/models/address.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
@@ -22,18 +23,11 @@ class AddressPage extends StatelessWidget {
       appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '地址管理'),
       body: Column(
         children: [
+          SizedBox(height: 15,),
           Expanded(
-            child: ListView(
-                children: [
-                  SizedBox(height: 15),
-                  _CurrentSelectedAddress(true),
-                  SizedBox(height: 15),
-                  _CurrentSelectedAddress(false),
-                  SizedBox(height: 15),
-                  _CurrentSelectedAddress(false),
-                ]
-            )
-          ),
+            child: Obx(() => ListView(
+                children: List.generate(state.addressList.value.length, (index) => _CurrentSelectedAddress(state.addressList.value[index]))
+            ))) ,
           Container(
             alignment: Alignment.center,
             height: ScreenUtil().setWidth(250),
@@ -49,7 +43,7 @@ class AddressPage extends StatelessWidget {
   }
 
 
-  Widget _CurrentSelectedAddress(isDefault) {
+  Widget _CurrentSelectedAddress(AddressListModel item) {
     return InkWell(
       onTap: () {
         Get.toNamed(RouteConfig.edit_address);
@@ -57,6 +51,7 @@ class AddressPage extends StatelessWidget {
       child: Container(
           color: Colors.white,
           padding: EdgeInsets.all(20),
+          margin: EdgeInsets.all(7.5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,12 +62,12 @@ class AddressPage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text('姓名', style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
+                      Text(item.contact, style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        child: Text('17623144342', style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
+                        child: Text(item.telephone, style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
                       ),
-                      isDefault ? Container(
+                      item.isDefault == 1 ? Container(
                         width: ScreenUtil().setWidth(137),
                         height: ScreenUtil().setWidth(79),
                         alignment: Alignment.center,
@@ -89,7 +84,7 @@ class AddressPage extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 10),
-                  Text('深圳市龙华区龙华街道116号3楼', style: TextStyle(
+                  Text(item.province + item.city + item.district + item.address, style: TextStyle(
                       color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_36
                   ), maxLines: 1, overflow: TextOverflow.ellipsis,)
                 ],

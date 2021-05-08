@@ -6,6 +6,7 @@ class HomeState {
   RxList Category = [].obs;
   RxList goodsList = [].obs;
   RxInt hasMore = 0.obs;
+  RxInt page = 1.obs;
   HomeState() {
     ///Initialize variables
     current = 0.obs;

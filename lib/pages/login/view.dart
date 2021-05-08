@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
           isRequired: true
       ),
       SizedBox(height: 10),
-      RowTextField(name: 'password', key: GlobalKey(), controller: TextEditingController(),
+      RowTextField(name: 'code', key: GlobalKey(), controller: TextEditingController(),
         labelText: '请输入验证码', icon: Text('验证码', style: TextStyle(fontSize: ScreenUtil().setSp(48),
             fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_000000)),
         contentPaddingLeft: 4 , labelLeft: 70,isRequired: true,
@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 40),
                     Obx(() => RadiusButton('登录', width: 960, onTap: () {
                       final data = Utils.getFormValue(textFieldItems);
-                      logic.onAccountLogin(data);
+                      logic.onLogin(data);
                     }, disabled: state.disabled.value)),
                   ],
                 ),

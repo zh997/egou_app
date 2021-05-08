@@ -102,9 +102,10 @@ class GoodsListModel {
   String image;
   String price;
   String marketPrice;
+  int salesVolume;
 
   GoodsListModel(
-      {this.id, this.name, this.image, this.price, this.marketPrice});
+      {this.id, this.name, this.image, this.price, this.marketPrice, this.salesVolume});
 
   GoodsListModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -112,6 +113,7 @@ class GoodsListModel {
     image = json['image'];
     price = json['price'];
     marketPrice = json['market_price'];
+    salesVolume = json['sales_volumn'];
   }
 
   Map<String, dynamic> toJson() {
@@ -121,6 +123,7 @@ class GoodsListModel {
     data['image'] = this.image;
     data['price'] = this.price;
     data['market_price'] = this.marketPrice;
+    data['sales_volumn'] = this.salesVolume;
     return data;
   }
 }

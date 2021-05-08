@@ -157,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           onTap: (){
-                            Get.back();
+                            Get.offNamed(RouteConfig.login_page);
                           },
                           child: Text('登录', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: ScreenUtil().setSp(48))),
                         )

@@ -14,6 +14,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_easyrefresh/material_header.dart';
+import 'package:flutter_easyrefresh/material_footer.dart';
 import 'logic.dart';
 import 'state.dart';
 
@@ -31,25 +34,36 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
 
   final List<String> labelList = ['食品', '家电', '饰品', '服饰箱包', '个人彩妆','茶叶酒水', '健康保健', '生活日用', '生鲜', '建材家具','五金百货','家纺家装','其他'];
 
+  int category_id;
+
   TabController tabController;
 
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    tabController.dispose();
   }
 
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-       future: logic.onInitData(),
+       future: logic.onInitData(true),
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if (snapshot.connectionState == ConnectionState.done) {
+            tabController = TabController(length: state.Category.value.length, vsync: this);
+            tabController.addListener(() {
+              category_id = state.Category.value[tabController.index].id;
+              logic.onCategoryData(category_id);
+            });
             return Obx(() {
-              print( state.goodsList.value[0].name);
-              tabController = TabController(length: state.Category.value.length, vsync: this);
               return Scaffold(
                   backgroundColor: AppColors.COLOR_GRAY_F8F8F8,
                   body: Column(
@@ -57,8 +71,12 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
                       _HeaderSearch(),
                       Expanded(child: TabBarView(
                         controller: tabController,
-                        children: List.generate(state.Category.value.length, (index) => CustomScrollView(
-                          slivers: [
+                        children: List.generate(state.Category.value.length, (index) => EasyRefresh.custom(
+                          header: MaterialHeader(),
+                          footer: MaterialFooter(enableInfiniteLoad: false),
+                          onRefresh: () async => logic.onCategoryData(category_id),
+                          onLoad: () => logic.onLoadMore(category_id),
+                          slivers: <Widget>[
                             SliverList(
                               delegate: SliverChildListDelegate([
                                 Container(

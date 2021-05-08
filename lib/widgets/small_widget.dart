@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:egou_app/models/goods_detail.dart';
 
 class Price extends StatelessWidget {
   final Color color;
@@ -66,7 +67,7 @@ class Counter extends StatelessWidget{
 
 
 class DetailSwiper extends StatelessWidget {
-  final List<SwiperItemModel> list;
+  final List<GoodsImage> list;
   DetailSwiper(this.list);
 
   @override
@@ -90,7 +91,7 @@ class DetailSwiper extends StatelessWidget {
                 );
               })
           ),
-          itemBuilder: (BuildContext context,int index) =>  Image.network(list[index].url, fit: BoxFit.cover)
+          itemBuilder: (BuildContext context,int index) =>  Image.network(list[index].uri, fit: BoxFit.cover)
       ),
     );
   }
