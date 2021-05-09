@@ -79,7 +79,7 @@ class RouteConfig {
     GetPage(name: launch_page, page: () => LaunchPage()),
     GetPage(name: login_page, page: () => LoginPage(), transition: Transition.downToUp),
     GetPage(name: guide_page, page: () => GuidePage()),
-    GetPage(name: main_page, page: () => MainPage()),
+    GetPage(name: main_page, page: () => MainPage(), transition: Transition.fadeIn),
     GetPage(name: home_page, page: () => HomePage()),
     GetPage(name: shop_detail, page: () => ShopDetailPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: goods_detail, page: () => GoodsDetailPage()),
