@@ -4,6 +4,7 @@ import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_space.dart';
+import 'package:egou_app/models/address.dart';
 import 'package:egou_app/models/order.dart';
 import 'package:egou_app/pages/main/logic.dart';
 import 'package:egou_app/pages/main/state.dart';
@@ -12,8 +13,10 @@ import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
+import 'package:string_num_calculate/string_num_calculate.dart';
 
 import 'logic.dart';
 import 'state.dart';
@@ -26,11 +29,12 @@ class ConfirmOrderPage extends StatefulWidget {
 class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
   final ConfirmOrderLogic logic = Get.put(ConfirmOrderLogic());
   final ConfirmOrderState state = Get.find<ConfirmOrderLogic>().state;
+  final MainLogic mainLogic = Get.put(MainLogic());
   final MainState mainState = Get.find<MainLogic>().state;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(future: logic.onGetAddressList(),builder: (BuildContext context, AsyncSnapshot snapshot){
+    return FutureBuilder(future: mainLogic.onGetAddressList(),builder: (BuildContext context, AsyncSnapshot snapshot){
        if(snapshot.connectionState == ConnectionState.done) {
          return Scaffold(
            appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '确认订单'),
@@ -39,8 +43,8 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
              int goodsNum = 0;
              if ( mainState.orderGoods.value.length > 0) {
                mainState.orderGoods.value.forEach((element) {
-                 totalPrice = (totalPrice + double.parse(element.price)) * element.num;
-                 goodsNum = goodsNum + element.num;
+                 totalPrice = Calculate.plus(totalPrice, Calculate.multiply(element.num, double.parse(element.price)));
+                 goodsNum = Calculate.plus(goodsNum, element.num);
                });
              }
              return Column(
@@ -50,7 +54,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                      GestureDetector(
                        behavior: HitTestBehavior.opaque,
                        onTap: () {
-                         if (state.selectAddress.value.id != null) {
+                         if (mainState.selectAddress.value.id != null) {
                            Get.toNamed(RouteConfig.address_page + '?isSelect=${1}');
                          } else {
                            Get.toNamed(RouteConfig.edit_address);
@@ -62,7 +66,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                          height: ScreenUtil().setWidth(272),
                          margin: EdgeInsets.only(top: AppSpace.SPACE_40),
                          padding: EdgeInsets.only(right: 20, left: 20),
-                         child: state.selectAddress.value.id != null ? _CurrentSelectedAddress() : _EmptyAddress(),
+                         child: mainState.selectAddress.value.id != null ? _CurrentSelectedAddress() : _EmptyAddress(),
                        ),
                      ),
                      Container(
@@ -140,7 +144,13 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                            Price(color: AppColors.COLOR_BLACK_333333,size: AppFontsize.SIZE_67, price: '${totalPrice}')
                          ],
                        ),
-                       RadiusButton('结算', width: 410, onTap: (){Get.toNamed(RouteConfig.pay_mode);})
+                       RadiusButton('结算', width: 410, onTap: (){
+                         if (mainState.selectAddress.value.id != null) {
+                           Get.toNamed(RouteConfig.pay_mode);
+                         } else {
+                           EasyLoading.showToast('请先添加收货地址');
+                         }
+                       })
                      ],
                    ),
                  )
@@ -167,7 +177,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
   }
 
   Widget _CurrentSelectedAddress() {
-    final item = state.selectAddress.value;
+    final item = mainState.selectAddress.value;
     final String address = item.province + item.city + item.district + item.address;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -179,12 +189,12 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
           children: [
             Row(
               children: [
-                Text(state.selectAddress.value.contact, style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
+                Text(item.contact, style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Text(state.selectAddress.value.telephone, style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
+                  child: Text(item.telephone, style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_000000,fontWeight: FontWeight.bold)),
                 ),
-                Container(
+                item.isDefault == 1 ? Container(
                   width: ScreenUtil().setWidth(137),
                   height: ScreenUtil().setWidth(79),
                   alignment: Alignment.center,
@@ -197,7 +207,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                     color: AppColors.COLOR_PRIMARY_D22315,
                     fontSize: AppFontsize.SIZE_36,
                   ),),
-                )
+                ) : SizedBox()
               ],
             ),
             SizedBox(height: 10),
@@ -231,7 +241,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(item.name, style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_48)),
+              Text(item.name, style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_48), maxLines: 2, overflow: TextOverflow.ellipsis,),
               SizedBox(height: 5),
               Text(item.goodsSpec.name, style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1),
               SizedBox(height: 5),

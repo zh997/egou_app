@@ -30,7 +30,9 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     // TODO: implement setState
-    pageController = PageController(initialPage: state.pageIndex.value);
+    String pageIndex = Get.parameters['pageIndex'];
+    final index = pageIndex != null? int.parse(pageIndex) : state.pageIndex.value;
+    pageController = PageController(initialPage:index);
     super.initState();
   }
 
@@ -43,7 +45,7 @@ class _MainPageState extends State<MainPage> {
           children: [
             HomePage(),
             ShopSettledPage(),
-            CartPage(),
+            CartPage(pageController: pageController,),
             // ShopPage(),
             MyPage()
           ],
@@ -58,12 +60,9 @@ class _MainPageState extends State<MainPage> {
           selectedFontSize: 12.0,
           backgroundColor: Colors.white,
           onTap: (int index) {
-            // if(AppStorage.getString('token') == null ) {
-            //   Get.toNamed(RouteConfig.login_page);
-            // } else {
-            //   logic.onChangePageIndex(index);
-            //   pageController.jumpToPage(index);
-            // }
+            if(AppStorage.getString('token') == null && AppStorage.getString('token') == ''  && index != 0 ) {
+             return Get.toNamed(RouteConfig.login_page);
+            }
             logic.onChangePageIndex(index);
             pageController.jumpToPage(index);
           },

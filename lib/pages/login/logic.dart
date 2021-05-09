@@ -51,7 +51,6 @@ class LoginLogic extends GetxController {
   void onAccountLogin(data) async {
     EasyLoading.show(status: '加载中');
     RealResponseData response = await LoginService.accountLogin(data);
-    print(data);
     if (response.result) {
       AppStorage.setString('token', response.data.token);
       EasyLoading.showToast('登录成功!');

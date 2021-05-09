@@ -39,12 +39,16 @@ class HttpRequest{
     }
 
     options.method = method;
-    options.headers['token'] = '81db4474cdaf61cb99855b309354b683';
-    // AppStorage.getString('token');
+    // options.headers['token'] = '81db4474cdaf61cb99855b309354b683';
+    options.headers['token'] = AppStorage.getString('token');
     Dio dio = new Dio(options);
 
     try {
-      response = await dio.request(url,data: params, queryParameters: params );
+      if (method == 'POST') {
+        response = await dio.request(url,data: params);
+      } else if(method == 'GET') {
+        response = await dio.request(url, queryParameters: params);
+      }
     } on DioError catch(e) {
       if (e.response != null) {
         errorResponse = e.response;
@@ -75,7 +79,8 @@ class HttpRequest{
     if (response.code != 1) {
       EasyLoading.showError(response.msg);
       // 未登录
-      if (response.code == 4003) {
+      if (response.code == -1) {
+        AppStorage.setString('token', '');
         navigator.Get.offAllNamed(RouteConfig.login_page);
       }
       return RealResponseData(result: false, data: null);

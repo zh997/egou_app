@@ -136,7 +136,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                   ),
                 )),
                 Container(
-                  height: ScreenUtil().setWidth(250),
+                  height: ScreenUtil().setWidth(200),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
@@ -146,6 +146,10 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          Get.offAllNamed(RouteConfig.my_store);
+                        },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -157,6 +161,11 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                         ),
                       ),
                       GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          mainLogic.onChangePageIndex(2);
+                          Get.offAllNamed(RouteConfig.main_page + '?pageIndex=2');
+                        },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -176,7 +185,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                             },
                             child: Container(
                                 width: ScreenUtil().setWidth(339),
-                                height: ScreenUtil().setWidth(158),
+                                height: ScreenUtil().setWidth(138),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                     color: AppColors.COLOR_BLACK_000000,
@@ -195,7 +204,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                             },
                             child: Container(
                                 width: ScreenUtil().setWidth(339),
-                                height: ScreenUtil().setWidth(158),
+                                height: ScreenUtil().setWidth(138),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                     color: AppColors.COLOR_PRIMARY_D22315,
@@ -297,10 +306,16 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                         data['name'] = state.goodsDetail.value.name;
                         data['num'] = state.num.value;
                         data['price'] = state.goodsDetail.value.price;
+                        data['id'] = state.goodsDetail.value.id;
                         if (state.goodsDetail.value.stock > 0) {
                           mainLogic.onSelectOrderGoods([OrderGoodsModelFromJson(data)]);
                           if (type == 'pay') {
                             Get.toNamed(RouteConfig.confirm_order);
+                          } else if (type == 'cart'){
+                            logic.onAddCart({
+                              'item_id': state.selectSpecId.value,
+                              'goods_num': state.num.value
+                            });
                           }
                         } else {
                           EasyLoading.showToast('库存不足');
@@ -313,7 +328,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                         decoration: BoxDecoration(
                             border: Border(top:BorderSide(color: AppColors.COLOR_GRAY_C9C9C9, width: 1))
                         ),
-                        child: RadiusButton(type == 'add' ? '加入购物车' : '立即购买'),
+                        child: RadiusButton(type == 'cart' ? '加入购物车' : '立即购买'),
                       ),
                     )
                   ],

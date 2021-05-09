@@ -8,21 +8,4 @@ import 'state.dart';
 
 class ConfirmOrderLogic extends GetxController {
   final state = ConfirmOrderState();
-
-  Future onGetAddressList() async {
-    EasyLoading.show(status: '加载中');
-    final RealResponseData response = await AddressService.addressList();
-    if (response.result) {
-      response.data.forEach((item) => {
-        if(item.isDefault == 1) {
-          state.selectAddress.value = item
-        }
-      });
-    }
-    EasyLoading.dismiss();
-  }
-
-  void onSelectAddress(AddressListModel address) {
-    state.selectAddress.value = address;
-  }
 }

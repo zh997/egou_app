@@ -37,4 +37,12 @@ class AddressService {
       return HttpRequest.catchError(ResponseData.fromJson(response.data));
     }
   }
+
+  // 删除地址
+  static Future<RealResponseData> delAddress(Map<String, dynamic> data) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.DEL_ADDRESS, data, 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data));
+    }
+  }
 }

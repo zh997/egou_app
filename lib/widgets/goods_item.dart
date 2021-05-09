@@ -29,6 +29,7 @@ class GoodsItem extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               width: ScreenUtil().setWidth(434),
@@ -39,11 +40,8 @@ class GoodsItem extends StatelessWidget {
               clipBehavior: Clip.hardEdge,
               child: Image.network(item.image, fit: BoxFit.cover, headers: {'Access-Control-Allow-Origin ': '*'}),
             ),
-            SizedBox(height: ScreenUtil().setHeight(14)),
-            Text(item.name, style: TextStyle(fontSize: AppFontsize.SIZE_44, color: AppColors.COLOR_BLACK_333333), maxLines: 1, overflow: TextOverflow.ellipsis,),
-            SizedBox(height: ScreenUtil().setHeight(14)),
+            Text(item.name, style: TextStyle(fontSize: AppFontsize.SIZE_44, color: AppColors.COLOR_BLACK_333333), maxLines: 2, overflow: TextOverflow.ellipsis,),
             Price(price: item.price),
-            SizedBox(height: ScreenUtil().setHeight(14)),
             Text('已售: ${item.salesVolume}', style: TextStyle(fontSize: AppFontsize.SIZE_36, color: AppColors.COLOR_GRAY_999999)),
           ],
         ),

@@ -4,8 +4,11 @@ import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/pages/confirm_order/logic.dart';
+import 'package:egou_app/pages/main/logic.dart';
+import 'package:egou_app/pages/main/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
+import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:egou_app/models/address.dart';
@@ -16,25 +19,29 @@ import 'state.dart';
 
 class AddressPage extends StatelessWidget {
   final AddressLogic logic = Get.put(AddressLogic());
-  final ConfirmOrderLogic confirmOrderlogic = Get.put(ConfirmOrderLogic());
+  final MainLogic mainLogic  = Get.put(MainLogic());
+  final MainState mainState  = Get.find<MainLogic>().state;
   final AddressState state = Get.find<AddressLogic>().state;
   String isSelect = Get.parameters['isSelect'];
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: logic.onGetAddressList(),
+        future: mainLogic.onGetAddressList(),
         builder: (BuildContext context, AsyncSnapshot snapshot){
       if(snapshot.connectionState == ConnectionState.done){
         return Scaffold(
             appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '地址管理'),
-            body: Column(
+            body: Obx(() => Column(
                 children: [
-                  Expanded(
-                      child: Obx(() => ListView(
-                          children: List.generate(state.addressList.value.length, (index) => _CurrentSelectedAddress(state.addressList.value[index]))
-                      ))) ,
-                  Container(
+                  mainState.addressList.value.length == 0 ? Empty(text: '暂时还没有地址哦，快去添加吧~', btnText: '添加收货地址', onTap: (){
+                    Get.toNamed(RouteConfig.edit_address);
+                  },) : SizedBox(),
+                  mainState.addressList.value.length > 0 ? Expanded(
+                      child: ListView(
+                          children: List.generate(mainState.addressList.value.length, (index) => _CurrentSelectedAddress(mainState.addressList.value[index]))
+                      )) : SizedBox(),
+                  mainState.addressList.value.length > 0 ? Container(
                     alignment: Alignment.center,
                     height: ScreenUtil().setWidth(250),
                     decoration: BoxDecoration(
@@ -42,9 +49,9 @@ class AddressPage extends StatelessWidget {
                         border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
                     ),
                     child: RadiusButton('添加收货地址', width: 903, height: 156, onTap: (){Get.toNamed(RouteConfig.edit_address);}),
-                  )
+                  ): SizedBox()
                 ]
-            )
+            ))
         );
       }
       return SizedBox();
@@ -58,7 +65,7 @@ class AddressPage extends StatelessWidget {
         if (isSelect == null) {
           Get.toNamed(RouteConfig.edit_address + '?id=${item.id}');
         } else {
-          confirmOrderlogic.onSelectAddress(item);
+          mainLogic.onSelectAddress(item);
           Get.back();
         }
       },

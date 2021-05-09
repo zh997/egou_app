@@ -39,5 +39,6 @@ class AppColors {
 
   // 其他
   static Color COLOR_6AB354 = Utils.getColor('#6AB354');
+  static Color COLOR_AC5A04 = Utils.getColor('#AC5A04');
 }
 

@@ -37,4 +37,11 @@ class EditAddressLogic extends GetxController {
     EasyLoading.showSuccess('修改成功！');
   }
 
+  Future onDelAddress(Map<String, dynamic> data) async {
+    EasyLoading.show(status: '加载中');
+    final RealResponseData response = await AddressService.delAddress(data);
+    if(response.result){
+      Get.back();
+    }
+  }
 }

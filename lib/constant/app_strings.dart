@@ -11,4 +11,5 @@ class AppStrings {
     static String STRING_4 = '场景消费';
     static String STRING_5 = '新品推荐';
     static String STRING_6 = '管理';
+    static String STRING_CANCEL = '取消';
 }

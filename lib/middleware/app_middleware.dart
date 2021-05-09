@@ -33,7 +33,7 @@ class RouteAuthMiddleware extends GetMiddleware{
 
   @override
   RouteSettings redirect(String route) {
-    if(AppStorage.getString('token') == null ) {
+    if(AppStorage.getString('token') == null && AppStorage.getString('token') == '') {
       return RouteSettings(name: RouteConfig.login_page);
     }
   }

@@ -7,13 +7,4 @@ import 'state.dart';
 
 class AddressLogic extends GetxController {
   final state = AddressState();
-
-  Future onGetAddressList() async {
-    EasyLoading.show(status: '加载中');
-    final RealResponseData response = await AddressService.addressList();
-    if (response.result) {
-       state.addressList.value = response.data;
-    }
-    EasyLoading.dismiss();
-  }
 }

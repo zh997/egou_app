@@ -34,19 +34,20 @@ class _LoginPageState extends State<LoginPage> {
         child: Text('获取验证码', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_PRIMARY_D22315)),
       ),
     );
+    // suffixIcon: Obx(() => state.isStartCountdown.value ? countDownText : getCodeBtn)
     final Widget countDownText = Obx(() => Text('${state.CountDownSeconds.value}s', style: TextStyle(fontSize: ScreenUtil().setSp(48), color: AppColors.COLOR_PRIMARY_D22315)));
     final List<Widget> textFieldItems = [
       RowTextField(name: 'account', key: GlobalKey(), controller: _mobileController,
         labelText: '请输入手机号', icon: Text('+86', style: TextStyle(fontSize: ScreenUtil().setSp(48),
               fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_000000)),
-        contentPaddingLeft: 20, labelLeft: 70, suffixIcon: Obx(() => state.isStartCountdown.value ? countDownText : getCodeBtn),
+        contentPaddingLeft: 18, labelLeft: 55,
           isRequired: true
       ),
       SizedBox(height: 10),
-      RowTextField(name: 'code', key: GlobalKey(), controller: TextEditingController(),
-        labelText: '请输入验证码', icon: Text('验证码', style: TextStyle(fontSize: ScreenUtil().setSp(48),
+      RowTextField(name: 'password', key: GlobalKey(), controller: TextEditingController(),
+        labelText: '请输入密码', icon: Text('密码', style: TextStyle(fontSize: ScreenUtil().setSp(48),
             fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_000000)),
-        contentPaddingLeft: 4 , labelLeft: 70,isRequired: true,
+        contentPaddingLeft: 15 , labelLeft: 55,isRequired: true, obscureText: true,
       ),
     ];
 
@@ -74,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 40),
                     Obx(() => RadiusButton('登录', width: 960, onTap: () {
                       final data = Utils.getFormValue(textFieldItems);
-                      logic.onLogin(data);
+                      logic.onAccountLogin(data);
                     }, disabled: state.disabled.value)),
                   ],
                 ),

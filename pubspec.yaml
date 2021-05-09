@@ -43,6 +43,7 @@ dependencies:
   flutter_easyrefresh: ^2.2.1
   flutter_widget_from_html_core: ^0.6.1
   city_picker: ^0.1.4
+  string_num_calculate: ^0.0.3
 
 dev_dependencies:
   flutter_test:

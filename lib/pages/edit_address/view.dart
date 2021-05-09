@@ -6,9 +6,12 @@ import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/models/address.dart';
 import 'package:egou_app/pages/address/logic.dart';
 import 'package:egou_app/pages/address/state.dart';
+import 'package:egou_app/pages/main/logic.dart';
+import 'package:egou_app/pages/main/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/app_text_field.dart';
+import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:city_picker/city_picker.dart';
@@ -24,9 +27,9 @@ class EditAddressPage extends StatefulWidget {
 
 class _EditAddressPageState extends State<EditAddressPage>{
   final EditAddressLogic logic = Get.put(EditAddressLogic());
-  final AddressLogic addressLogic = Get.put(AddressLogic());
+  final MainLogic mainLogic = Get.put(MainLogic());
   final EditAddressState state = Get.find<EditAddressLogic>().state;
-  final AddressState addressState = Get.find<AddressLogic>().state;
+  final MainState mainState = Get.find<MainLogic>().state;
   String id = Get.parameters['id'];
   int is_default  = 1;
   final TextEditingController _contactController = TextEditingController();
@@ -38,7 +41,7 @@ class _EditAddressPageState extends State<EditAddressPage>{
   void initState(){
     super.initState();
     if (id != null) {
-      addressState.addressList.value.forEach((element) {
+      mainState.addressList.value.forEach((element) {
         if (int.parse(id) == element.id) {
           _contactController.text = element.contact;
           _telephoneController.text = element.telephone;
@@ -61,7 +64,7 @@ class _EditAddressPageState extends State<EditAddressPage>{
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    addressLogic.onGetAddressList();
+    mainLogic.onGetAddressList();
   }
 
   @override
@@ -120,57 +123,59 @@ class _EditAddressPageState extends State<EditAddressPage>{
     ];
     return Scaffold(
         appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '编辑地址'),
-        body: Column(
+        body: ListView(
             children: [
-              Expanded(
-                  child: ListView(
-                      children: [
-                        SizedBox(height: 15),
-                        Container(
-                            color: Colors.white,
-                            child: Column(
-                                children: textFieldItems
-                            )
-                        ),
-                        SizedBox(height: 15),
-                        _listItem('设为默认地址'),
-                        SizedBox(height: 15),
-                        Container(
-                            padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                            color: Colors.white,
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.delete_forever, color: AppColors.COLOR_PRIMARY_D22315),
-                                  SizedBox(width: 5),
-                                  Text('删除该地址', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_48))
-                                ]
-                            )
-                        )
-                      ]
+              SizedBox(height: 15),
+              Container(
+                  color: Colors.white,
+                  child: Column(
+                      children: textFieldItems
                   )
               ),
-              Container(
-                alignment: Alignment.center,
-                height: ScreenUtil().setWidth(250),
-                decoration: BoxDecoration(
+              SizedBox(height: 15),
+              _listItem('设为默认地址'),
+              SizedBox(height: 15),
+              id != null ? GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: (){
+                  AppAnimatedDialog.onShowAnimatedDialog(context, '确定删除该地址吗？', () async {
+                    await logic.onDelAddress({
+                      'id': int.parse(id)
+                    });
+                    Get.back(result: 'success');
+                  });
+
+                },
+                child: Container(
+                    padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
                     color: Colors.white,
-                    border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
-                ),
-                child: RadiusButton('保存', width: 903, height: 156, onTap: (){
-                  final data = Utils.getFormValue(textFieldItems);
-                  data.remove('city');
-                  data['province_id'] = state.AddressIds.value.province;
-                  data['city_id'] = state.AddressIds.value.city;
-                  data['district_id'] = state.AddressIds.value.district;
-                  data['is_default'] = is_default;
-                  if(id != null) {
-                    data['id'] = int.parse(id);
-                    logic.onUpdateAddress(data);
-                  } else {
-                    logic.onAddAddress(data);
-                  }
-                }),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.delete_forever, color: AppColors.COLOR_PRIMARY_D22315),
+                          SizedBox(width: 5),
+                          Text('删除该地址', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_48))
+                        ]
+                    )
+                ) ,
+              ) : SizedBox(),
+              SizedBox(height: 15),
+              Container(
+                  padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                  child: RadiusButton('保存', width: 300, height: 156, onTap: (){
+                    final data = Utils.getFormValue(textFieldItems);
+                    data.remove('city');
+                    data['province_id'] = state.AddressIds.value.province;
+                    data['city_id'] = state.AddressIds.value.city;
+                    data['district_id'] = state.AddressIds.value.district;
+                    data['is_default'] = is_default;
+                    if(id != null) {
+                      data['id'] = int.parse(id);
+                      logic.onUpdateAddress(data);
+                    } else {
+                      logic.onAddAddress(data);
+                    }
+                  })
               )
             ]
         )

@@ -413,6 +413,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.0"
+  string_num_calculate:
+    dependency: "direct main"
+    description:
+      name: string_num_calculate
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.3"
   string_scanner:
     dependency: transitive
     description:

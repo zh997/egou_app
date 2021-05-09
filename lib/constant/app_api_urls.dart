@@ -16,6 +16,12 @@ class AppApiUrls  {
   static String ADDRESS_NAME_TO_ID = '/api/user_address/handleregion';
   static String ADD_ADDRESS = '/api/user_address/add';
   static String UPDATE_ADDRESS = '/api/user_address/update';
-
-
+  static String ORDER_BUY = '/api/order/buy';
+  static String CART_ADD = '/api/cart/add';
+  static String CART_LIST = '/api/cart/lists';
+  static String CART_CHANGE = '/api/cart/change';
+  static String CART_SELECTED = '/api/cart/selected';
+  static String SHARE_POSETER = '/api/share/userPoster';
+  static String CART_DEL = '/api/cart/del';
+  static String DEL_ADDRESS = '/api/user_address/del';
 }
