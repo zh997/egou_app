@@ -48,7 +48,7 @@ class AddressPage extends StatelessWidget {
                         color: Colors.white,
                         border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
                     ),
-                    child: RadiusButton('添加收货地址', width: 903, height: 156, onTap: (){Get.toNamed(RouteConfig.edit_address);}),
+                    child: RadiusButton('添加收货地址', height: 156, onTap: (){Get.toNamed(RouteConfig.edit_address);}),
                   ): SizedBox()
                 ]
             ))

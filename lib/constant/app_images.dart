@@ -84,4 +84,7 @@ class AppImages {
   static String COMMENT_ICON_32 = 'static/images/comment_icon_3_2.png';
   static String STAR_ICON = 'static/images/star_icon.png';
   static String STAR_ICON_SELECTED = 'static/images/star_icon_selected.png';
+  static String ORDER_SUCCESS = 'static/images/order_success.png';
+  static String ORDER_WAIT = 'static/images/order_wait.png';
+  static String STEP_SUCCESS = 'static/images/step_succes.png';
 }

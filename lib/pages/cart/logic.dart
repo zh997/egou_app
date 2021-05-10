@@ -28,7 +28,7 @@ class CartLogic extends GetxController {
       final List goodsList = [];
       lists.forEach((element) {
         final item = element.toJson();
-        if (data != null && data['cart_id'].indexOf(item['cart_id']) != -1) {
+        if (data != null && data['cart_id'] == item['cart_id']) {
           item['goods_num'] = data['goods_num'];
         }
         goodsList.add(item);
@@ -80,6 +80,8 @@ class CartLogic extends GetxController {
           goods['id'] = item['goods_id'];
           selectedGoods.add(OrderGoodsModelFromJson(goods));
           totalAmount = Calculate.plus(totalAmount, Calculate.multiply(element.goodsNum, double.parse(element.price)));
+        }
+        if( data != null && data['cart_id'].indexOf(item['cart_id']) == -1) {
           goodsList.add(item);
         }
       } else {

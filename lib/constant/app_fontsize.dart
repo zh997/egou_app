@@ -20,4 +20,5 @@ class AppFontsize {
   static double SIZE_70 = ScreenUtil().setSp(70);
   static double SIZE_52 = ScreenUtil().setSp(52);
   static double SIZE_80 = ScreenUtil().setSp(80);
+  static double SIZE_64 = ScreenUtil().setSp(64);
 }

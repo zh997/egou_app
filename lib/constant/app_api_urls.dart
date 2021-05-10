@@ -6,7 +6,7 @@ class AppApiUrls  {
   static String SMS_LOGIN = '/api/account/smsLogin';
   static String ACCOUNT_REGISTER = '/api/account/register';
 
-  static String UPLOAD_IMG = '/api/file/formimage';
+  static String UPLOAD_IMG = BASE_URL + '/api/file/formimage';
   static String ENTRY_ADD = '/api/Entry/add';
   static String AD_LISTS = '/api/ad/lists';
   static String GET_BESTLIST = '/api/goods/getBestList';
@@ -24,4 +24,6 @@ class AppApiUrls  {
   static String SHARE_POSETER = '/api/share/userPoster';
   static String CART_DEL = '/api/cart/del';
   static String DEL_ADDRESS = '/api/user_address/del';
+  static String USER_CENTER = '/api/user/center';
+  static String FORGET_LOGIN_PWD = '/api/login_password/forget';
 }

@@ -81,7 +81,7 @@ class HttpRequest{
       // 未登录
       if (response.code == -1) {
         AppStorage.setString('token', '');
-        navigator.Get.offAllNamed(RouteConfig.login_page);
+        navigator.Get.toNamed(RouteConfig.login_page);
       }
       return RealResponseData(result: false, data: null);
     } else {

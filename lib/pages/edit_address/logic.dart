@@ -11,6 +11,15 @@ class EditAddressLogic extends GetxController {
   Future onNameToId(Map<String, String> data) async {
     final RealResponseData response = await AddressService.nameToId(data);
     if(response.result){
+      if (response.data.province == '') {
+        return EasyLoading.showError('省份不存在，请重新选择');
+      }
+      if ( response.data.city == '') {
+        return EasyLoading.showError('城市不存在，请重新选择');
+      }
+      if (response.data.district == '') {
+        return EasyLoading.showError('区县不存在，请重新选择');
+      }
       state.AddressIds.value = response.data;
     }
   }

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:html' as html;
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/common/storage.dart';
+import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/http/response_data.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart' as getx;
@@ -15,7 +16,7 @@ class ShopSettledLogic extends getx.GetxController {
   final state = ShopSettledState();
 
   void uploadImg(data, String key) async {
-    html.HttpRequest.request('http://shop.hlnsqz.cn/api/file/formimage', method: 'post', sendData: data).then((res){
+    html.HttpRequest.request(AppApiUrls.UPLOAD_IMG, method: 'post', sendData: data).then((res){
       res.onLoadEnd.listen((e) {
         final response = json.decode(res.response);
         if (response['code'] == 1) {

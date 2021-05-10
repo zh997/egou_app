@@ -162,7 +162,7 @@ class _EditAddressPageState extends State<EditAddressPage>{
               SizedBox(height: 15),
               Container(
                   padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                  child: RadiusButton('保存', width: 300, height: 156, onTap: (){
+                  child: RadiusButton('保存', height: 156, onTap: (){
                     final data = Utils.getFormValue(textFieldItems);
                     data.remove('city');
                     data['province_id'] = state.AddressIds.value.province;

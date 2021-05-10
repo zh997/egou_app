@@ -16,6 +16,7 @@ import 'package:egou_app/pages/my_order/view.dart';
 import 'package:egou_app/pages/my_shop/view.dart';
 import 'package:egou_app/pages/my_store/view.dart';
 import 'package:egou_app/pages/my_team/view.dart';
+import 'package:egou_app/pages/order_detail/view.dart';
 import 'package:egou_app/pages/pay_mode/view.dart';
 import 'package:egou_app/pages/pay_result/view.dart';
 import 'package:egou_app/pages/points_mall/view.dart';
@@ -74,9 +75,10 @@ class RouteConfig {
   static final String merchant_list = '/merchant_list';
   static final String publish_comments = '/publish_comments';
   static final String register_page = '/register_page';
+  static final String order_detail = '/order_detail';
 
   static final List<GetPage> getPages = [
-    GetPage(name: launch_page, page: () => LaunchPage()),
+    GetPage(name: launch_page, page: () => LaunchPage(),  transition: Transition.fadeIn),
     GetPage(name: login_page, page: () => LoginPage(), transition: Transition.downToUp),
     GetPage(name: guide_page, page: () => GuidePage()),
     GetPage(name: main_page, page: () => MainPage(), transition: Transition.fadeIn),
@@ -112,5 +114,6 @@ class RouteConfig {
     GetPage(name: shop_page, page: () => ShopPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: publish_comments, page: () => PublishCommentsPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: register_page, page: () => RegisterPage()),
+    GetPage(name: order_detail, page: () => OrderDetailPage()),
   ];
 }

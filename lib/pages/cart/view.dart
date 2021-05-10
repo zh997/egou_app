@@ -201,7 +201,7 @@ class CartPage extends StatelessWidget {
                     }
                   }, rightTap: (){
                     logic.onCartChange({
-                      'cart_id': [item.cartId],
+                      'cart_id': item.cartId,
                       'goods_num': item.goodsNum + 1
                     });
                   }, num: item.goodsNum,)
