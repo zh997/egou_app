@@ -5,6 +5,8 @@ import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/models/user.dart';
+import 'package:egou_app/pages/main/logic.dart';
+import 'package:egou_app/pages/main/state.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +19,9 @@ import 'state.dart';
 
 class MyPage extends StatelessWidget {
   final MyLogic logic = Get.put(MyLogic());
+  final MainLogic mainLogic = Get.put(MainLogic());
   final MyState state = Get.find<MyLogic>().state;
+  final MainState mainState = Get.find<MainLogic>().state;
 
   void _onRedirectOrder (){
     Get.toNamed(RouteConfig.my_order);
@@ -26,14 +30,14 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _statusBarHeght = MediaQuery.of(context).padding.top;
-    return FutureBuilder(future: logic.onGetUserInfo() ,builder: (BuildContext context, AsyncSnapshot snapshot) {
+    return FutureBuilder(future: mainLogic.onGetUserInfo() ,builder: (BuildContext context, AsyncSnapshot snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
         return Scaffold(
           body: SingleChildScrollView(
             child: Column(
               children: [
                 Obx((){
-                  final UserInfoModel userinfo = state.userInfo.value;
+                  final UserInfoModel userinfo = mainState.userInfo.value;
                   return Container(
                     padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, _statusBarHeght+AppSpace.SPACE_52, AppSpace.SPACE_52, AppSpace.SPACE_52),
                     color: Colors.white,

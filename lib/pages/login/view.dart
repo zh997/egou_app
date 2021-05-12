@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
       RowTextField(name: 'account', key: GlobalKey(), controller: _mobileController,
         labelText: '请输入手机号', icon: Text('+86', style: TextStyle(fontSize: ScreenUtil().setSp(48),
               fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_000000)),
-        contentPaddingLeft: 18, labelLeft: 55,
+        contentPaddingLeft: 15, labelLeft: 55,
           isRequired: true
       ),
       SizedBox(height: 10),

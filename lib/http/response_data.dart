@@ -29,11 +29,12 @@ class ResponseData<T>{
         });
       } else if(json['data'] is Map) {
         if (json['data']['more'] != null) {
-          data = new List();
-          json['data']['list'].forEach((v) {
-            data.add(fromJson(v));
-          });
-
+          if ( json['data']['list'] != null && json['data']['list'] is List) {
+            data = new List();
+            json['data']['list'].forEach((v) {
+              data.add(fromJson(v));
+            });
+          }
           more = json['data']['more'];
         } else {
           data = json['data'] != null ? fromJson(json['data']) : null;

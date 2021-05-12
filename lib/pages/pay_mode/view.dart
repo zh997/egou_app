@@ -4,6 +4,7 @@ import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_space.dart';
+import 'package:egou_app/models/user.dart';
 import 'package:egou_app/pages/confirm_order/logic.dart';
 import 'package:egou_app/pages/confirm_order/state.dart';
 import 'package:egou_app/pages/main/logic.dart';
@@ -35,6 +36,8 @@ class _PayModePageState extends State<PayModePage> {
   final PayModeLogic logic = Get.put(PayModeLogic());
   final PayModeState state = Get.find<PayModeLogic>().state;
   final MainState mainState = Get.find<MainLogic>().state;
+  final MainLogic mainLogic = Get.put(MainLogic());
+  Future _future;
   String isGiftBag = Get.parameters['isGiftBag'];
 
   final FocusNode _focusNode = FocusNode();
@@ -46,6 +49,7 @@ class _PayModePageState extends State<PayModePage> {
   @override
   void initState() {
     // TODO: implement initState
+    super.initState();
     _focusNode.addListener(() {
       if (_focusNode.hasFocus){
         setState(() {
@@ -58,126 +62,132 @@ class _PayModePageState extends State<PayModePage> {
         });
       }
     });
-    super.initState();
+    _future = mainLogic.onGetUserInfo();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final int shopType = mainState.shopType.value;
-      double totalPrice = 0.00;
-      if ( mainState.orderGoods.value.length > 0) {
-        mainState.orderGoods.value.forEach((element) {
-          totalPrice = (totalPrice + double.parse(element.price)) * element.num;
+    return FutureBuilder(future: _future, builder: (BuildContext context, AsyncSnapshot snapshot) {
+      if (snapshot.connectionState == ConnectionState.done) {
+        return Obx(() {
+          final int shopType = mainState.shopType.value;
+          double totalPrice = 0.00;
+          if ( mainState.orderGoods.value.length > 0) {
+            mainState.orderGoods.value.forEach((element) {
+              totalPrice = (totalPrice + double.parse(element.price)) * element.num;
+            });
+          }
+          final UserInfoModel userinfo = mainState.userInfo.value;
+          return Scaffold(
+            appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '支付方式'),
+            body: ListView(
+              children: [
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, 0),
+                  margin: EdgeInsets.only(top: AppSpace.SPACE_40),
+                  height: ScreenUtil().setWidth(186),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('订单金额', style: TextStyle(
+                          fontSize: AppFontsize.SIZE_50,
+                          color: AppColors.COLOR_BLACK_000000
+                      )),
+                      Price(price: totalPrice.toString())
+                    ],
+                  ) ,
+                ),
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, AppSpace.SPACE_52),
+                  margin: EdgeInsets.only(top: AppSpace.SPACE_40),
+                  child: Column(
+                    children: [
+                      _payModeItem(AppImages.PAY_MODE_ICON_1, '余额支付', PayMode.balance, num: userinfo.userMoney),
+                      // shopType != 1 && shopType != 2 ? _payModeItem(AppImages.PAY_MODE_ICON_2, '金币支付', PayMode.wechat, num: '0.00') : SizedBox(),
+                      // shopType != 2 ?  _payModeItem(AppImages.PAY_MODE_ICON_3, '银币支付',PayMode.wechat, num: '0.00') : SizedBox(),
+                      _payModeItem(AppImages.PAY_MODE_ICON_4, '微信支付', PayMode.wechat ),
+                      _payModeItem(AppImages.PAY_MODE_ICON_5,'支付宝支付',  PayMode.alipay),
+                      SizedBox(height: 20),
+                      Container(
+                        alignment: Alignment.center,
+                        // width: ScreenUtil().setWidth(895),
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
+                            borderRadius: BorderRadius.circular(AppRadius.RADIUS_20)
+                        ),
+                        child: Stack(
+                          alignment: const FractionalOffset(0.5, 0.5),
+                          children: [
+                            !isFocus && !pwd.isNotEmpty ? Text('请填写6-20位交易密码',
+                                style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(60),
+                                    color: AppColors.COLOR_PRIMARY_D22315,
+                                    height: ScreenUtil().setHeight(4)
+                                )
+                            ): Text(''),
+                            TextFormField(
+                              focusNode: _focusNode,
+                              controller: _pwdController,
+                              onChanged: (String val) {setState(() {
+                                pwd = val;
+                              });},
+                              textInputAction: TextInputAction.next,
+                              maxLines: 1,
+                              cursorColor: AppColors.COLOR_PRIMARY_D22315,
+                              style: TextStyle(fontSize: ScreenUtil().setSp(80), color: AppColors.COLOR_PRIMARY_D22315),
+                              obscureText: true,
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(15),
+                                hasFloatingPlaceholder: false,
+                                focusColor:  AppColors.COLOR_PRIMARY_D22315,
+                                border: InputBorder.none,
+                              ),
+                              keyboardType: TextInputType.text,
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ) ,
+                ),
+                Divider(height: 1,  color: AppColors.COLOR_GRAY_DDDDDD),
+                SizedBox(height: 40),
+                Container(
+                  padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, AppSpace.SPACE_52),
+                  child:  RadiusButton('结算', onTap: (){
+                    final Map<String, dynamic> data = {};
+
+                    data['pay_way'] = pay_way;
+                    data['use_integral'] = 0;
+                    data['address_id'] = mainState.selectAddress.value.id;
+                    data['pay_password'] = pwd;
+                    if (isGiftBag != null) {
+                      // 大礼包购买
+                      logic.onGiftBuy(data);
+                    } else {
+                      // 普通商品购买
+                      final List goods = [];
+                      mainState.orderGoods.forEach((element) {
+                        goods.add({
+                          'item_id': element.goodsSpec.id,
+                          'num': element.num,
+                          'goods_id': element.id
+                        });
+                      });
+                      data['goods'] = goods;
+                      logic.onOrderBuy(data);
+                    }
+                  }),
+                )
+              ],
+            ),
+          );
         });
       }
-      return Scaffold(
-        appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '支付方式'),
-        body: ListView(
-          children: [
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, 0),
-              margin: EdgeInsets.only(top: AppSpace.SPACE_40),
-              height: ScreenUtil().setWidth(186),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('订单金额', style: TextStyle(
-                      fontSize: AppFontsize.SIZE_50,
-                      color: AppColors.COLOR_BLACK_000000
-                  )),
-                  Price(price: totalPrice.toString())
-                ],
-              ) ,
-            ),
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, AppSpace.SPACE_52),
-              margin: EdgeInsets.only(top: AppSpace.SPACE_40),
-              child: Column(
-                children: [
-                  _payModeItem(AppImages.PAY_MODE_ICON_1, '余额支付', PayMode.balance, num: '0.00'),
-                  // shopType != 1 && shopType != 2 ? _payModeItem(AppImages.PAY_MODE_ICON_2, '金币支付', PayMode.wechat, num: '0.00') : SizedBox(),
-                  // shopType != 2 ?  _payModeItem(AppImages.PAY_MODE_ICON_3, '银币支付',PayMode.wechat, num: '0.00') : SizedBox(),
-                  _payModeItem(AppImages.PAY_MODE_ICON_4, '微信支付', PayMode.wechat ),
-                  _payModeItem(AppImages.PAY_MODE_ICON_5,'支付宝支付',  PayMode.alipay),
-                  SizedBox(height: 20),
-                  Container(
-                    alignment: Alignment.center,
-                    // width: ScreenUtil().setWidth(895),
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
-                        borderRadius: BorderRadius.circular(AppRadius.RADIUS_20)
-                    ),
-                    child: Stack(
-                      alignment: const FractionalOffset(0.5, 0.5),
-                      children: [
-                        !isFocus && !pwd.isNotEmpty ? Text('请填写6-20位交易密码',
-                            style: TextStyle(
-                                fontSize: ScreenUtil().setSp(60),
-                                color: AppColors.COLOR_PRIMARY_D22315,
-                                height: ScreenUtil().setHeight(4)
-                            )
-                        ): Text(''),
-                        TextFormField(
-                          focusNode: _focusNode,
-                          controller: _pwdController,
-                          onChanged: (String val) {setState(() {
-                            pwd = val;
-                          });},
-                          textInputAction: TextInputAction.next,
-                          maxLines: 1,
-                          cursorColor: AppColors.COLOR_PRIMARY_D22315,
-                          style: TextStyle(fontSize: ScreenUtil().setSp(100), color: AppColors.COLOR_PRIMARY_D22315),
-                          obscureText: true,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(15),
-                            hasFloatingPlaceholder: false,
-                            focusColor:  AppColors.COLOR_PRIMARY_D22315,
-                            border: InputBorder.none,
-                          ),
-                          keyboardType: TextInputType.text,
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ) ,
-            ),
-            Divider(height: 1,  color: AppColors.COLOR_GRAY_DDDDDD),
-            SizedBox(height: 40),
-            Container(
-              padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, AppSpace.SPACE_52),
-              child:  RadiusButton('结算', onTap: (){
-                final Map<String, dynamic> data = {};
-
-                data['pay_way'] = pay_way;
-                data['use_integral'] = 0;
-                data['address_id'] = mainState.selectAddress.value.id;
-                data['pay_password'] = pwd;
-                if (isGiftBag != null) {
-                  // 大礼包购买
-                  logic.onGiftBuy(data);
-                } else {
-                  // 普通商品购买
-                  final List goods = [];
-                  mainState.orderGoods.forEach((element) {
-                    goods.add({
-                      'item_id': element.goodsSpec.id,
-                      'num': element.num,
-                      'goods_id': element.id
-                    });
-                  });
-                  data['goods'] = goods;
-                  logic.onOrderBuy(data);
-                }
-              }),
-            )
-          ],
-        ),
-      );
+      return SizedBox();
     });
   }
 

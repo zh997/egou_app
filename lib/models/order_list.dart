@@ -17,7 +17,7 @@ class OrderListItem {
   int takeBtn;
   int delBtn;
   int commentBtn;
-  String orderCancelTime;
+  int orderCancelTime;
 
   OrderListItem(
       {this.id,
@@ -60,7 +60,7 @@ class OrderListItem {
     takeBtn = json['take_btn'];
     delBtn = json['del_btn'];
     commentBtn = json['comment_btn'];
-    orderCancelTime = json['order_cancel_time'];
+    orderCancelTime = json['order_cancel_time'] is int ? json['order_cancel_time'] : 0;
   }
 
   Map<String, dynamic> toJson() {

@@ -57,7 +57,6 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
       final files = uploadInput.files;
       var formData = html.FormData();
       formData.appendBlob("file", files[0].slice(), files[0].name);
-      EasyLoading.show(status: '正在上传');
       await logic.uploadImg(formData, key);
     });
   }
@@ -216,17 +215,12 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
                          UploadBtn(titleText:'门头照片',maxImgLength: 2, imgList: state.shop_photo.value, onTap: (){
                            getImage('shop_photo');
                          }, isRequired: true, onDelete: (index) {
-                           setState(() {
-                             logic.removeImg('shop_photo', index);
-                           });
+                           logic.removeImg('shop_photo', index);
                          }, ),
                          UploadBtn(titleText:'产品或服务照片',maxImgLength: 2, imgList: state.other_img.value, onTap: (){
                            getImage('other_img');
                          },isRequired: true, onDelete: (index) {
-                           setState(() {
-                             logic.removeImg('other_img', index);
-                           });
-
+                           logic.removeImg('other_img', index);
                          },)
                        ],
                      ),

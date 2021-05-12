@@ -27,6 +27,7 @@ class HomeLogic extends GetxController {
     if (response2.result) {
       state.goodsList.value = response2.data;
       state.hasMore.value = response2.more;
+      state.page.value = 1;
     }
   }
 

@@ -25,11 +25,11 @@ class MyOrderPage extends StatefulWidget {
   _MyOrderPageState createState() => _MyOrderPageState();
 }
 
-class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
 
   final MyOrderLogic logic = Get.put(MyOrderLogic());
   final MyOrderState state = Get.find<MyOrderLogic>().state;
-
+  Future _future;
   int tabIndex = 0;
 
   TabController tabController;
@@ -37,12 +37,16 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
   @override
   void initState() {
     // TODO: implement initState
+    super.initState();
     tabController = TabController(length: OrderTabValueItems.length, vsync: this);
     tabController.addListener(() {
-      // final orderType = labelList[tabController.index]
-      logic.onGetOrderLists('all');
+      if (tabIndex != tabController.index){
+        tabIndex = tabController.index;
+        final orderType = OrderTabValueItems[tabController.index].status;
+        logic.onGetOrderLists(orderType);
+      }
     });
-    super.initState();
+    _future = logic.onGetOrderLists('all');
   }
 
   @override
@@ -54,44 +58,60 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '我的订单'),
-      body: FutureBuilder(future: logic.onGetOrderLists('all'), builder: (BuildContext context, AsyncSnapshot snapshot){
-        if (snapshot.connectionState == ConnectionState.done) {
-           return Obx(() {
-             final List orderList = state.orderLists.value;
-             return Column(
-               children: [
-                 Container(
-                   decoration: BoxDecoration(
-                       color: Colors.white, boxShadow: [BoxShadow(color: AppColors.COLOR_GRAY_848484, blurRadius: 1.0, spreadRadius: 0.0)]
-                   ),
-                   child: TabBarWidget(OrderTabValueItems, tabController, itemPadding: 40),
-                 ),
-                 Expanded(child: TabBarView(
-                   controller: tabController,
-                   children: List.generate(OrderTabValueItems.length, (index) => EasyRefresh.custom(
-                     header: MaterialHeader(),
-                     footer: MaterialFooter(enableInfiniteLoad: false),
-                     onRefresh: () async => logic.onGetOrderLists('all'),
-                     onLoad: () async => logic.onGetOrderLists('all'),
-                     slivers: <Widget>[
-                       SliverList(
-                         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                           return _OrderItem(orderList[index]);
-                         }, childCount: orderList.length
-                         ),
-                       ),
-                     ],
-                   )),
-                 ))
-               ],
-             );
-           });
-        }
-        return SizedBox();
-      }),
-    );
+    return FutureBuilder(future: _future , builder: (BuildContext context, AsyncSnapshot snapshot){
+      Future _onRefresh() async {
+        await logic.onGetOrderLists(OrderTabValueItems[tabIndex].status);
+      }
+      Future _onLoad() async {
+        await logic.onLoadMore(OrderTabValueItems[tabIndex].status);
+      }
+      if (snapshot.connectionState == ConnectionState.done) {
+        return Scaffold(
+          appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '我的订单'),
+          body: Obx(() {
+            List orderList = state.orderLists.value;
+            return Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white
+                  ),
+                  child: TabBarWidget(OrderTabValueItems, tabController, itemPadding: 40),
+                ),
+                Expanded(child: TabBarView(
+                  controller: tabController,
+                  children: List.generate(OrderTabValueItems.length, (index) => EasyRefresh.custom(
+                    header: MaterialHeader(),
+                    footer: MaterialFooter(enableInfiniteLoad: false),
+                    onRefresh: _onRefresh,
+                    onLoad: _onLoad,
+                    slivers: <Widget>[
+                      SliverToBoxAdapter(
+                        child: SizedBox(height: 15),
+                      ),
+                      orderList.length > 0 ? SliverList(
+                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            child: _OrderItem(orderList[index]),
+                          );
+                        }, childCount: orderList.length
+                        ),
+                      ) : SliverList(delegate: SliverChildListDelegate([
+                        SizedBox(height: 200,),
+                        Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
+                          Get.offAllNamed(RouteConfig.main_page);},)
+                      ])),
+                    ],
+                  )),
+                ))
+              ],
+            );
+          }),
+        );
+      }
+      return SizedBox();
+    });
   }
 
   Widget _OrderItem(OrderListItem item) {
@@ -111,62 +131,77 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
       ),
       child: Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(bottom: 15),
-            padding: EdgeInsets.only(bottom: 15),
-            decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(
-                width: 1, color: AppColors.COLOR_GRAY_DDDDDD
-              ))
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: (){
+              Get.toNamed(RouteConfig.order_detail + '?id=${item.id}');
+            },
+            child: Column(
               children: [
-                Text(item.createTime, style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40)),
-                Text(orderStatus.text, style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_56))
-              ],
-            ),
-          ),
-          Column(
-            children: List.generate(item.orderGoods.length, (index) => Row(
-                children: [
-                      Container(
-                        width:  ScreenUtil().setWidth(300),
-                        height:  ScreenUtil().setWidth(300),
-                        margin: EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.COLOR_GRAY_F4F4F4, width: 3)
+                Container(
+                  margin: EdgeInsets.only(bottom: 15),
+                  padding: EdgeInsets.only(bottom: 15),
+                  decoration: BoxDecoration(
+                      border: Border(bottom: BorderSide(
+                          width: 1, color: AppColors.COLOR_GRAY_EEEEEE
+                      ))
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(item.createTime, style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40)),
+                      Text(orderStatus.text, style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_56))
+                    ],
+                  ),
+                ),
+                Column(
+                  children: List.generate(item.orderGoods.length, (index) => Padding(
+                    padding: EdgeInsets.only(bottom: 15),
+                    child: Row(
+                      children: [
+                        Container(
+                          width:  ScreenUtil().setWidth(300),
+                          height:  ScreenUtil().setWidth(300),
+                          margin: EdgeInsets.only(right: 10),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: AppColors.COLOR_GRAY_F4F4F4, width: 3)
+                          ),
+                          child: Image.network(item.orderGoods[index].image, fit: BoxFit.cover),
                         ),
-                        child: Image.network(item.orderGoods[index].image, fit: BoxFit.cover),
-                    ),
-                    Expanded(child: Container(
-                      height:  ScreenUtil().setWidth(300),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                          Text(item.orderGoods[index].goodsName, style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_48)),
-                          Text(item.orderGoods[index].specValue, style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1),
-                          // Text('运单号 59863326989465（中通）', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1),
-                          Row(
+                        Expanded(child: Container(
+                          height:  ScreenUtil().setWidth(300),
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Price(price: item.orderGoods[index].goodsPrice ,),
-                              Text('数量 x${item.orderGoods[index].goodsNum}', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1),
+                              Text(item.orderGoods[index].goodsName,
+                                style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_48),maxLines: 2, overflow: TextOverflow.ellipsis,),
+                              Text(item.orderGoods[index].specValue, style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1),
+                              // Text('运单号 59863326989465（中通）', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Price(price: item.orderGoods[index].goodsPrice ,),
+                                  Text('数量 x${item.orderGoods[index].goodsNum}', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1),
+                                ],
+                              )
                             ],
-                          )
+                          ),
+                        ),
+                        ),
                       ],
                     ),
-                    ))
+                  )),
+                )
               ],
-            )),
+            ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 15),
+            // margin: EdgeInsets.only(top: 15),
             padding: EdgeInsets.only(top: 15),
             decoration: BoxDecoration(
                 border: Border(top: BorderSide(
-                    width: 1, color: AppColors.COLOR_GRAY_DDDDDD
+                    width: 1, color: AppColors.COLOR_GRAY_EEEEEE
                 ))
             ),
             child: Row(
@@ -181,12 +216,33 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    item.orderStatus == 0 ? _Button('取消订单', AppColors.COLOR_GRAY_666666) : SizedBox(),
-                    item.orderStatus == 0 ? _Button('继续支付', AppColors.COLOR_PRIMARY_D22315) : SizedBox(),
-                    item.orderStatus == 2 ? _Button('查看物流', AppColors.COLOR_GRAY_666666) : SizedBox(),
-                    item.orderStatus == 2 ? _Button('确认收货', AppColors.COLOR_PRIMARY_D22315) : SizedBox(),
-                    item.orderStatus == 3 || item.orderStatus == 4 ? _Button('删除订单', AppColors.COLOR_PRIMARY_D22315) : SizedBox(),
-                    item.orderStatus == 3 ? _Button('去评价', AppColors.COLOR_PRIMARY_D22315) : SizedBox()
+                    item.orderStatus == OrderStatusEnums.wait_pay ? _Button('取消订单', AppColors.COLOR_GRAY_666666, () {
+                      AppAnimatedDialog.onShowAnimatedDialog(context, '确定取消该订单吗？', () async {
+                        await logic.onOrderCancel(item.id);
+                        Get.back();
+                        await Future.delayed(Duration(seconds: 1));
+                        logic.onGetOrderLists(OrderTabValueItems[tabIndex].status);
+                      });
+                    }) : SizedBox(),
+                    item.orderStatus == OrderStatusEnums.wait_pay ? _Button('继续支付', AppColors.COLOR_PRIMARY_D22315, () {}) : SizedBox(),
+                    item.orderStatus == OrderStatusEnums.wait_receiving ? _Button('查看物流', AppColors.COLOR_GRAY_666666, () {}) : SizedBox(),
+                    item.orderStatus == OrderStatusEnums.wait_receiving ? _Button('确认收货', AppColors.COLOR_PRIMARY_D22315, () {
+                      AppAnimatedDialog.onShowAnimatedDialog(context, '确定已收到货物吗？', () async {
+                        await logic.onOrderConfirm(item.id);
+                        Get.back();
+                        await Future.delayed(Duration(seconds: 1));
+                        logic.onGetOrderLists(OrderTabValueItems[tabIndex].status);
+                      });
+                    }) : SizedBox(),
+                    item.orderStatus == OrderStatusEnums.finish || item.orderStatus == OrderStatusEnums.close ? _Button('删除订单', AppColors.COLOR_PRIMARY_D22315, () {
+                      AppAnimatedDialog.onShowAnimatedDialog(context, '确定删除该订单吗？', () async {
+                        await logic.onOrderDel(item.id);
+                        Get.back();
+                        await Future.delayed(Duration(seconds: 1));
+                        logic.onGetOrderLists(OrderTabValueItems[tabIndex].status);
+                      });
+                    }) : SizedBox(),
+                    item.orderStatus == OrderStatusEnums.finish ? _Button('去评价', AppColors.COLOR_PRIMARY_D22315, () {}) : SizedBox()
                   ],
                 )
               ],
@@ -197,12 +253,10 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
     );
   }
 
-  Widget _Button(text, color) {
+  Widget _Button(text, color,Function onTap) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () {
-        Get.toNamed(RouteConfig.publish_comments);
-      },
+      onTap: onTap,
       child: Container(
           width: ScreenUtil().setWidth(243),
           height: ScreenUtil().setWidth(92),

@@ -32,11 +32,19 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
   final GoodsDetailLogic logic = Get.put(GoodsDetailLogic());
   final MainLogic mainLogic = Get.put(MainLogic());
   final GoodsDetailState state = Get.find<GoodsDetailLogic>().state;
+  Future _future;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _future = logic.onGetGoodsDetail();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: logic.onGetGoodsDetail(),
+      future: _future,
       builder: (BuildContext context, AsyncSnapshot snapshot){
         if (snapshot.connectionState == ConnectionState.done) {
           return Obx(() => Scaffold(

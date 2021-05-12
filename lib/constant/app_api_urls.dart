@@ -29,4 +29,9 @@ class AppApiUrls  {
   static String GIFT_DETAIL = '/api/gift/detail';
   static String ORDER_BUYGIFT = '/api/order/buyGift';
   static String ORDER_LISTS = '/api/order/lists';
+  static String ORDER_DETAIL = '/api/order/detail';
+  static String ORDER_CONFIRM = '/api/order/confirm';
+  static String ORDER_DEL = '/api/order/del';
+  static String ORDER_CANCEL = '/api/order/cancel';
+
 }

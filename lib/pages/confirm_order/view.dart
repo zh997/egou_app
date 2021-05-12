@@ -97,7 +97,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                            // ),
                            Column(
                              children: List.generate(orderGoods.length, (index) =>  OrderItem(img: orderGoods[index].image,
-                               name: orderGoods[index].name, price: orderGoods[index].price, specValueStr: orderGoods[index].goodsSpec.name,)),
+                               name: orderGoods[index].name, price: orderGoods[index].price, specValueStr: orderGoods[index].goodsSpec != null ? orderGoods[index].goodsSpec.name : null,)),
                            ),
 
                          ],

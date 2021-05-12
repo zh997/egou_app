@@ -27,10 +27,13 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
 
   final HomeLogic logic = Get.put(HomeLogic());
   final HomeState state = Get.find<HomeLogic>().state;
+  Future _future;
+
+
 
   int category_id;
 
@@ -40,6 +43,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
   void initState() {
     // TODO: implement initState
     super.initState();
+    _future = logic.onInitData(true);
   }
 
   @override
@@ -53,13 +57,15 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-       future: logic.onInitData(true),
+       future: _future,
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if (snapshot.connectionState == ConnectionState.done) {
             tabController = TabController(length: state.Category.value.length, vsync: this);
             tabController.addListener(() {
-              category_id = state.Category.value[tabController.index].id;
-              logic.onCategoryData(category_id);
+              if (category_id != state.Category.value[tabController.index].id) {
+                category_id = state.Category.value[tabController.index].id;
+                logic.onCategoryData(category_id);
+              }
             });
             return Obx(() {
               return Scaffold(
@@ -72,8 +78,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
                         children: List.generate(state.Category.value.length, (index) => EasyRefresh.custom(
                           header: MaterialHeader(),
                           footer: MaterialFooter(enableInfiniteLoad: false),
-                          onRefresh: () async => logic.onCategoryData(category_id),
-                          onLoad: () => logic.onLoadMore(category_id),
+                          onRefresh: () async => await logic.onCategoryData(category_id),
+                          onLoad: () async => await logic.onLoadMore(category_id),
                           slivers: <Widget>[
                             SliverList(
                               delegate: SliverChildListDelegate([

@@ -16,6 +16,7 @@ class ShopSettledLogic extends getx.GetxController {
   final state = ShopSettledState();
 
   void uploadImg(data, String key) async {
+    EasyLoading.show(status: '正在上传');
     html.HttpRequest.request(AppApiUrls.UPLOAD_IMG, method: 'post', sendData: data).then((res){
       res.onLoadEnd.listen((e) {
         final response = json.decode(res.response);
@@ -33,6 +34,8 @@ class ShopSettledLogic extends getx.GetxController {
           }
 
           EasyLoading.showSuccess('上传成功！');
+        } else {
+          EasyLoading.dismiss();
         }
       });
     });
@@ -43,12 +46,12 @@ class ShopSettledLogic extends getx.GetxController {
     if (key == 'shop_photo') {
       final List shop_photo = [];
       shop_photo.addAll(state.shop_photo.value);
-      shop_photo.remove(index);
+      shop_photo.removeAt(index);
       state.shop_photo.value = shop_photo;
     } else {
       final List other_img = [];
       other_img.addAll(state.other_img.value);
-      other_img.remove(index);
+      other_img.removeAt(index);
       state.other_img.value = other_img;
     }
   }

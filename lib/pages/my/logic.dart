@@ -6,11 +6,4 @@ import 'state.dart';
 
 class MyLogic extends GetxController {
   final state = MyState();
-
-  Future onGetUserInfo () async {
-    final RealResponseData response = await UserService.getUserInfo();
-    if (response.result) {
-      state.userInfo.value = response.data;
-    }
-  }
 }

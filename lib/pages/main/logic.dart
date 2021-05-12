@@ -2,6 +2,7 @@ import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/models/address.dart';
 import 'package:egou_app/models/order.dart';
 import 'package:egou_app/services/address.dart';
+import 'package:egou_app/services/user.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'state.dart';
@@ -33,6 +34,13 @@ class MainLogic extends GetxController {
       state.addressList.value = response.data;
     }
     EasyLoading.dismiss();
+  }
+
+  Future onGetUserInfo () async {
+    final RealResponseData response = await UserService.getUserInfo();
+    if (response.result) {
+      state.userInfo.value = response.data;
+    }
   }
 
   void onSelectAddress(AddressListModel address) {
