@@ -10,6 +10,7 @@ import 'package:egou_app/pages/main/logic.dart';
 import 'package:egou_app/pages/main/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
+import 'package:egou_app/widgets/app_order_item.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
@@ -31,6 +32,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
   final ConfirmOrderState state = Get.find<ConfirmOrderLogic>().state;
   final MainLogic mainLogic = Get.put(MainLogic());
   final MainState mainState = Get.find<MainLogic>().state;
+  String isGiftBag = Get.parameters['isGiftBag'];
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +41,11 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
          return Scaffold(
            appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '确认订单'),
            body: Obx((){
+             final List orderGoods = mainState.orderGoods.value;
              double totalPrice = 0.00;
              int goodsNum = 0;
-             if ( mainState.orderGoods.value.length > 0) {
-               mainState.orderGoods.value.forEach((element) {
+             if (orderGoods.length > 0) {
+               orderGoods.forEach((element) {
                  totalPrice = Calculate.plus(totalPrice, Calculate.multiply(element.num, double.parse(element.price)));
                  goodsNum = Calculate.plus(goodsNum, element.num);
                });
@@ -88,10 +91,15 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                              )),
                            ),
                            SizedBox(height: 15),
+                           // Column(
+                           //   children: List.generate(mainState.orderGoods.value.length, (index) => _CartItem(context,
+                           //       mainState.orderGoods.value[index])),
+                           // ),
                            Column(
-                             children: List.generate(mainState.orderGoods.value.length, (index) => _CartItem(context,
-                                 mainState.orderGoods.value[index])),
-                           )
+                             children: List.generate(orderGoods.length, (index) =>  OrderItem(img: orderGoods[index].image,
+                               name: orderGoods[index].name, price: orderGoods[index].price, specValueStr: orderGoods[index].goodsSpec.name,)),
+                           ),
+
                          ],
                        ),
                      ),
@@ -146,7 +154,11 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                        ),
                        RadiusButton('结算', width: 410, onTap: (){
                          if (mainState.selectAddress.value.id != null) {
-                           Get.toNamed(RouteConfig.pay_mode);
+                           if (isGiftBag != null ) {
+                             Get.toNamed(RouteConfig.pay_mode + '?isGiftBag=${isGiftBag}');
+                           } else {
+                             Get.toNamed(RouteConfig.pay_mode);
+                           }
                          } else {
                            EasyLoading.showToast('请先添加收货地址');
                          }
@@ -223,6 +235,8 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
 
 
   Widget _CartItem(context, OrderGoodsModel item) {
+    print(item.name);
+    print(item.price);
     return Container(
       color: Colors.white,
       margin: EdgeInsets.only(bottom: 15),
@@ -243,7 +257,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
             children: [
               Text(item.name, style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_48), maxLines: 2, overflow: TextOverflow.ellipsis,),
               SizedBox(height: 5),
-              Text(item.goodsSpec.name, style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1),
+              item.goodsSpec != null ? Text(item.goodsSpec.name, style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1): SizedBox(),
               SizedBox(height: 5),
               Text('数量 x${item.num}', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1),
               SizedBox(height: 10),

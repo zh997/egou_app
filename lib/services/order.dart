@@ -3,6 +3,7 @@ import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/http/http_request.dart';
 import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/models/order.dart';
+import 'package:egou_app/models/order_list.dart';
 
 class OrderService {
 
@@ -17,4 +18,12 @@ class OrderService {
     }
   }
 
+
+  // 订单列表
+  static Future<RealResponseData> orderLists(String type) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.ORDER_LISTS, {'type': type}, 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: OrderListItemFromJson));
+    }
+  }
 }

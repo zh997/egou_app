@@ -26,4 +26,7 @@ class AppApiUrls  {
   static String DEL_ADDRESS = '/api/user_address/del';
   static String USER_CENTER = '/api/user/center';
   static String FORGET_LOGIN_PWD = '/api/login_password/forget';
+  static String GIFT_DETAIL = '/api/gift/detail';
+  static String ORDER_BUYGIFT = '/api/order/buyGift';
+  static String ORDER_LISTS = '/api/order/lists';
 }

@@ -58,3 +58,28 @@ class OrderBuyModel {
     return data;
   }
 }
+
+class OrderItemModel {
+  String img;
+  String name;
+  String specValueStr;
+  String price;
+
+  OrderItemModel({this.img, this.name, this.specValueStr, this.price});
+
+  OrderItemModel.fromJson(Map<String, dynamic> json) {
+    img = json['img'];
+    name = json['name'];
+    specValueStr = json['specValueStr'];
+    price = json['price'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['img'] = this.img;
+    data['name'] = this.name;
+    data['specValueStr'] = this.specValueStr;
+    data['price'] = this.price;
+    return data;
+  }
+}

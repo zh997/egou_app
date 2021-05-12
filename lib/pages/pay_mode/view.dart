@@ -35,6 +35,7 @@ class _PayModePageState extends State<PayModePage> {
   final PayModeLogic logic = Get.put(PayModeLogic());
   final PayModeState state = Get.find<PayModeLogic>().state;
   final MainState mainState = Get.find<MainLogic>().state;
+  String isGiftBag = Get.parameters['isGiftBag'];
 
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _pwdController = TextEditingController();
@@ -70,7 +71,6 @@ class _PayModePageState extends State<PayModePage> {
           totalPrice = (totalPrice + double.parse(element.price)) * element.num;
         });
       }
-      print(shopType);
       return Scaffold(
         appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '支付方式'),
         body: ListView(
@@ -129,7 +129,7 @@ class _PayModePageState extends State<PayModePage> {
                           textInputAction: TextInputAction.next,
                           maxLines: 1,
                           cursorColor: AppColors.COLOR_PRIMARY_D22315,
-                          style: TextStyle(fontSize: ScreenUtil().setSp(60), color: AppColors.COLOR_BLACK_333333),
+                          style: TextStyle(fontSize: ScreenUtil().setSp(100), color: AppColors.COLOR_PRIMARY_D22315),
                           obscureText: true,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
@@ -152,20 +152,27 @@ class _PayModePageState extends State<PayModePage> {
               padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, AppSpace.SPACE_52),
               child:  RadiusButton('结算', onTap: (){
                 final Map<String, dynamic> data = {};
-                final List goods = [];
-                mainState.orderGoods.forEach((element) {
-                  goods.add({
-                    'item_id': element.goodsSpec.id,
-                    'num': element.num,
-                    'goods_id': element.id
-                  });
-                });
-                data['goods'] = goods;
+
                 data['pay_way'] = pay_way;
                 data['use_integral'] = 0;
                 data['address_id'] = mainState.selectAddress.value.id;
                 data['pay_password'] = pwd;
-                logic.onOrderBuy(data);
+                if (isGiftBag != null) {
+                  // 大礼包购买
+                  logic.onGiftBuy(data);
+                } else {
+                  // 普通商品购买
+                  final List goods = [];
+                  mainState.orderGoods.forEach((element) {
+                    goods.add({
+                      'item_id': element.goodsSpec.id,
+                      'num': element.num,
+                      'goods_id': element.id
+                    });
+                  });
+                  data['goods'] = goods;
+                  logic.onOrderBuy(data);
+                }
               }),
             )
           ],

@@ -178,99 +178,40 @@ class CartPage extends StatelessWidget {
             ),
             child: Image.network(item.img, fit: BoxFit.cover),
           ),
-          Expanded(child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(item.name, style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_48), maxLines: 2, overflow: TextOverflow.ellipsis,),
-              SizedBox(height: 10),
-              Text(item.specValueStr, style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_41), maxLines: 1),
-              // SizedBox(height: 5),
-              // Container(color: AppColors.COLOR_PRIMARY_D22315, padding: EdgeInsets.fromLTRB(5, 2,5,2), child: Text('特例品', style: TextStyle(color: Colors.white, fontSize: AppFontsize.SIZE_32))),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Price(price: item.price,),
-                  Counter(leftTap: () {
-                    if (item.goodsNum > 1) {
-                      logic.onCartChange({
-                        'cart_id': item.cartId,
-                        'goods_num': item.goodsNum - 1
-                      });
-                    }
-                  }, rightTap: (){
-                    logic.onCartChange({
-                      'cart_id': item.cartId,
-                      'goods_num': item.goodsNum + 1
-                    });
-                  }, num: item.goodsNum,)
-                ],
-              )
-            ],
-          ))
-        ],
-      ),
-    );
-  }
-
-  void onShowPupop(BuildContext context,List<int> selectCartIds) {
-    showAnimatedDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return Center(
-          child: Container(
-            width: ScreenUtil().setWidth(956),
-            height: ScreenUtil().setWidth(387),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(AppRadius.RADIUS_20)
-            ),
+          Expanded(child: SizedBox(
+            height:  ScreenUtil().setWidth(300),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: Container(
-                  alignment: Alignment.center,
-                  child: Text('确定删除${selectCartIds.length}件选中商品？'),
-                )),
-                Divider(height: 1, color: AppColors.COLOR_GRAY_D2D2D2),
+                Text(item.name, style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_48), maxLines: 2, overflow: TextOverflow.ellipsis,),
+                Text(item.specValueStr, style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_41), maxLines: 1),
+                // SizedBox(height: 5),
+                // Container(color: AppColors.COLOR_PRIMARY_D22315, padding: EdgeInsets.fromLTRB(5, 2,5,2), child: Text('特例品', style: TextStyle(color: Colors.white, fontSize: AppFontsize.SIZE_32))),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: (){
-                        Get.back(result: 'success');
-                      },
-                      child: Container(
-                        height: ScreenUtil().setWidth(150),
-                        alignment: Alignment.center,
-                        child: Text('取消', style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_GRAY_666666)),
-                      ),
-                    )),
-                    Container(width: 1,height:  ScreenUtil().setWidth(150), color: AppColors.COLOR_GRAY_D2D2D2),
-                    Expanded(child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () async {
-                        await logic.onCartDel({
-                          'cart_id': selectCartIds
+                    Price(price: item.price,),
+                    Counter(leftTap: () {
+                      if (item.goodsNum > 1) {
+                        logic.onCartChange({
+                          'cart_id': item.cartId,
+                          'goods_num': item.goodsNum - 1
                         });
-                        Get.back(result: 'success');
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: ScreenUtil().setWidth(150),
-                        child: Text('确定', style: TextStyle(fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_PRIMARY_D22315)),
-                      ),
-                    ))
+                      }
+                    }, rightTap: (){
+                      logic.onCartChange({
+                        'cart_id': item.cartId,
+                        'goods_num': item.goodsNum + 1
+                      });
+                    }, num: item.goodsNum,)
                   ],
                 )
               ],
             ),
-          ),
-        );
-      },
+          ))
+        ],
+      ),
     );
   }
 }

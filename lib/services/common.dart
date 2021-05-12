@@ -25,4 +25,12 @@ class CommonService {
       return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: SharePosterModelFromJson));
     }
   }
+
+  // 大礼包详情
+  static Future<RealResponseData> giftDetail() async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.GIFT_DETAIL, null , 'GET');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: SharePosterModelFromJson));
+    }
+  }
 }

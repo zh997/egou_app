@@ -33,6 +33,7 @@ class ResponseData<T>{
           json['data']['list'].forEach((v) {
             data.add(fromJson(v));
           });
+
           more = json['data']['more'];
         } else {
           data = json['data'] != null ? fromJson(json['data']) : null;
