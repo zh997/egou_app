@@ -8,7 +8,11 @@ class Search extends StatelessWidget {
 
   final String labelText;
 
-  Search(this.labelText, {Key key}) : super(key: key);
+  final FocusNode focusNode;
+
+  final TextEditingController controller;
+
+  Search(this.labelText, {Key key, this.controller, this.focusNode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +26,7 @@ class Search extends StatelessWidget {
         children: [
           Container(width: 40, child: Image.asset(AppImages.SEARCH_ICON, width: ScreenUtil().setWidth(47), height: ScreenUtil().setWidth(47)),) ,
           Expanded(child: TextField(
+            controller: controller,
             cursorColor: AppColors.COLOR_PRIMARY_D22315,
             style: TextStyle(fontSize: ScreenUtil().setSp(60), color: AppColors.COLOR_BLACK_333333),
             decoration: InputDecoration(

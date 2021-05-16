@@ -18,18 +18,19 @@ class Price extends StatelessWidget {
   final double size;
   final double unitSize;
   final double bottom;
+  final bool isShowUnit;
   final MainAxisAlignment mainAxisAlignment;
-  Price({this.color, Key key, this.price, this.size, this.bottom = 1.8, this.unitSize, this.mainAxisAlignment}): super(key: key);
+  Price({this.color, Key key, this.price, this.size, this.bottom = 1.8, this.unitSize, this.mainAxisAlignment, this.isShowUnit = true}): super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
       children: [
-        Padding(padding: EdgeInsets.only(bottom: bottom),
+        isShowUnit ?  Padding(padding: EdgeInsets.only(bottom: bottom),
             child: Text('￥',  style: TextStyle(fontSize:
             unitSize ?? AppFontsize.SIZE_32, color:
-            color ?? AppColors.COLOR_PRIMARY_D22315,fontWeight: FontWeight.bold))),
+            color ?? AppColors.COLOR_PRIMARY_D22315,fontWeight: FontWeight.bold))) : SizedBox(),
         Text('${price ?? '0.00'}',  style: TextStyle(
             fontSize: size ?? AppFontsize.SIZE_56,
             color: color ?? AppColors.COLOR_PRIMARY_D22315,

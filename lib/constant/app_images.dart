@@ -87,4 +87,8 @@ class AppImages {
   static String ORDER_SUCCESS = 'static/images/order_success.png';
   static String ORDER_WAIT = 'static/images/order_wait.png';
   static String STEP_SUCCESS = 'static/images/step_success.png';
+  static String MONEY_ICON_1 = 'static/images/money_icon_1@2x.png';
+  static String MONEY_ICON_2 = 'static/images/money_icon_2@2x.png';
+  static String MONEY_ICON_3 = 'static/images/money_icon_3@2x.png';
+  static String MY_HEADER_BG = 'static/images/my_header_bg@2x.png';
 }

@@ -33,5 +33,11 @@ class AppApiUrls  {
   static String ORDER_CONFIRM = '/api/order/confirm';
   static String ORDER_DEL = '/api/order/del';
   static String ORDER_CANCEL = '/api/order/cancel';
-
+  static String SHOP_CATEGORY_LISTS = '/api/shop_category/lists';
+  static String SHOP_ENTRY_LISTS = '/api/Entry/lists';
+  static String USER_ACCOUNTLOG = '/api/user/accountLog';
+  static String ADD_COMMENT = '/api/goods_comment/addGoodsComment';
+  static String USER_MYTEAM = '/api/User/myTeam';
+  static String COLLECT_GOODS = '/api/collect/handleCollectGoods';
+  static String GET_COLLECT_GOODS = '/api/collect/getCollectGoods';
 }

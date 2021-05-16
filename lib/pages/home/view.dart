@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
   final HomeState state = Get.find<HomeLogic>().state;
   Future _future;
 
-
+  int tabIndex = 0;
 
   int category_id;
 
@@ -61,9 +61,11 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if (snapshot.connectionState == ConnectionState.done) {
             tabController = TabController(length: state.Category.value.length, vsync: this);
+            tabController.animateTo(tabIndex);
             tabController.addListener(() {
               if (category_id != state.Category.value[tabController.index].id) {
                 category_id = state.Category.value[tabController.index].id;
+                tabIndex = tabController.index;
                 logic.onCategoryData(category_id);
               }
             });

@@ -6,6 +6,7 @@ import 'package:egou_app/http/http_request.dart';
 import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/models/upload_img.dart';
 import 'package:egou_app/models/global.dart';
+import 'package:egou_app/models/my_collect_item.dart';
 
 class CommonService {
 
@@ -31,6 +32,14 @@ class CommonService {
     final DioResponseData response = await HttpRequest.request(AppApiUrls.GIFT_DETAIL, null , 'GET');
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: SharePosterModelFromJson));
+    }
+  }
+
+  // 我的收藏
+  static Future<RealResponseData> getCollectGoods(Map<String, dynamic> data) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.GET_COLLECT_GOODS, data , 'GET');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: MyCollectItemModelFromJson));
     }
   }
 }

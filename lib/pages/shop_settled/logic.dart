@@ -57,6 +57,7 @@ class ShopSettledLogic extends getx.GetxController {
   }
 
   void entryAdd(data) async {
+    EasyLoading.show(status: '入驻中');
     final RealResponseData response = await CommonService.entryAdd(data);
     if (response.result) {
       EasyLoading.showSuccess('入驻成功！');

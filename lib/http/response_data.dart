@@ -16,7 +16,7 @@ class ResponseData<T>{
   int more;
   ResponseData({this.msg, this.data, this.code, this.more});
 
-  ResponseData.fromJson(Map<String, dynamic> json, { fromJson }) {
+  ResponseData.fromJson(Map<String, dynamic> json, { fromJson,bool noList }) {
     // print('----------------------');
     // print(json);
     // print('----------------------');
@@ -29,11 +29,15 @@ class ResponseData<T>{
         });
       } else if(json['data'] is Map) {
         if (json['data']['more'] != null) {
-          if ( json['data']['list'] != null && json['data']['list'] is List) {
-            data = new List();
-            json['data']['list'].forEach((v) {
-              data.add(fromJson(v));
-            });
+          if (noList == true) {
+            data = json['data'] != null ? fromJson(json['data']) : null;
+          } else {
+            if ( json['data']['list'] != null && json['data']['list'] is List) {
+              data = new List();
+              json['data']['list'].forEach((v) {
+                data.add(fromJson(v));
+              });
+            }
           }
           more = json['data']['more'];
         } else {

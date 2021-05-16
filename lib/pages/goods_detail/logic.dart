@@ -10,12 +10,6 @@ class GoodsDetailLogic extends GetxController {
   final state = GoodsDetailState();
   void onSwiperChange(int index) => state.current.value = index;
   String id = Get.parameters['id'];
-  @override
-  void onInit() async {
-    // TODO: implement onInit
-    super.onInit();
-    await onGetGoodsDetail();
-  }
 
   void onChangeSelectSpecId (int index) {
     state.selectSpecId.value = index;
@@ -31,6 +25,7 @@ class GoodsDetailLogic extends GetxController {
     final RealResponseData response = await GoodsDetailService.goodsDetail({'id': int.parse(id)});
     if (response.result) {
       state.goodsDetail.value = response.data;
+      state.is_collect.value = response.data.isCollect;
     }
   }
 
@@ -39,6 +34,19 @@ class GoodsDetailLogic extends GetxController {
     final RealResponseData response = await CartService.addCart(data);
     if (response.result) {
       EasyLoading.showSuccess('添加成功');
+    }
+  }
+
+  Future onCollectGoods(Map<String, dynamic> data) async {
+    EasyLoading.show(status: '加载中');
+    final RealResponseData response = await GoodsDetailService.collectGoods(data);
+    if (response.result) {
+      state.is_collect.value = data['is_collect'];
+      if (data['is_collect'] == 1) {
+        EasyLoading.showSuccess('收藏成功');
+      } else {
+        EasyLoading.showToast('已取消收藏');
+      }
     }
   }
 }

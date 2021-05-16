@@ -38,124 +38,142 @@ class MyPage extends StatelessWidget {
               children: [
                 Obx((){
                   final UserInfoModel userinfo = mainState.userInfo.value;
-                  return Container(
-                    padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, _statusBarHeght+AppSpace.SPACE_52, AppSpace.SPACE_52, AppSpace.SPACE_52),
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        Row(
+                  return Stack(
+                    children: [
+                      Positioned(top: 0, left: 0, child: Container(
+                        height: ScreenUtil().setWidth(714),
+                        child: Image.asset(AppImages.MY_HEADER_BG, fit: BoxFit.fill),
+                      )) ,
+                      Container(
+                        padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52,
+                            _statusBarHeght+AppSpace.SPACE_52, AppSpace.SPACE_52,
+                            AppSpace.SPACE_52
+                        ),
+                        height: ScreenUtil().setWidth(714),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Container(
-                              width: ScreenUtil().setWidth(182),
-                              height: ScreenUtil().setWidth(182),
-                              margin: EdgeInsets.only(right: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(ScreenUtil().setWidth(182))
-                              ),
-                              clipBehavior: Clip.hardEdge,
-                              child: Image.network(userinfo.avatar, fit: BoxFit.cover),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               children: [
-                                Row(
+                                Container(
+                                  width: ScreenUtil().setWidth(182),
+                                  height: ScreenUtil().setWidth(182),
+                                  margin: EdgeInsets.only(right: 10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(ScreenUtil().setWidth(182))
+                                  ),
+                                  clipBehavior: Clip.hardEdge,
+                                  child: Image.network(userinfo.avatar, fit: BoxFit.cover),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(userinfo.nickname, style: TextStyle(
-                                        fontSize: AppFontsize.SIZE_56,
-                                        color: AppColors.COLOR_BLACK_000000
-                                    )),
-                                    Container(
-                                      padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                                      margin: EdgeInsets.only(left: 10),
-                                      decoration: BoxDecoration(
-                                          color: AppColors.COLOR_6AB354,
-                                          borderRadius: BorderRadius.circular(10)
-                                      ),
-                                      child: Text(userinfo.makerLevelStr, style: TextStyle(
+                                    Row(
+                                      children: [
+                                        Text(userinfo.nickname, style: TextStyle(
+                                            fontSize: AppFontsize.SIZE_56,
+                                            color: Colors.white
+                                        )),
+                                        Container(
+                                          padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                                          margin: EdgeInsets.only(left: 10),
+                                          decoration: BoxDecoration(
+                                              color: AppColors.COLOR_6AB354,
+                                              borderRadius: BorderRadius.circular(10)
+                                          ),
+                                          child: Text(userinfo.makerLevelStr, style: TextStyle(
+                                              fontSize: AppFontsize.SIZE_36,
+                                              color: Colors.white
+                                          )),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: AppSpace.SPACE_40),
+                                    Text('UID: ${userinfo.sn}', style: TextStyle(
+                                        fontSize: AppFontsize.SIZE_36,
+                                        color: Colors.white
+                                    ))
+                                  ],
+                                )
+                              ],
+                            ),
+                            Padding(padding: EdgeInsets.fromLTRB(0, AppSpace.SPACE_64, 0, AppSpace.SPACE_24), child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.balance.toString());
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Image.asset(AppImages.MONEY_ICON_1, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
+                                      SizedBox(height: 10,),
+                                      Text('余额', style: TextStyle(
                                           fontSize: AppFontsize.SIZE_36,
                                           color: Colors.white
                                       )),
-                                    )
-                                  ],
+                                      SizedBox(height: 10,),
+                                      Price(color: Colors.white, price: userinfo.userMoney,)
+                                    ],
+                                  ),
                                 ),
-                                SizedBox(height: AppSpace.SPACE_40),
-                                Text('UID: ${userinfo.sn}', style: TextStyle(
-                                    fontSize: AppFontsize.SIZE_36,
-                                    color: AppColors.COLOR_BLACK_000000
-                                ))
+                                GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.goldcoin.toString());
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Image.asset(AppImages.MONEY_ICON_2, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
+                                      SizedBox(height: 10,),
+                                      Text('金币', style: TextStyle(
+                                          fontSize: AppFontsize.SIZE_36,
+                                          color: Colors.white
+                                      )),
+                                      SizedBox(height: 10,),
+                                      Price(color: Colors.white, price: userinfo.userIntegral.toString(), isShowUnit: false,)
+                                    ],
+                                  ),
+                                ),
+                                GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.silvercoin.toString());
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Image.asset(AppImages.MONEY_ICON_3, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
+                                      SizedBox(height: 10,),
+                                      Text('银币', style: TextStyle(
+                                          fontSize: AppFontsize.SIZE_36,
+                                          color: Colors.white
+                                      )),
+                                      SizedBox(height: 10,),
+                                      Price(color: Colors.white)
+                                    ],
+                                  ),
+                                ),
                               ],
-                            )
+                            )),
+                            // GestureDetector(
+                            //   onTap:(){
+                            //     Get.toNamed(RouteConfig.share_page);
+                            //   },
+                            //   child: Container(
+                            //     decoration: BoxDecoration(
+                            //       // boxShadow: [BoxShadow(color: AppColors.COLOR_GRAY_B7B7B7, blurRadius:1, spreadRadius: 0)]
+                            //     ),
+                            //     child: Image.asset(AppImages.SHARE_BANNER, width: ScreenUtil().setWidth(1087),height: ScreenUtil().setWidth(298),),
+                            //   ),
+                            // ),
+                            // Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 0), child: RadiusButton('我的订单', width: 987, onTap: () {
+                            //   Get.toNamed(RouteConfig.my_order);
+                            // })),
                           ],
                         ),
-                        Padding(padding: EdgeInsets.fromLTRB(0, AppSpace.SPACE_64, 0, AppSpace.SPACE_24), child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.balance.toString());
-                              },
-                              child: Column(
-                                children: [
-                                  Text('余额', style: TextStyle(
-                                      fontSize: AppFontsize.SIZE_36,
-                                      color: AppColors.COLOR_GRAY_B7B7B7
-                                  )),
-                                  SizedBox(height: 10,),
-                                  Price(color: AppColors.COLOR_BLACK_000000, price: userinfo.userMoney,)
-                                ],
-                              ),
-                            ),
-                            GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.goldcoin.toString());
-                              },
-                              child: Column(
-                                children: [
-                                  Text('金币', style: TextStyle(
-                                      fontSize: AppFontsize.SIZE_36,
-                                      color: AppColors.COLOR_GRAY_B7B7B7
-                                  )),
-                                  SizedBox(height: 10,),
-                                  Price(color: AppColors.COLOR_BLACK_000000)
-                                ],
-                              ),
-                            ),
-                            GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.silvercoin.toString());
-                              },
-                              child: Column(
-                                children: [
-                                  Text('银币', style: TextStyle(
-                                      fontSize: AppFontsize.SIZE_36,
-                                      color: AppColors.COLOR_GRAY_B7B7B7
-                                  )),
-                                  SizedBox(height: 10,),
-                                  Price(color: AppColors.COLOR_BLACK_000000)
-                                ],
-                              ),
-                            ),
-                          ],
-                        )),
-                        // GestureDetector(
-                        //   onTap:(){
-                        //     Get.toNamed(RouteConfig.share_page);
-                        //   },
-                        //   child: Container(
-                        //     decoration: BoxDecoration(
-                        //       // boxShadow: [BoxShadow(color: AppColors.COLOR_GRAY_B7B7B7, blurRadius:1, spreadRadius: 0)]
-                        //     ),
-                        //     child: Image.asset(AppImages.SHARE_BANNER, width: ScreenUtil().setWidth(1087),height: ScreenUtil().setWidth(298),),
-                        //   ),
-                        // ),
-                        // Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 0), child: RadiusButton('我的订单', width: 987, onTap: () {
-                        //   Get.toNamed(RouteConfig.my_order);
-                        // })),
-                      ],
-                    ),
+                      ),
+                    ],
                   );
                 }),
                 Container(

@@ -112,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
         isRequired: true, obscureText: true,
       ),
       SizedBox(height: 30),
-      RowTextField(
+      invitation != null ? RowTextField(
           title: '邀请码 ',
           key: GlobalKey(),
           name: 'invitation',
@@ -123,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
           labelTop: 20,
           height: 90,
           isRequired: true
-      )
+      ): SizedBox()
     ];
     return Scaffold(
       body: SafeArea(

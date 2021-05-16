@@ -97,11 +97,8 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
                           );
                         }, childCount: orderList.length
                         ),
-                      ) : SliverList(delegate: SliverChildListDelegate([
-                        SizedBox(height: 200,),
-                        Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
-                          Get.offAllNamed(RouteConfig.main_page);},)
-                      ])),
+                      ) : SliverPadding(padding: EdgeInsets.only(top: 100) , sliver: SliverToBoxAdapter(child: Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
+                        Get.offAllNamed(RouteConfig.main_page);},),),)
                     ],
                   )),
                 ))
@@ -242,7 +239,9 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
                         logic.onGetOrderLists(OrderTabValueItems[tabIndex].status);
                       });
                     }) : SizedBox(),
-                    item.orderStatus == OrderStatusEnums.finish ? _Button('去评价', AppColors.COLOR_PRIMARY_D22315, () {}) : SizedBox()
+                    item.orderStatus == OrderStatusEnums.finish ? _Button('去评价', AppColors.COLOR_PRIMARY_D22315, () {
+                      Get.toNamed(RouteConfig.publish_comments + '?id=${item.id}');
+                    }) : SizedBox()
                   ],
                 )
               ],

@@ -5,61 +5,100 @@ import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/models/global.dart';
+import 'package:egou_app/models/shop_entry_list.dart';
 import 'package:egou_app/pages/shop/logic.dart';
 import 'package:egou_app/pages/shop/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/search.dart';
+import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
 import 'state.dart';
 
-class MerchantListPage extends StatelessWidget {
+
+class MerchantListPage extends StatefulWidget {
+  @override
+  _MerchantListPageState createState() => _MerchantListPageState();
+}
+
+class _MerchantListPageState extends State<MerchantListPage> {
   final MerchantListLogic logic = Get.put(MerchantListLogic());
   final MerchantListState state = Get.find<MerchantListLogic>().state;
   final ShopState shopState = Get.find<ShopLogic>().state;
-  String id = Get.parameters['id'];
+  final TextEditingController searchController = TextEditingController();
+  final FocusNode searchFocusNode = FocusNode();
+  Future _future;
+  String category_id = Get.parameters['category_id'];
+  String name = Get.parameters['name'];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _future = logic.onGetShopEntryLists({'category_id': int.parse(category_id)});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return Scaffold(
-        appBar: CustomAppBar(title: shopState.gridList.value[int.parse(id)].text + '商家',
-            leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333)
-        ),
-        body: Column(
-          children: [
-            Container(
-                padding: EdgeInsets.only(left: AppSpace.SPACE_52, right: AppSpace.SPACE_52, bottom: 10),
-                color: Colors.white , child: Search('搜索商家')
+    return FutureBuilder(future: _future,builder: (BuildContext context, AsyncSnapshot snapshot){
+      if (snapshot.connectionState == ConnectionState.done){
+        return Obx(() {
+          final List shopEntryList = state.shopEntryList.value;
+          return Scaffold(
+            appBar: CustomAppBar(title: name + '商家',
+                leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333)
             ),
-            Expanded(child: CustomScrollView(
-              slivers: [
-                SliverPadding(padding: EdgeInsets.all(AppSpace.SPACE_52), sliver:  SliverList(delegate: SliverChildBuilderDelegate(
-                      (BuildContext context,int index) {
-                    return  _ShopItem();
+            body: Column(
+              children: [
+                RawKeyboardListener(
+                  focusNode: searchFocusNode,// 焦点
+                  onKey: (RawKeyEvent event){
+                    // TODO: Key event here
+                    RawKeyDownEvent rawKeyDownEvent = event;
+                    RawKeyEventDataAndroid rawKeyEventDataAndroid = rawKeyDownEvent.data;
+                    if (rawKeyEventDataAndroid.keyCode == 288) {
+                      //
+                    }
+                    print("keyCode: ${rawKeyEventDataAndroid.keyCode}");
                   },
-                  childCount: 10,
-                ))),
+                  child: Container(
+                      padding: EdgeInsets.only(left: AppSpace.SPACE_52, right: AppSpace.SPACE_52, bottom: 10),
+                      color: Colors.white , child: Search('搜索商家', controller: searchController, focusNode: searchFocusNode,)
+                  ), // 子组件
+                ),
+                shopEntryList.length > 0 ? Expanded(child: CustomScrollView(
+                  slivers: [
+                    SliverPadding(padding: EdgeInsets.all(AppSpace.SPACE_52), sliver:  SliverList(delegate: SliverChildBuilderDelegate(
+                          (BuildContext context,int index) {
+                        return  _ShopItem(shopEntryList[index]);
+                      },
+                      childCount: shopEntryList.length,
+                    ))),
+                  ],
+                )): Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
+                  Get.offAllNamed(RouteConfig.main_page);},),
+                // Expanded(child: ListView(
+                //   padding: EdgeInsets.all(AppSpace.SPACE_52),
+                //   children: [
+                //     Text('分类', style: TextStyle(color: Colors.black, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
+                //     _ShopItem(),
+                //     _ShopItem()
+                //   ],
+                // ))
               ],
-            )),
-            // Expanded(child: ListView(
-            //   padding: EdgeInsets.all(AppSpace.SPACE_52),
-            //   children: [
-            //     Text('分类', style: TextStyle(color: Colors.black, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
-            //     _ShopItem(),
-            //     _ShopItem()
-            //   ],
-            // ))
-          ],
-        ),
-      );
+            ),
+          );
+        });
+      }
+      return SizedBox();
     });
   }
 
-  Widget _ShopItem(){
+  Widget _ShopItem(ShopEntryListModel item){
     return GestureDetector(
       onTap: (){
         Get.toNamed(RouteConfig.shop_detail);
@@ -86,14 +125,14 @@ class MerchantListPage extends StatelessWidget {
                       border: Border.all(width: 1, color: AppColors.COLOR_GRAY_EFEFEF)
                   ),
                   clipBehavior: Clip.hardEdge,
-                  child: Image.asset(AppImages.APP_LOGO, fit: BoxFit.cover),
+                  child: Image.asset(item.shopPhoto, fit: BoxFit.cover),
                 ),
                 Expanded(child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('商家真牛网络', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48, fontWeight: FontWeight.bold), maxLines: 1),
+                    Text(item.name, style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48, fontWeight: FontWeight.bold), maxLines: 1),
                     SizedBox(height: AppSpace.SPACE_24),
-                    Text('商品介绍商品介绍商品介商品介绍商品介绍商品介', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_36),maxLines: 2,)
+                    Text(item.businessContent, style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_36),maxLines: 2, overflow: TextOverflow.ellipsis,)
                   ],
                 ))
               ],
@@ -108,7 +147,7 @@ class MerchantListPage extends StatelessWidget {
                     Image.asset(AppImages.ICON_7, width: ScreenUtil().setWidth(48), height: ScreenUtil().setHeight(49)),
                     Container(
                       width: ScreenUtil().setWidth(520),
-                      child: Text('深圳市龙华区龙华街道116号3楼深圳市龙华区龙华街道116号3楼深圳市龙华区龙华街道116号3楼',
+                      child: Text(item.address,
                         style: TextStyle(color:AppColors.COLOR_GRAY_999999,
                             fontSize: AppFontsize.SIZE_36),
                         maxLines: 1,
@@ -142,3 +181,4 @@ class MerchantListPage extends StatelessWidget {
     );
   }
 }
+

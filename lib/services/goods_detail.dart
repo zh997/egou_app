@@ -15,4 +15,12 @@ class GoodsDetailService {
     }
   }
 
+  // 商品收藏
+  static Future<RealResponseData> collectGoods(Map<String, dynamic> data) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.COLLECT_GOODS, data, 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data));
+    }
+  }
+
 }

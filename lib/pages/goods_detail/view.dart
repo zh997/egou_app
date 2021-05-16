@@ -47,197 +47,202 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
       future: _future,
       builder: (BuildContext context, AsyncSnapshot snapshot){
         if (snapshot.connectionState == ConnectionState.done) {
-          return Obx(() => Scaffold(
-            appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333), title: state.goodsDetail.value.name),
-            body: Column(
-              children: [
-                Expanded(child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      DetailSwiper(state.goodsDetail.value.goodsImage),
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.all(AppSpace.SPACE_52),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(state.goodsDetail.value.name, style: TextStyle(
-                                fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_333333
-                            )),
-                            SizedBox(height:15),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Price(price: state.goodsDetail.value.price,),
-                                Text('已售: ${state.goodsDetail.value.salesSum}', style: TextStyle(
-                                    fontSize: AppFontsize.SIZE_41,
-                                    color: AppColors.COLOR_BLACK_333333
-                                ))
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.all(AppSpace.SPACE_52),
-                        margin: EdgeInsets.only(top: AppSpace.SPACE_35),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(right:AppSpace.SPACE_52),
-                                  child: Text('服务', style: TextStyle(
-                                      fontSize: AppFontsize.SIZE_46,
-                                      color: AppColors.COLOR_GRAY_999999
-                                  )),
-                                ),
-                                Row(
-                                  children: [
-                                    _dot(),
-                                    Text('假一赔十', style: TextStyle(
-                                        fontSize: AppFontsize.SIZE_46,
-                                        color: AppColors.COLOR_BLACK_222222
-                                    )),
-                                    _dot(),
-                                    Text('极速退款', style: TextStyle(
-                                        fontSize: AppFontsize.SIZE_46,
-                                        color: AppColors.COLOR_BLACK_222222
-                                    ))
-                                  ],
-                                )
-                              ],
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(right:AppSpace.SPACE_52),
-                                  child: Text('运费', style: TextStyle(
-                                      fontSize: AppFontsize.SIZE_46,
-                                      color: AppColors.COLOR_GRAY_999999
-                                  )),
-                                ),
-                                Row(
-                                  children: [
-                                    Text('¥ 0.00', style: TextStyle(
-                                        fontSize: AppFontsize.SIZE_46,
-                                        color: AppColors.COLOR_BLACK_222222
-                                    ))
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      _goodsTab(),
-                      state.tabIndex.value == 0 ? Container(
+          return Obx((){
+            final bool isCollect = state.is_collect.value == 1;
+            return Scaffold(
+              appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333), title: state.goodsDetail.value.name),
+              body: Column(
+                children: [
+                  Expanded(child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        DetailSwiper(state.goodsDetail.value.goodsImage),
+                        Container(
                           color: Colors.white,
-                          child: HtmlWidget(state.goodsDetail.value.content,textStyle: TextStyle(fontSize: 14),
-                          )
-                      ) : _Comment()
-                    ],
-                  ),
-                )),
-                Container(
-                  height: ScreenUtil().setWidth(200),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          Get.offAllNamed(RouteConfig.my_store);
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(AppImages.ICON_21, width: ScreenUtil().setWidth(71), height: ScreenUtil().setWidth(71)),
-                            Text('收藏', style: TextStyle(
-                                fontSize: AppFontsize.SIZE_32, color: AppColors.COLOR_BLACK_000000
-                            ))
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          mainLogic.onChangePageIndex(2);
-                          Get.offAllNamed(RouteConfig.main_page + '?pageIndex=2');
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(AppImages.ICON_23, width: ScreenUtil().setWidth(71), height: ScreenUtil().setWidth(71)),
-                            Text('购物车', style: TextStyle(
-                                fontSize: AppFontsize.SIZE_32, color: AppColors.COLOR_BLACK_000000
-                            ))
-                          ],
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              onShowSheet('cart');
-                            },
-                            child: Container(
-                                width: ScreenUtil().setWidth(339),
-                                height: ScreenUtil().setWidth(138),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: AppColors.COLOR_BLACK_000000,
-                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(AppRadius.RADIUS_8),bottomLeft: Radius.circular(AppRadius.RADIUS_8) )
-                                ),
-                                child: Text('加入购物车', style: TextStyle(
-                                    fontSize: AppFontsize.SIZE_48,
-                                    color: Colors.white
-                                ))
-                            ),
+                          padding: EdgeInsets.all(AppSpace.SPACE_52),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(state.goodsDetail.value.name, style: TextStyle(
+                                  fontSize: AppFontsize.SIZE_48, color: AppColors.COLOR_BLACK_333333
+                              )),
+                              SizedBox(height:15),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Price(price: state.goodsDetail.value.price,),
+                                  Text('已售: ${state.goodsDetail.value.salesSum}', style: TextStyle(
+                                      fontSize: AppFontsize.SIZE_41,
+                                      color: AppColors.COLOR_BLACK_333333
+                                  ))
+                                ],
+                              )
+                            ],
                           ),
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              onShowSheet('pay');
-                            },
-                            child: Container(
-                                width: ScreenUtil().setWidth(339),
-                                height: ScreenUtil().setWidth(138),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: AppColors.COLOR_PRIMARY_D22315,
-                                    borderRadius: BorderRadius.only(topRight: Radius.circular(AppRadius.RADIUS_8),bottomRight: Radius.circular(AppRadius.RADIUS_8) )
-                                ),
-                                child: Text('立即购买', style: TextStyle(
-                                    fontSize: AppFontsize.SIZE_48,
-                                    color: Colors.white
-                                ))
+                        ),
+                        Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.all(AppSpace.SPACE_52),
+                          margin: EdgeInsets.only(top: AppSpace.SPACE_35),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(right:AppSpace.SPACE_52),
+                                    child: Text('服务', style: TextStyle(
+                                        fontSize: AppFontsize.SIZE_46,
+                                        color: AppColors.COLOR_GRAY_999999
+                                    )),
+                                  ),
+                                  Row(
+                                    children: [
+                                      _dot(),
+                                      Text('假一赔十', style: TextStyle(
+                                          fontSize: AppFontsize.SIZE_46,
+                                          color: AppColors.COLOR_BLACK_222222
+                                      )),
+                                      _dot(),
+                                      Text('极速退款', style: TextStyle(
+                                          fontSize: AppFontsize.SIZE_46,
+                                          color: AppColors.COLOR_BLACK_222222
+                                      ))
+                                    ],
+                                  )
+                                ],
+                              ),
+                              SizedBox(height: 10,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(right:AppSpace.SPACE_52),
+                                    child: Text('运费', style: TextStyle(
+                                        fontSize: AppFontsize.SIZE_46,
+                                        color: AppColors.COLOR_GRAY_999999
+                                    )),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text('¥ 0.00', style: TextStyle(
+                                          fontSize: AppFontsize.SIZE_46,
+                                          color: AppColors.COLOR_BLACK_222222
+                                      ))
+                                    ],
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        _goodsTab(),
+                        state.tabIndex.value == 0 ? Container(
+                            color: Colors.white,
+                            child: HtmlWidget(state.goodsDetail.value.content,textStyle: TextStyle(fontSize: 14),
+                            )
+                        ) : _Comment()
+                      ],
+                    ),
+                  )),
+                  Container(
+                    height: ScreenUtil().setWidth(200),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border(top: BorderSide(width: 1, color: AppColors.COLOR_GRAY_DDDDDD))
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            logic.onCollectGoods({'is_collect': isCollect ? 0 : 1,
+                              'goods_id': state.goodsDetail.value.id});
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(isCollect ? AppImages.ICON_22 : AppImages.ICON_21, width: ScreenUtil().setWidth(71), height: ScreenUtil().setWidth(71)),
+                              Text('${isCollect ? '已' : ''}收藏', style: TextStyle(
+                                  fontSize: AppFontsize.SIZE_32, color: AppColors.COLOR_BLACK_000000
+                              ))
+                            ],
+                          ),
+                        ),
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            mainLogic.onChangePageIndex(2);
+                            Get.offAllNamed(RouteConfig.main_page + '?pageIndex=2');
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(AppImages.ICON_23, width: ScreenUtil().setWidth(71), height: ScreenUtil().setWidth(71)),
+                              Text('购物车', style: TextStyle(
+                                  fontSize: AppFontsize.SIZE_32, color: AppColors.COLOR_BLACK_000000
+                              ))
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                onShowSheet('cart');
+                              },
+                              child: Container(
+                                  width: ScreenUtil().setWidth(339),
+                                  height: ScreenUtil().setWidth(138),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.COLOR_BLACK_000000,
+                                      borderRadius: BorderRadius.only(topLeft: Radius.circular(AppRadius.RADIUS_8),bottomLeft: Radius.circular(AppRadius.RADIUS_8) )
+                                  ),
+                                  child: Text('加入购物车', style: TextStyle(
+                                      fontSize: AppFontsize.SIZE_48,
+                                      color: Colors.white
+                                  ))
+                              ),
                             ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ));
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                onShowSheet('pay');
+                              },
+                              child: Container(
+                                  width: ScreenUtil().setWidth(339),
+                                  height: ScreenUtil().setWidth(138),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.COLOR_PRIMARY_D22315,
+                                      borderRadius: BorderRadius.only(topRight: Radius.circular(AppRadius.RADIUS_8),bottomRight: Radius.circular(AppRadius.RADIUS_8) )
+                                  ),
+                                  child: Text('立即购买', style: TextStyle(
+                                      fontSize: AppFontsize.SIZE_48,
+                                      color: Colors.white
+                                  ))
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          });
         }
         return SizedBox();
       });
   }
 
   void onShowSheet(String type) {
+    final List<GoodsSpec> goodsSpec = state.goodsDetail.value.goodsSpec;
     showMaterialModalBottomSheet(
         context: context,
         duration: Duration(milliseconds: 200),
@@ -266,16 +271,24 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                               Price(price: state.goodsDetail.value.price,)
                             ],
                           ),
-                          SizedBox(height: 20),
-                          Text('规格', style: TextStyle(
-                              fontSize: AppFontsize.SIZE_48,
-                              color: AppColors.COLOR_BLACK_000000
-                          )),
-                          SizedBox(height: 20),
-                          Wrap(
-                            spacing: 10,
-                            runSpacing: 10,
-                            children: List.generate(state.goodsDetail.value.goodsSpec.length, (index) =>  _specItem(state.goodsDetail.value.goodsSpec[index])),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(goodsSpec.length, (i) => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 20),
+                                Text(goodsSpec[i].name, style: TextStyle(
+                                    fontSize: AppFontsize.SIZE_48,
+                                    color: AppColors.COLOR_BLACK_000000
+                                )),
+                                SizedBox(height: 20),
+                                Wrap(
+                                  spacing: 10,
+                                  runSpacing: 10,
+                                  children: List.generate(goodsSpec[i].specValue.length, (index) =>  _specItem(goodsSpec[i].specValue[index])),
+                                ),
+                              ],
+                            )) ,
                           ),
                           SizedBox(height: 20),
                           Row(
@@ -435,7 +448,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
     );
   }
 
-  Widget _specItem(GoodsSpec item) {
+  Widget _specItem(SpecValue item) {
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: (){
@@ -446,7 +459,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
             decoration: BoxDecoration(
                 border: item.id == state.selectSpecId.value ? Border.all(color:AppColors.COLOR_PRIMARY_D22315) : Border.all(color:AppColors.COLOR_GRAY_C9C9C9)
             ),
-            child: Text(item.name, style: TextStyle(
+            child: Text(item.value, style: TextStyle(
                 color: item.id == state.selectSpecId.value ?  AppColors.COLOR_PRIMARY_D22315 : AppColors.COLOR_BLACK_000000,
                 fontSize: AppFontsize.SIZE_42
             ))

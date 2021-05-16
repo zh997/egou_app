@@ -133,6 +133,7 @@ class CartPage extends StatelessWidget {
                                await logic.onCartDel({
                                  'cart_id': selectCartIds
                                });
+                               logic.onChangeIsEditCart(state.isEditCart.value? false : true);
                                Get.back(result: 'success');
                              });
                            } else {

@@ -9,6 +9,7 @@ class GoodsDetailState {
   RxInt selectSpecId = 0.obs;
   RxInt tabIndex = 0.obs;
   RxInt num = 1.obs;
+  RxInt is_collect = 0.obs;
   GoodsDetailState() {
     ///Initialize variables
     current = 0.obs;
