@@ -100,11 +100,11 @@ class _MyStorePageState extends State<MyStorePage> {
                 Row(
                     children: [
                       _CircleButton(ButtonType.border, '加入购物车', () {
-
+                        Get.toNamed(RouteConfig.goods_detail + '?id=' + item.id.toString());
                       }),
                       SizedBox(width: 10),
                       _CircleButton(ButtonType.primary, '立即购买', (){
-
+                        Get.toNamed(RouteConfig.goods_detail + '?id=' + item.id.toString());
                       })
                     ]
                 )
