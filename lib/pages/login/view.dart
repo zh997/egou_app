@@ -77,6 +77,18 @@ class _LoginPageState extends State<LoginPage> {
                       final data = Utils.getFormValue(textFieldItems);
                       logic.onAccountLogin(data);
                     }, disabled: state.disabled.value)),
+                    SizedBox(height: 15,),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: (){
+                            Get.toNamed(RouteConfig.pwd_update + '?type=1');
+                          },
+                          child: Text('找回密码', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: ScreenUtil().setSp(48))),
+                        )
+                      ],
+                    )
                   ],
                 ),
               )

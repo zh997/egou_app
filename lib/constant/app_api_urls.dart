@@ -40,4 +40,6 @@ class AppApiUrls  {
   static String USER_MYTEAM = '/api/User/myTeam';
   static String COLLECT_GOODS = '/api/collect/handleCollectGoods';
   static String GET_COLLECT_GOODS = '/api/collect/getCollectGoods';
+  static String UPDATE_PAY_PWD = '/api/login_password/payForget';
+
 }

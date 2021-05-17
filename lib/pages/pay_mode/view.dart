@@ -159,7 +159,6 @@ class _PayModePageState extends State<PayModePage> {
                   padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, AppSpace.SPACE_52),
                   child:  RadiusButton('结算', onTap: (){
                     final Map<String, dynamic> data = {};
-
                     data['pay_way'] = pay_way;
                     data['use_integral'] = 0;
                     data['address_id'] = mainState.selectAddress.value.id;
@@ -170,12 +169,25 @@ class _PayModePageState extends State<PayModePage> {
                     } else {
                       // 普通商品购买
                       final List goods = [];
+
                       mainState.orderGoods.forEach((element) {
-                        goods.add({
-                          'item_id': element.goodsSpec.id,
-                          'num': element.num,
-                          'goods_id': element.id
-                        });
+                        if (element.itemId != null) {
+                          goods.add({
+                            'item_id': element.itemId,
+                            'num': element.num,
+                            'goods_id': element.id
+                          });
+                        } else if(element.goodsSpec != null && element.goodsSpec.length > 0) {
+                          final List<int> specIds = [];
+                          element.goodsSpec.forEach((goodSpecItem){
+                            specIds.add(goodSpecItem.specValue[0].id);
+                          });
+                          goods.add({
+                            'item_id': specIds.join(','),
+                            'num': element.num,
+                            'goods_id': element.id
+                          });
+                        }
                       });
                       data['goods'] = goods;
                       logic.onOrderBuy(data);

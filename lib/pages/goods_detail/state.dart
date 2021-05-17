@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 class GoodsDetailState {
   RxInt current;
   Rx<GoodsDetailModel> goodsDetail = GoodsDetailModel().obs;
-  RxInt selectSpecId = 0.obs;
+  RxList selectedGoodsSpec = [].obs;
+  RxList selectedGoodsSpecIds = [].obs;
   RxInt tabIndex = 0.obs;
   RxInt num = 1.obs;
   RxInt is_collect = 0.obs;

@@ -120,8 +120,11 @@ class _PwdUpdatePageState extends State<PwdUpdatePage> {
                     Obx(() => RadiusButton('确定',disabled: state.disabled.value, width: 903, height: 156, onTap: (){
                       if (!state.disabled.value) {
                         final data = Utils.getFormValue(textFieldItems);
-                        print(data);
-                        logic.onUpdateLoginPwd(data);
+                        if (int.parse(type) == 1) {
+                          logic.onUpdateLoginPwd(data);
+                        } else {
+                          logic.onUpdatePayPwd(data);
+                        }
                       }
                     }))
                   ]))

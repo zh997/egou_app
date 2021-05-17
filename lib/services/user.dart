@@ -32,4 +32,12 @@ class UserService {
     }
   }
 
+  // 修改交易密码
+  static Future<RealResponseData> updatePayPwd(Map<String, dynamic> data) async {
+    data['client'] = 2;
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.UPDATE_PAY_PWD, data , 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data));
+    }
+  }
 }

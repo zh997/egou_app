@@ -13,6 +13,7 @@ import 'package:egou_app/widgets/app_text_field.dart';
 import 'package:egou_app/widgets/app_upload_btn.dart';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart' as getx;
@@ -34,31 +35,44 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _collection_typeController = TextEditingController();
   final TextEditingController _business_contentController = TextEditingController();
+
+  final _pickedImages = <Image>[];
+
   File _image;
   final picker = ImagePicker();
 
+  // Future<void> _getImgFile() async {
+  //   html.File infos = await ImagePickerWeb.getImage(outputType: ImageType.file);
+  //   var formData = html.FormData();
+  //   formData.appendBlob("file", infos.slice(), infos.name);
+  //   await logic.uploadImg(formData, key);
+  // }
+
   Future getImage(String key) async {
-    // final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    // setState(() {
-    //   if (pickedFile != null) {
-    //     _image = File(pickedFile.path);
-    //     print(_image);
-    //     _upLoadImage(_image, key);
-    //   } else {
-    //     print('No image selected.');
-    //     EasyLoading.dismiss();
-    //   }
+    // // final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    // // setState(() {
+    // //   if (pickedFile != null) {
+    // //     _image = File(pickedFile.path);
+    // //     print(_image);
+    // //     _upLoadImage(_image, key);
+    // //   } else {
+    // //     print('No image selected.');
+    // //     EasyLoading.dismiss();
+    // //   }
+    // // });
+    //
+    // html.InputElement uploadInput = html.FileUploadInputElement();
+    // uploadInput.click();
+    // uploadInput.onChange.listen((e) async {
+    //   final files = uploadInput.files;
+    //   var formData = html.FormData();
+    //   formData.appendBlob("file", files[0].slice(), files[0].name);
+    //   await logic.uploadImg(files[0], key);
     // });
-
-    html.InputElement uploadInput = html.FileUploadInputElement();
-
-    uploadInput.click();
-    uploadInput.onChange.listen((e) async {
-      final files = uploadInput.files;
-      var formData = html.FormData();
-      formData.appendBlob("file", files[0].slice(), files[0].name);
-      await logic.uploadImg(formData, key);
-    });
+    html.File infos = await ImagePickerWeb.getImage(outputType: ImageType.file);
+    var formData = html.FormData();
+    formData.appendBlob("file", infos.slice(), infos.name);
+    await logic.uploadImg(formData, key);
   }
 
   _upLoadImage(File image, key) async {
@@ -231,7 +245,7 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
                      decoration: BoxDecoration(
                        color: Colors.white,
                      ),
-                     child:  RadiusButton('立即入驻', width: 903, height: 159, onTap: (){
+                     child:  RadiusButton('申请入驻', width: 903, height: 159, onTap: (){
                        final data = Utils.getFormValue(TextFieldItems);
                        data['collection_type'] = state.collection_type.value;
                        data['shop_photo'] = state.shop_photo.value.join(',');

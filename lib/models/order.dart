@@ -7,38 +7,46 @@ class OrderGoodsModel {
   int id;
   String image;
   String name;
-  GoodsSpec goodsSpec;
+  List<GoodsSpec> goodsSpec;
+  String specValueStr;
+  String itemId;
   int num;
   String price;
 
   OrderGoodsModel(
-      {this.image, this.name, this.goodsSpec, this.num, this.price, this.id});
+      {this.id, this.image, this.name, this.goodsSpec, this.num, this.price, this.specValueStr, this.itemId});
 
   OrderGoodsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     image = json['image'];
     name = json['name'];
-    goodsSpec = json['goods_spec'] != null
-        ? new GoodsSpec.fromJson(json['goods_spec'])
-        : null;
+    if (json['goods_spec'] != null) {
+      goodsSpec = new List<GoodsSpec>();
+      json['goods_spec'].forEach((v) {
+        goodsSpec.add(new GoodsSpec.fromJson(v));
+      });
+    }
+    itemId = json['item_id'];
+    specValueStr = json['spec_value_str'];
     num = json['num'];
     price = json['price'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['image'] = this.image;
     data['name'] = this.name;
     if (this.goodsSpec != null) {
-      data['goods_spec'] = this.goodsSpec.toJson();
+      data['goods_spec'] = this.goodsSpec.map((v) => v.toJson()).toList();
     }
+    data['item_id'] = this.itemId;
+    data['spec_value_str'] = this.specValueStr;
     data['num'] = this.num;
     data['price'] = this.price;
-    data['id'] = this.id;
     return data;
   }
 }
-
 
 class OrderBuyModel {
   String orderId;

@@ -101,7 +101,7 @@ class RouteConfig {
     GetPage(name: concat_us, page: () => ConcatUsPage(),middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: setting_center, page: () => SettingCenterPage(),middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: edit_address, page: () => EditAddressPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
-    GetPage(name: pwd_update, page: () => PwdUpdatePage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
+    GetPage(name: pwd_update, page: () => PwdUpdatePage() ),
     GetPage(name: be_guest, page: () => BeGuestPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: balance_page, page: () => BalancePage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: withdrawal_page, page: () => WithdrawalPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),

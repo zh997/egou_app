@@ -91,15 +91,14 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                              )),
                            ),
                            SizedBox(height: 15),
-                           // Column(
-                           //   children: List.generate(mainState.orderGoods.value.length, (index) => _CartItem(context,
-                           //       mainState.orderGoods.value[index])),
-                           // ),
                            Column(
-                             children: List.generate(orderGoods.length, (index) =>  OrderItem(img: orderGoods[index].image,
-                               name: orderGoods[index].name, price: orderGoods[index].price, specValueStr: orderGoods[index].goodsSpec != null ? orderGoods[index].goodsSpec.name : null,)),
+                             children: List.generate(orderGoods.length, (index) => Padding(
+                               padding: EdgeInsets.only(bottom: 10),
+                               child: OrderItem(img: orderGoods[index].image,
+                                 name: orderGoods[index].name, price: orderGoods[index].price, goodsSpec: orderGoods[index].goodsSpec,
+                                 specValueStr: orderGoods[index].specValueStr, num:  orderGoods[index].num,) ,
+                             )),
                            ),
-
                          ],
                        ),
                      ),
@@ -230,47 +229,6 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
         ),
         Image.asset(AppImages.ARROW_RIGHT_ICON, width: ScreenUtil().setWidth(23), height: ScreenUtil().setWidth(52))
       ],
-    );
-  }
-
-
-  Widget _CartItem(context, OrderGoodsModel item) {
-    print(item.name);
-    print(item.price);
-    return Container(
-      color: Colors.white,
-      margin: EdgeInsets.only(bottom: 15),
-      child: Row(
-        children: [
-          Container(
-            width:  ScreenUtil().setWidth(300),
-            height:  ScreenUtil().setWidth(300),
-            margin: EdgeInsets.only(right: 20),
-            decoration: BoxDecoration(
-                border: Border.all(color: AppColors.COLOR_GRAY_F4F4F4, width: 3)
-            ),
-            child: Image.network(item.image, fit: BoxFit.cover),
-          ),
-          Expanded(child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(item.name, style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_48), maxLines: 2, overflow: TextOverflow.ellipsis,),
-              SizedBox(height: 5),
-              item.goodsSpec != null ? Text(item.goodsSpec.name, style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1): SizedBox(),
-              SizedBox(height: 5),
-              Text('数量 x${item.num}', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_41), maxLines: 1),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Price(price: item.price,)
-                ],
-              )
-            ],
-          ))
-        ],
-      ),
     );
   }
 }

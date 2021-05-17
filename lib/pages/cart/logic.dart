@@ -68,11 +68,8 @@ class CartLogic extends GetxController {
       final Map<String, dynamic> goods = {};
       if (isDel) {
         if (data != null && item['selected'] == 1 &&  data['cart_id'].indexOf(item['cart_id']) == -1) {
-          goods['goods_spec'] = {
-            'id': item['item_id'],
-            'goods_id': item['goods_id'],
-            'name': item['spec_value_str']
-          };
+          goods['spec_value_str'] = item['spec_value_str'];
+          goods['item_id'] = item['item_id'].toString();
           goods['image'] = item['img'];
           goods['name'] = item['name'];
           goods['num'] = item['goods_num'];
@@ -89,12 +86,9 @@ class CartLogic extends GetxController {
           item['selected'] = element.selected == 1 ? 0 : 1;
         }
         if (item['selected'] == 1) {
-          goods['goods_spec'] = {
-            'id': item['item_id'],
-            'goods_id': item['goods_id'],
-            'name': item['spec_value_str']
-          };
+          goods['spec_value_str'] = item['spec_value_str'];
           goods['image'] = item['img'];
+          goods['item_id'] = item['item_id'].toString();
           goods['name'] = item['name'];
           goods['num'] = item['goods_num'];
           goods['price'] = item['price'];

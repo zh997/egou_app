@@ -242,129 +242,149 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
   }
 
   void onShowSheet(String type) {
-    final List<GoodsSpec> goodsSpec = state.goodsDetail.value.goodsSpec;
     showMaterialModalBottomSheet(
         context: context,
         duration: Duration(milliseconds: 200),
-        builder: (BuildContext context) => Container(
-            height: 500,
-            color: Colors.white,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Column(
-                  children: [
-                    Expanded(child: SingleChildScrollView(
-                      padding: EdgeInsets.all(AppSpace.SPACE_40),
-                      child:  Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment:CrossAxisAlignment.end,
-                            children: [
-                              Container(
-                                width: ScreenUtil().setWidth(366),
-                                height: ScreenUtil().setWidth(366),
-                                margin: EdgeInsets.only(right: 20),
-                                child: Image.network(state.goodsDetail.value.image, fit:BoxFit.cover),
-                              ),
-                              Price(price: state.goodsDetail.value.price,)
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: List.generate(goodsSpec.length, (i) => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+        builder: (BuildContext context) => Obx(() {
+          final List<GoodsSpec> goodsSpec = state.goodsDetail.value.goodsSpec;
+          final List<GoodsItem> goodsItem = state.goodsDetail.value.goodsItem;
+          final List selectedGoodsSpec = state.selectedGoodsSpec.value;
+          final List selectedGoodsSpecIds = state.selectedGoodsSpecIds.value;
+          GoodsItem selectedGoodsItem = GoodsItem();
+          if (selectedGoodsSpecIds.length == selectedGoodsSpec.length) {
+            goodsItem.forEach((element) {
+              if (element.specValueIds == selectedGoodsSpecIds.join(',')){
+                selectedGoodsItem = element;
+              }
+            });
+          }
+          return Container(
+              height: 500,
+              color: Colors.white,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Column(
+                    children: [
+                      Expanded(child: SingleChildScrollView(
+                        padding: EdgeInsets.all(AppSpace.SPACE_40),
+                        child:  Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment:CrossAxisAlignment.end,
                               children: [
-                                SizedBox(height: 20),
-                                Text(goodsSpec[i].name, style: TextStyle(
+                                Container(
+                                  width: ScreenUtil().setWidth(366),
+                                  height: ScreenUtil().setWidth(366),
+                                  margin: EdgeInsets.only(right: 20),
+                                  child: Image.network(selectedGoodsItem.id != null ? selectedGoodsItem.image : state.goodsDetail.value.image, fit:BoxFit.cover),
+                                ),
+                                Price(price:selectedGoodsItem.id != null ? selectedGoodsItem.price : state.goodsDetail.value.price,)
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: List.generate(goodsSpec.length, (i) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 20),
+                                  Text(goodsSpec[i].name, style: TextStyle(
+                                      fontSize: AppFontsize.SIZE_48,
+                                      color: AppColors.COLOR_BLACK_000000
+                                  )),
+                                  SizedBox(height: 20),
+                                  Wrap(
+                                    spacing: 10,
+                                    runSpacing: 10,
+                                    children: List.generate(goodsSpec[i].specValue.length, (index) =>  _specItem(goodsSpec[i], goodsSpec[i].specValue[index])),
+                                  ),
+                                ],
+                              )) ,
+                            ),
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('购买数量', style: TextStyle(
                                     fontSize: AppFontsize.SIZE_48,
                                     color: AppColors.COLOR_BLACK_000000
                                 )),
-                                SizedBox(height: 20),
-                                Wrap(
-                                  spacing: 10,
-                                  runSpacing: 10,
-                                  children: List.generate(goodsSpec[i].specValue.length, (index) =>  _specItem(goodsSpec[i].specValue[index])),
-                                ),
+                                Obx(() => Counter(leftTap: (){
+                                  if (state.num.value > 1) {
+                                    logic.onChangeNum(state.num.value - 1);
+                                  }
+                                },rightTap: () {
+                                  if (state.num.value < state.goodsDetail.value.stock) {
+                                    logic.onChangeNum(state.num.value + 1);
+                                  }
+                                },num: state.num.value))
                               ],
-                            )) ,
-                          ),
-                          SizedBox(height: 20),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('购买数量', style: TextStyle(
-                                  fontSize: AppFontsize.SIZE_48,
-                                  color: AppColors.COLOR_BLACK_000000
-                              )),
-                              Obx(() => Counter(leftTap: (){
-                                if (state.num.value > 1) {
-                                  logic.onChangeNum(state.num.value - 1);
-                                }
-                              },rightTap: () {
-                                if (state.num.value < state.goodsDetail.value.stock) {
-                                  logic.onChangeNum(state.num.value + 1);
-                                }
-                              },num: state.num.value))
-                            ],
-                          )
-                        ],
-                      ) ,
-                    )),
-                    GestureDetector(
-                      onTap: (){
-                        if (state.goodsDetail.value.goodsSpec.length > 0 && state.selectSpecId.value == 0) {
-                          return  EasyLoading.showToast('请选择规格');
-                        }
-                        final Map<String, dynamic> data = {};
-                        state.goodsDetail.value.goodsSpec.forEach((element) {
-                          if (element.id == state.selectSpecId.value){
-                            data['goods_spec'] = element.toJson();
+                            )
+                          ],
+                        ) ,
+                      )),
+                      GestureDetector(
+                        onTap: (){
+                          bool isPass = true;
+                          for (var i = selectedGoodsSpec.length - 1; i >= 0; i -- ) {
+                            if (selectedGoodsSpec[i].specValue.length == 0) {
+                              isPass = false;
+                              EasyLoading.showToast('请选择${selectedGoodsSpec[i].name}');
+                              continue;
+                            }
                           }
-                        });
-                        data['image'] = state.goodsDetail.value.image;
-                        data['name'] = state.goodsDetail.value.name;
-                        data['num'] = state.num.value;
-                        data['price'] = state.goodsDetail.value.price;
-                        data['id'] = state.goodsDetail.value.id;
-                        if (state.goodsDetail.value.stock > 0) {
-                          mainLogic.onSelectOrderGoods([OrderGoodsModelFromJson(data)]);
-                          if (type == 'pay') {
-                            Get.toNamed(RouteConfig.confirm_order);
-                          } else if (type == 'cart'){
-                            logic.onAddCart({
-                              'item_id': state.selectSpecId.value,
-                              'goods_num': state.num.value
+                          if (isPass) {
+                            final Map<String, dynamic> data = {};
+                            final List good_spec = [];
+                            selectedGoodsSpec.forEach((element) {
+                              good_spec.add(element.toJson());
                             });
+                            data['goods_spec'] = good_spec;
+                            data['image'] = state.goodsDetail.value.image;
+                            data['name'] = state.goodsDetail.value.name;
+                            data['num'] = state.num.value;
+                            data['price'] = selectedGoodsItem.price;
+                            data['id'] = state.goodsDetail.value.id;
+                            if (state.goodsDetail.value.stock > 0) {
+                              mainLogic.onSelectOrderGoods([OrderGoodsModelFromJson(data)]);
+                              if (type == 'pay') {
+                                Get.toNamed(RouteConfig.confirm_order);
+                              } else if (type == 'cart'){
+                                logic.onAddCart({
+                                  'item_id': state.selectedGoodsSpecIds.value.join(','),
+                                  'goods_num': state.num.value
+                                });
+                              }
+                            } else {
+                              EasyLoading.showToast('库存不足');
+                            }
                           }
-                        } else {
-                          EasyLoading.showToast('库存不足');
-                        }
-                      },
-                      child: Container(
-                        height: ScreenUtil().setWidth(282),
-                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            border: Border(top:BorderSide(color: AppColors.COLOR_GRAY_C9C9C9, width: 1))
+                        },
+                        child: Container(
+                          height: ScreenUtil().setWidth(282),
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              border: Border(top:BorderSide(color: AppColors.COLOR_GRAY_C9C9C9, width: 1))
+                          ),
+                          child: RadiusButton(type == 'cart' ? '加入购物车' : '立即购买'),
                         ),
-                        child: RadiusButton(type == 'cart' ? '加入购物车' : '立即购买'),
-                      ),
-                    )
-                  ],
-                ),
-                Positioned(
-                    top: 15,
-                    right: 15,
-                    child: GestureDetector(
-                      onTap: () {Get.back(result: 'success');},
-                      child: Icon(Icons.close, color: AppColors.COLOR_GRAY_707070,),
-                    )
-                )
-              ],
-            )
-        )
+                      )
+                    ],
+                  ),
+                  Positioned(
+                      top: 15,
+                      right: 15,
+                      child: GestureDetector(
+                        onTap: () {Get.back(result: 'success');},
+                        child: Icon(Icons.close, color: AppColors.COLOR_GRAY_707070,),
+                      )
+                  )
+                ],
+              )
+          );
+        })
     );
   }
 
@@ -448,22 +468,26 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
     );
   }
 
-  Widget _specItem(SpecValue item) {
+  Widget _specItem(GoodsSpec goodsSpec, SpecValue specValue) {
+
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: (){
-          logic.onChangeSelectSpecId(item.id);
+          logic.onChangeSelectedGoodsSpec(goodsSpec.id, specValue);
         },
-        child: Obx(() => Container(
-            padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-            decoration: BoxDecoration(
-                border: item.id == state.selectSpecId.value ? Border.all(color:AppColors.COLOR_PRIMARY_D22315) : Border.all(color:AppColors.COLOR_GRAY_C9C9C9)
-            ),
-            child: Text(item.value, style: TextStyle(
-                color: item.id == state.selectSpecId.value ?  AppColors.COLOR_PRIMARY_D22315 : AppColors.COLOR_BLACK_000000,
-                fontSize: AppFontsize.SIZE_42
-            ))
-        ))
+        child: Obx(() {
+          final List selectedGoodsSpecIds = state.selectedGoodsSpecIds.value;
+          return  Container(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+              decoration: BoxDecoration(
+                  border: selectedGoodsSpecIds.indexOf(specValue.id) != -1 ? Border.all(color:AppColors.COLOR_PRIMARY_D22315) : Border.all(color:AppColors.COLOR_GRAY_C9C9C9)
+              ),
+              child: Text(specValue.value, style: TextStyle(
+                  color:  selectedGoodsSpecIds.indexOf(specValue.id) != -1 ?  AppColors.COLOR_PRIMARY_D22315 : AppColors.COLOR_BLACK_000000,
+                  fontSize: AppFontsize.SIZE_42
+              ))
+          );
+        })
     );
   }
 

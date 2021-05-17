@@ -46,4 +46,13 @@ class PwdUpdateLogic extends GetxController {
       Get.back();
     }
   }
+
+  Future onUpdatePayPwd (Map<String, dynamic> data) async {
+    EasyLoading.show(status: '加载中');
+    final RealResponseData response = await UserService.updatePayPwd(data);
+    if (response.result) {
+      EasyLoading.showToast('修改成功!');
+      Get.back();
+    }
+  }
 }
