@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'dart:html' as html;
-import 'dart:math';
-import 'package:dio/dio.dart';
-import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
@@ -50,14 +48,10 @@ class _PublishCommentsPageState extends State<PublishCommentsPage> {
   ];
 
   Future getImage() async {
-    html.InputElement uploadInput = html.FileUploadInputElement();
-    uploadInput.click();
-    uploadInput.onChange.listen((e) async {
-      final files = uploadInput.files;
-      var formData = html.FormData();
-      formData.appendBlob("file", files[0].slice(), files[0].name);
-      await logic.uploadImg(formData);
-    });
+    html.File infos = await ImagePickerWeb.getImage(outputType: ImageType.file);
+    var formData = html.FormData();
+    formData.appendBlob("file", infos.slice(), infos.name);
+    await logic.uploadImg(formData);
   }
 
   @override

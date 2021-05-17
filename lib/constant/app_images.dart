@@ -1,6 +1,6 @@
 class AppImages {
   static String APP_LOGO = 'static/images/app_logo.png';
-  static String APP_OPEN_LOGO = 'static/images/app_open_logo.png';
+  static String APP_OPEN_LOGO = 'static/images/app_open_logo.jpg';
   static String TABBAR_HOME_ICON = 'static/images/tabbar_home_icon.png';
   static String TABBAR_HOME_SELECTED_ICON = 'static/images/tabbar_home_selected_icon.png';
   static String TABBAR_BILL_ICON = 'static/images/tabbar_bill_icon.png';

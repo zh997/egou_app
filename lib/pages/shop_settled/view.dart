@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'dart:html' as html;
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
 import 'package:egou_app/common/utils.dart';
-import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
@@ -14,7 +12,6 @@ import 'package:egou_app/widgets/app_upload_btn.dart';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker_web/image_picker_web.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart' as getx;
 import 'package:image_picker/image_picker.dart';

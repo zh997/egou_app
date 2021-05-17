@@ -42,26 +42,27 @@ class _MyStorePageState extends State<MyStorePage> {
           return Scaffold(
               appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '我的收藏'),
               body: SafeArea(
-                  child: EasyRefresh.custom(
-                      slivers: [
-                         SliverToBoxAdapter(child:  SizedBox(height: 15),),
-                        collectGoods.length > 0 ? SliverToBoxAdapter(child: Container(
-                           color: Colors.white,
-                           padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
-                           child: Column(
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                             children: [
-                               Text('${collectGoods.length}件商品', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
-                               Divider(),
-                               SizedBox(height: 15,)
-                             ],
-                           ),
-                         ),): SliverToBoxAdapter(child: SizedBox(),),
-                        collectGoods.length > 0 ? SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index){
-                          return  _storeItem(collectGoods[index]);
-                        },childCount: collectGoods.length),) : SliverPadding(padding: EdgeInsets.only(top: 100) , sliver: SliverToBoxAdapter(child: Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
-                          Get.offAllNamed(RouteConfig.main_page);},),),)
-                      ],
+                  child: Column(
+                    children: [
+                      collectGoods.length > 0 ? Expanded(child: EasyRefresh.custom(
+                        slivers: [
+                          SliverToBoxAdapter(child:  SizedBox(height: 15),),
+                          SliverToBoxAdapter(child: Container(
+                            color: Colors.white,
+                            padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('${collectGoods.length}件商品', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
+                                Divider(),
+                                SizedBox(height: 15,)
+                              ],
+                            ),
+                          ),)
+                        ],
+                      )) : Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
+                        Get.offAllNamed(RouteConfig.main_page);},)
+                    ],
                   )
               )
           );

@@ -116,7 +116,7 @@ class _PwdUpdatePageState extends State<PwdUpdatePage> {
                       final isPass = Utils.validate(context, textFieldItems, false);
                       logic.onChangeDisabled(!isPass);
                     }),
-                    SizedBox(height: 50),
+                    SizedBox(height: 20),
                     Obx(() => RadiusButton('确定',disabled: state.disabled.value, width: 903, height: 156, onTap: (){
                       if (!state.disabled.value) {
                         final data = Utils.getFormValue(textFieldItems);

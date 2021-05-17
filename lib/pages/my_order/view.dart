@@ -80,26 +80,30 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
                 ),
                 Expanded(child: TabBarView(
                   controller: tabController,
-                  children: List.generate(OrderTabValueItems.length, (index) => EasyRefresh.custom(
-                    header: MaterialHeader(),
-                    footer: MaterialFooter(enableInfiniteLoad: false),
-                    onRefresh: _onRefresh,
-                    onLoad: _onLoad,
-                    slivers: <Widget>[
-                      SliverToBoxAdapter(
-                        child: SizedBox(height: 15),
-                      ),
-                      orderList.length > 0 ? SliverList(
-                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                          return Padding(
-                            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            child: _OrderItem(orderList[index]),
-                          );
-                        }, childCount: orderList.length
-                        ),
-                      ) : SliverPadding(padding: EdgeInsets.only(top: 100) , sliver: SliverToBoxAdapter(child: Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
-                        Get.offAllNamed(RouteConfig.main_page);},),),)
-                    ],
+                  children: List.generate(OrderTabValueItems.length, (index) => Column(
+                      children: [
+                        orderList.length > 0 ? EasyRefresh.custom(
+                          header: MaterialHeader(),
+                          footer: MaterialFooter(enableInfiniteLoad: false),
+                          onRefresh: _onRefresh,
+                          onLoad: _onLoad,
+                          slivers: <Widget>[
+                            SliverToBoxAdapter(
+                              child: SizedBox(height: 15),
+                            ),
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                                return Padding(
+                                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                  child: _OrderItem(orderList[index]),
+                                );
+                              }, childCount: orderList.length
+                              ),
+                            )
+                          ],
+                        ) : Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
+                          Get.offAllNamed(RouteConfig.main_page);},)
+                      ],
                   )),
                 ))
               ],
