@@ -48,3 +48,40 @@ class OrderStatus {
 
   OrderStatus({this.status, this.text, this.icon});
 }
+
+
+/**
+ * 商城类型:1-社区商城; 2-场景商城;
+ * */
+class MallType{
+  static int community_mall = 1;
+  static int scene_mall = 2;
+}
+
+/****
+ * 卡片列表类型: 0微信 1支付宝 2 银行卡
+ * */
+
+class CardListType {
+  static int wachat = 0;
+  static int ali = 1;
+  static int bank = 2;
+}
+
+/****
+ * 银行卡类型: 1储蓄卡、2信用卡 3其他
+ * */
+
+final BankCardTypeList = [
+  BankCardTypeItem(type: 1, text: '储蓄卡'),
+  BankCardTypeItem(type: 2, text: '信用卡'),
+  BankCardTypeItem(type: 3, text: '其他')
+];
+
+class BankCardTypeItem{
+  final int type;
+  final String text;
+
+  BankCardTypeItem({this.type, this.text});
+
+}

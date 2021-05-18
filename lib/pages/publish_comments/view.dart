@@ -1,17 +1,20 @@
-import 'dart:io';
-import 'dart:html' as html;
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:egou_app/models/order_detail.dart';
-import 'package:get/get.dart';
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
+// import 'package:universal_html/html.dart' as html;
+// import 'package:image_picker_web/image_picker_web.dart';
+import 'package:get/get.dart' as getx;
 
 import 'logic.dart';
 import 'state.dart';
@@ -23,11 +26,15 @@ class PublishCommentsPage extends StatefulWidget {
 }
 
 class _PublishCommentsPageState extends State<PublishCommentsPage> {
-  final PublishCommentsLogic logic = Get.put(PublishCommentsLogic());
-  final PublishCommentsState state = Get.find<PublishCommentsLogic>().state;
+  final PublishCommentsLogic logic = getx.Get.put(PublishCommentsLogic());
+  final PublishCommentsState state = getx.Get.find<PublishCommentsLogic>().state;
   final TextEditingController _commentController = TextEditingController();
+
+  File _image;
+  final ImagePicker _picker = ImagePicker();
+
   Future _futtur;
-  String id = Get.parameters['id'];
+  String id = getx.Get.parameters['id'];
 
   final List SmilingFaceMap = [
     {
@@ -48,10 +55,33 @@ class _PublishCommentsPageState extends State<PublishCommentsPage> {
   ];
 
   Future getImage() async {
-    html.File infos = await ImagePickerWeb.getImage(outputType: ImageType.file);
-    var formData = html.FormData();
-    formData.appendBlob("file", infos.slice(), infos.name);
-    await logic.uploadImg(formData);
+    final pickedFile = await _picker.getImage(source: ImageSource.gallery, imageQuality: 1);
+    if (pickedFile != null) {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        _upLoadImage(_image);
+      } else {
+        EasyLoading.dismiss();
+      }
+    } else {
+      EasyLoading.dismiss();
+    }
+    // html.File infos = await ImagePickerWeb.getImage(outputType: ImageType.file);
+    // var formData = html.FormData();
+    // formData.appendBlob("file", infos.slice(), infos.name);
+    // await logic.uploadImg(formData);
+  }
+
+  _upLoadImage(File image) async {
+
+    String path = image.path;
+    var name = path.substring(path.lastIndexOf("/") + 1, path.length);
+    FormData formdata = FormData.fromMap({
+      "file": await MultipartFile.fromFile(path, filename:name)
+    });
+
+    await logic.appUploadImg(formdata);
+
   }
 
   @override
@@ -68,7 +98,7 @@ class _PublishCommentsPageState extends State<PublishCommentsPage> {
         return Scaffold(
           appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '发表评论'),
           body: SafeArea(
-            child: Obx((){
+            child: getx.Obx((){
               final int description_comment = state.description_comment.value;
               final int service_comment = state.service_comment.value;
               final int express_comment = state.express_comment.value;

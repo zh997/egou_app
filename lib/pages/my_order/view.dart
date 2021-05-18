@@ -3,6 +3,7 @@ import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_enums.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
+import 'package:egou_app/constant/app_refresh.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/models/home.dart';
 import 'package:egou_app/models/order_list.dart';
@@ -82,9 +83,9 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
                   controller: tabController,
                   children: List.generate(OrderTabValueItems.length, (index) => Column(
                       children: [
-                        orderList.length > 0 ? EasyRefresh.custom(
-                          header: MaterialHeader(),
-                          footer: MaterialFooter(enableInfiniteLoad: false),
+                        orderList.length > 0 ? Expanded(child: EasyRefresh.custom(
+                          header: AppRefresh.getHeader(GlobalKey()),
+                          footer: AppRefresh.getFooter(GlobalKey()),
                           onRefresh: _onRefresh,
                           onLoad: _onLoad,
                           slivers: <Widget>[
@@ -101,7 +102,7 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
                               ),
                             )
                           ],
-                        ) : Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
+                        ) ) : Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
                           Get.offAllNamed(RouteConfig.main_page);},)
                       ],
                   )),

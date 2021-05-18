@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:html' as html;
+import 'package:universal_html/html.dart' as html;
 import 'package:dio/dio.dart';
 import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/http/http_request.dart';
@@ -9,6 +9,15 @@ import 'package:egou_app/models/global.dart';
 import 'package:egou_app/models/my_collect_item.dart';
 
 class CommonService {
+
+  // 上传图片
+  static Future<RealResponseData> uploadImg(data) async {
+    final DioResponseData response = await HttpRequest.request('http://shop.hlnsqz.cn/api/file/formimage', data, 'POST');
+    print(response.data);
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: uploadImgModelFromJson));
+    }
+  }
 
   // 商家入驻
   static Future<RealResponseData> entryAdd( Map<String, dynamic> data) async {

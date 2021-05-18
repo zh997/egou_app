@@ -1,4 +1,5 @@
 import 'package:egou_app/common/routes.dart';
+import 'package:egou_app/common/storage.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_enums.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
@@ -314,23 +315,28 @@ class MyPage extends StatelessWidget {
                       ]),
                 ),
                 SizedBox(height: 20),
-                // GestureDetector(
-                //   behavior: HitTestBehavior.opaque,
-                //   onTap: () {
-                //     Get.toNamed(RouteConfig.bank_card_list);
-                //   },
-                //   child: Container(
-                //     color: Colors.white,
-                //     padding: EdgeInsets.all(20),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //       children: [
-                //         Text('绑定银行卡/微信号/付宝账号', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
-                //         Image.asset(AppImages.ARROW_RIGHT_ICON, width: 8, height: 18)
-                //       ],
-                //     ),
-                //   ),
-                // )
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    AppAnimatedDialog.onShowAnimatedDialog(context, '确定退出登录吗？', () async {
+                      AppStorage.remove('token');
+                      Get.offAllNamed(RouteConfig.login_page);
+                    });
+                  },
+                  child: Container(
+                      padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
+                      color: Colors.white,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.logout, color: AppColors.COLOR_PRIMARY_D22315),
+                            SizedBox(width: 5),
+                            Text('退出登录', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_48))
+                          ]
+                      )
+                  ) ,
+                ),
+                SizedBox(height: 20),
               ],
             ),
           ),

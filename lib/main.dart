@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           designSize: Size(1125, 2346),
           allowFontScaling: false,
           builder: () => GetMaterialApp(
-            title: 'egou app',
+            title: '牛木马app',
             builder: (context, child){
               return EasyLoading.init()(context, Scaffold(
                 // Global GestureDetector that will dismiss the keyboard

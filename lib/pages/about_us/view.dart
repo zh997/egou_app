@@ -4,6 +4,7 @@ import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:egou_app/common/routes.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
@@ -20,21 +21,21 @@ class AboutUsPage extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(height: 15),
-          _listItem('当前版本',rightText: Text('v1.0.2', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48))),
+          _listItem('当前版本',rightText: Text('v1.0.0', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48))),
           SizedBox(height: 15),
-          _listItem('最新版本', rightText: Text('v1.0.2', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48))),
+          _listItem('最新版本', rightText: Text('v1.0.0', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48))),
           SizedBox(height: 15),
-          _listItem('用户协议')
+          _listItem('用户协议',onTap: (){
+             Get.toNamed(RouteConfig.agreenment_page);
+          })
         ]
       )
     );
   }
 
-  Widget _listItem(text, {rightText}) {
+  Widget _listItem(text, {rightText,Function onTap}) {
     return InkWell(
-        onTap: () {
-          Get.toNamed(RouteConfig.shop_detail);
-        },
+        onTap: onTap,
         child: Container(
             padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
             color: Colors.white,

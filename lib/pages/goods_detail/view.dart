@@ -258,6 +258,9 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
               }
             });
           }
+          if (selectedGoodsItem.id != null && selectedGoodsItem.stock <= 0) {
+            EasyLoading.showToast('库存不足');
+          }
           return Container(
               height: 500,
               color: Colors.white,
@@ -311,12 +314,21 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                                     color: AppColors.COLOR_BLACK_000000
                                 )),
                                 Obx(() => Counter(leftTap: (){
-                                  if (state.num.value > 1) {
-                                    logic.onChangeNum(state.num.value - 1);
+                                  if (selectedGoodsItem.id == null){
+                                    EasyLoading.showToast('请先选择规格');
+                                  } else {
+                                    if (state.num.value > 1) {
+                                      logic.onChangeNum(state.num.value - 1);
+                                    }
                                   }
+
                                 },rightTap: () {
-                                  if (state.num.value < state.goodsDetail.value.stock) {
-                                    logic.onChangeNum(state.num.value + 1);
+                                  if (selectedGoodsItem.id == null){
+                                    EasyLoading.showToast('请先选择规格');
+                                  } else {
+                                    if (state.num.value <  selectedGoodsItem.stock) {
+                                      logic.onChangeNum(state.num.value + 1);
+                                    }
                                   }
                                 },num: state.num.value))
                               ],
@@ -346,7 +358,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                             data['num'] = state.num.value;
                             data['price'] = selectedGoodsItem.price;
                             data['id'] = state.goodsDetail.value.id;
-                            if (state.goodsDetail.value.stock > 0) {
+                            if (selectedGoodsItem.stock > 0) {
                               mainLogic.onSelectOrderGoods([OrderGoodsModelFromJson(data)]);
                               if (type == 'pay') {
                                 Get.toNamed(RouteConfig.confirm_order);

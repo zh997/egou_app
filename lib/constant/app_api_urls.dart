@@ -41,5 +41,10 @@ class AppApiUrls  {
   static String COLLECT_GOODS = '/api/collect/handleCollectGoods';
   static String GET_COLLECT_GOODS = '/api/collect/getCollectGoods';
   static String UPDATE_PAY_PWD = '/api/login_password/payForget';
+  static String USER_ADD_BANKCARD = '/api/User/addCard';
+  static String USER_BANKCARD_LIST = '/api/User/cardList';
+  static String SHOP_SETTING_ABOUT = '/api/Shop_Setting/about';
+  static String SHOP_SETTING_POLICY = '/api/Shop_Setting/policy';
+
 
 }

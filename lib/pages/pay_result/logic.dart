@@ -7,7 +7,7 @@ import 'state.dart';
 class PayResultLogic extends GetxController {
   final state = PayResultState();
   Future onCategoryData (int category_id) async  {
-    final RealResponseData response2 = await HomeService.goodsList(1, 1);
+    final RealResponseData response2 = await HomeService.goodsList(1, category_id: 1);
     if (response2.result) {
       state.goodsList.value = response2.data;
     }

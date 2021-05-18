@@ -8,7 +8,7 @@ class PointsMallLogic extends GetxController {
   final state = PointsMallState();
   Future onGoodsList(int category_id) async  {
     EasyLoading.show(status: '加载中');
-    final RealResponseData response2 = await HomeService.goodsList(1, category_id);
+    final RealResponseData response2 = await HomeService.goodsList(1, category_id: category_id);
     if (response2.result) {
       state.goodsList.value = response2.data;
       state.hasMore.value = response2.more;
@@ -19,7 +19,7 @@ class PointsMallLogic extends GetxController {
   Future onLoadMore(int category_id) async {
     if (state.hasMore.value > 0) {
       final page = state.page.value + 1;
-      final RealResponseData response = await HomeService.goodsList(page, category_id);
+      final RealResponseData response = await HomeService.goodsList(page, category_id: category_id);
       final List list =  state.goodsList.value;
       list.addAll(response.data);
       state.goodsList.value = list;

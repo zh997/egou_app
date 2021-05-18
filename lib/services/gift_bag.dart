@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:html' as html;
+import 'package:universal_html/html.dart' as html;
 import 'package:dio/dio.dart';
 import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/http/http_request.dart';

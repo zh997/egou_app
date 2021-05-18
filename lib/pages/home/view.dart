@@ -1,7 +1,8 @@
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
-import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
+import 'package:egou_app/constant/app_enums.dart';
+import 'package:egou_app/constant/app_refresh.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/constant/app_strings.dart';
 import 'package:egou_app/widgets/goods_item.dart';
@@ -11,12 +12,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_easyrefresh/material_header.dart';
-import 'package:flutter_easyrefresh/material_footer.dart';
 import 'logic.dart';
 import 'state.dart';
 
@@ -78,8 +76,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
                       Expanded(child: TabBarView(
                         controller: tabController,
                         children: List.generate(state.Category.value.length, (index) => EasyRefresh.custom(
-                          header: MaterialHeader(),
-                          footer: MaterialFooter(enableInfiniteLoad: false),
+                          header: AppRefresh.getHeader(GlobalKey()),
+                          footer: AppRefresh.getFooter(GlobalKey()),
                           onRefresh: () async => await logic.onCategoryData(category_id),
                           onLoad: () async => await logic.onLoadMore(category_id),
                           slivers: <Widget>[
@@ -154,7 +152,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
               alignment: Alignment.center,
               child: Row(
                 children: [
-                  Expanded(child: Search('搜索商品')),
+                  Expanded(child: Search('搜索商品', readOnly: true, onTap: (){
+                    Get.toNamed(RouteConfig.search_page);
+                  },)),
                   Container(
                       alignment: Alignment.centerRight,
                       width: 50,
@@ -239,7 +239,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
-            Get.toNamed(RouteConfig.points_mall+ '?type=2');
+            Get.toNamed(RouteConfig.points_mall+ '?type=${MallType.scene_mall}');
           },
           child: Column(
             children: [
@@ -252,7 +252,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: (){
-            Get.toNamed(RouteConfig.points_mall+ '?type=1');
+            Get.toNamed(RouteConfig.points_mall+ '?type=${MallType.community_mall}');
           },
           child: Column(
             children: [

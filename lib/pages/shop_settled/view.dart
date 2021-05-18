@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:html' as html;
-import 'package:dio/dio.dart';
 import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
@@ -11,7 +8,14 @@ import 'package:egou_app/widgets/app_text_field.dart';
 import 'package:egou_app/widgets/app_upload_btn.dart';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker_web/image_picker_web.dart';
+
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:image_picker/image_picker.dart';
+// import 'package:universal_html/html.dart' as html;
+// import 'package:image_picker_web/image_picker_web.dart';
+
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart' as getx;
 import 'package:image_picker/image_picker.dart';
@@ -33,58 +37,40 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
   final TextEditingController _collection_typeController = TextEditingController();
   final TextEditingController _business_contentController = TextEditingController();
 
-  final _pickedImages = <Image>[];
-
   File _image;
-  final picker = ImagePicker();
+  final ImagePicker _picker = ImagePicker();
 
-  // Future<void> _getImgFile() async {
-  //   html.File infos = await ImagePickerWeb.getImage(outputType: ImageType.file);
-  //   var formData = html.FormData();
-  //   formData.appendBlob("file", infos.slice(), infos.name);
-  //   await logic.uploadImg(formData, key);
-  // }
 
   Future getImage(String key) async {
-    // // final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    // // setState(() {
-    // //   if (pickedFile != null) {
-    // //     _image = File(pickedFile.path);
-    // //     print(_image);
-    // //     _upLoadImage(_image, key);
-    // //   } else {
-    // //     print('No image selected.');
-    // //     EasyLoading.dismiss();
-    // //   }
-    // // });
-    //
-    // html.InputElement uploadInput = html.FileUploadInputElement();
-    // uploadInput.click();
-    // uploadInput.onChange.listen((e) async {
-    //   final files = uploadInput.files;
-    //   var formData = html.FormData();
-    //   formData.appendBlob("file", files[0].slice(), files[0].name);
-    //   await logic.uploadImg(files[0], key);
-    // });
-    html.File infos = await ImagePickerWeb.getImage(outputType: ImageType.file);
-    var formData = html.FormData();
-    formData.appendBlob("file", infos.slice(), infos.name);
-    await logic.uploadImg(formData, key);
+    final pickedFile = await _picker.getImage(source: ImageSource.gallery, imageQuality: 1);
+    if (pickedFile != null) {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        _upLoadImage(_image, key);
+      } else {
+        EasyLoading.dismiss();
+      }
+    } else {
+      EasyLoading.dismiss();
+    }
+
+    // html.File infos = await ImagePickerWeb.getImage(outputType: ImageType.file);
+    // var formData = html.FormData();
+    // formData.appendBlob("file", infos.slice(), infos.name);
+    // await logic.uploadImg(formData, key);
   }
 
-  _upLoadImage(File image, key) async {
+  _upLoadImage(File image, String key) async {
 
     String path = image.path;
     var name = path.substring(path.lastIndexOf("/") + 1, path.length);
-    var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);
     FormData formdata = FormData.fromMap({
-      "file": await MultipartFile.fromFile(path, filename: name)
+      "file": await MultipartFile.fromFile(path, filename:name)
     });
 
-    await logic.uploadImg(formdata, key);
+    await logic.appUploadImg(formdata, key);
 
   }
-
 
 
   @override

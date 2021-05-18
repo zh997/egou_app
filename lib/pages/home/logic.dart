@@ -20,7 +20,7 @@ class HomeLogic extends GetxController {
 
   Future onCategoryData (int category_id) async  {
     final RealResponseData response1 = await HomeService.banner({'pid': 1, 'category_id': category_id});
-    final RealResponseData response2 = await HomeService.goodsList(1, category_id);
+    final RealResponseData response2 = await HomeService.goodsList(1, category_id: category_id);
     if (response1.result) {
       state.BannerList.value = response1.data;
     }
@@ -34,7 +34,7 @@ class HomeLogic extends GetxController {
   Future onLoadMore(int category_id) async {
     if (state.hasMore.value > 0) {
       final page = state.page.value + 1;
-      final RealResponseData response = await HomeService.goodsList(page, category_id);
+      final RealResponseData response = await HomeService.goodsList(page, category_id: category_id);
       final List list =  state.goodsList.value;
       list.addAll(response.data);
       state.goodsList.value = list;

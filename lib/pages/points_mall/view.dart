@@ -1,5 +1,6 @@
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
+import 'package:egou_app/constant/app_enums.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/constant/app_strings.dart';
@@ -35,10 +36,10 @@ class _PointsMallPageState extends State<PointsMallPage> with AutomaticKeepAlive
   TabController tabController;
 
   String _title() {
-    if (int.parse(type) == 1) {
+    if (int.parse(type) == MallType.scene_mall) {
       return '场景商城';
     }
-    if (int.parse(type) == 2) {
+    if (int.parse(type) ==  MallType.community_mall) {
       return '社区商城';
     }
   }
@@ -63,8 +64,8 @@ class _PointsMallPageState extends State<PointsMallPage> with AutomaticKeepAlive
             body: Column(
               children: [
                 goodsList.length  > 0 ? Expanded(child: EasyRefresh.custom(
-                  header: MaterialHeader(),
-                  footer: MaterialFooter(enableInfiniteLoad: false),
+                  header: ClassicalHeader(),
+                  footer: ClassicalFooter(),
                   onRefresh: () async => await logic.onGoodsList(int.parse(type)),
                   onLoad: () async => await logic.onLoadMore(int.parse(type)),
                   slivers: [

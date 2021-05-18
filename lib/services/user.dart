@@ -3,6 +3,8 @@ import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/http/http_request.dart';
 import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/models/user.dart';
+import 'package:egou_app/models/concat_us.dart';
+import 'package:egou_app/models/user_policy.dart';
 
 class UserService {
 
@@ -38,6 +40,22 @@ class UserService {
     final DioResponseData response = await HttpRequest.request(AppApiUrls.UPDATE_PAY_PWD, data , 'POST');
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data));
+    }
+  }
+
+  // 联系我们
+  static Future<RealResponseData> shopSettingAbout() async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.SHOP_SETTING_ABOUT, null , 'GET');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: ConcatUsModelFromJson));
+    }
+  }
+
+  // 用户协议
+  static Future<RealResponseData> shopSettingPolicy() async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.SHOP_SETTING_POLICY, null , 'GET');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: UserPolicyModelFromJson));
     }
   }
 }

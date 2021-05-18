@@ -1,9 +1,8 @@
 import 'package:egou_app/services/order.dart';
 import 'package:get/get.dart';
 import 'dart:async';
-import 'package:dio/dio.dart';
 import 'dart:convert';
-import 'dart:html' as html;
+import 'package:universal_html/html.dart' as html;
 import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/http/response_data.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -67,5 +66,16 @@ class PublishCommentsLogic extends GetxController {
     shop_photo.addAll(state.image.value);
     shop_photo.removeAt(index);
     state.image.value = shop_photo;
+  }
+
+  void appUploadImg(data) async {
+    final RealResponseData response = await CommonService.uploadImg(data);
+    if (response.result) {
+      final List shop_photo = [];
+      shop_photo.addAll(state.image.value);
+      shop_photo.add(response.data.url);
+      state.image.value = shop_photo;
+      EasyLoading.showSuccess('上传成功！');
+    }
   }
 }

@@ -80,7 +80,7 @@ class HttpRequest{
       EasyLoading.showError(response.msg);
       // 未登录
       if (response.code == -1) {
-        AppStorage.setString('token', '');
+        AppStorage.remove('token');
         navigator.Get.toNamed(RouteConfig.login_page);
       }
       return RealResponseData(result: false, data: null);

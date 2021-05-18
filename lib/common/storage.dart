@@ -23,4 +23,6 @@ class AppStorage {
   static String getString(String key) => _pref.getString(key);
   static List<String> getStringList(String key) => _pref.getStringList(key);
 
+  static remove(String key) => _pref.remove(key);
+
 }

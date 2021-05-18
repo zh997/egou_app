@@ -1,6 +1,7 @@
 import 'package:egou_app/middleware/app_middleware.dart';
 import 'package:egou_app/pages/about_us/view.dart';
 import 'package:egou_app/pages/address/view.dart';
+import 'package:egou_app/pages/agreement/view.dart';
 import 'package:egou_app/pages/balance/view.dart';
 import 'package:egou_app/pages/bank_card_list/view.dart';
 import 'package:egou_app/pages/be_guest/view.dart';
@@ -24,6 +25,7 @@ import 'package:egou_app/pages/publish_comments/view.dart';
 import 'package:egou_app/pages/pwd_update/view.dart';
 import 'package:egou_app/pages/recharge/view.dart';
 import 'package:egou_app/pages/register/view.dart';
+import 'package:egou_app/pages/search/view.dart';
 import 'package:egou_app/pages/setting_center/view.dart';
 import 'package:egou_app/pages/share/view.dart';
 import 'package:egou_app/pages/shop/view.dart';
@@ -76,15 +78,19 @@ class RouteConfig {
   static final String publish_comments = '/publish_comments';
   static final String register_page = '/register_page';
   static final String order_detail = '/order_detail';
+  static final String agreenment_page = '/agreenment_page';
+  static final String search_page = '/search_page';
 
   static final List<GetPage> getPages = [
+    GetPage(name: guide_page, page: () => GuidePage()),
+    GetPage(name: register_page, page: () => RegisterPage()),
+    GetPage(name: home_page, page: () => HomePage()),
     GetPage(name: launch_page, page: () => LaunchPage(),  transition: Transition.fadeIn),
     GetPage(name: login_page, page: () => LoginPage(), transition: Transition.downToUp),
-    GetPage(name: guide_page, page: () => GuidePage()),
     GetPage(name: main_page, page: () => MainPage(), transition: Transition.fadeIn),
-    GetPage(name: home_page, page: () => HomePage()),
+    GetPage(name: search_page, page: () => SearchPage(), transition: Transition.rightToLeftWithFade),
+    GetPage(name: goods_detail, page: () => GoodsDetailPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: shop_detail, page: () => ShopDetailPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
-    GetPage(name: goods_detail, page: () => GoodsDetailPage()),
     GetPage(name: confirm_order, page: () => ConfirmOrderPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: pay_mode, page: () => PayModePage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: pay_result, page: () => PayResultPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
@@ -113,7 +119,7 @@ class RouteConfig {
     GetPage(name: merchant_list, page: () => MerchantListPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: shop_page, page: () => ShopPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: publish_comments, page: () => PublishCommentsPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
-    GetPage(name: register_page, page: () => RegisterPage()),
-    GetPage(name: order_detail, page: () => OrderDetailPage()),
+    GetPage(name: order_detail, page: () => OrderDetailPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
+    GetPage(name: agreenment_page, page: () => AgreementPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
   ];
 }
