@@ -42,7 +42,7 @@ class MyPage extends StatelessWidget {
                   return Stack(
                     children: [
                       Positioned(top: 0, left: 0, child: Container(
-                        height: ScreenUtil().setWidth(714),
+                        height: ScreenUtil().setWidth(750),
                         child: Image.asset(AppImages.MY_HEADER_BG, fit: BoxFit.fill),
                       )) ,
                       Container(
@@ -50,7 +50,7 @@ class MyPage extends StatelessWidget {
                             _statusBarHeght+AppSpace.SPACE_52, AppSpace.SPACE_52,
                             AppSpace.SPACE_52
                         ),
-                        height: ScreenUtil().setWidth(714),
+                        height: ScreenUtil().setWidth(750),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -109,12 +109,12 @@ class MyPage extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Image.asset(AppImages.MONEY_ICON_1, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
-                                      SizedBox(height: 10,),
+                                      SizedBox(height: ScreenUtil().setWidth(20),),
                                       Text('余额', style: TextStyle(
                                           fontSize: AppFontsize.SIZE_36,
                                           color: Colors.white
                                       )),
-                                      SizedBox(height: 10,),
+                                      SizedBox(height: ScreenUtil().setWidth(20),),
                                       Price(color: Colors.white, price: userinfo.userMoney,)
                                     ],
                                   ),
@@ -127,12 +127,12 @@ class MyPage extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Image.asset(AppImages.MONEY_ICON_2, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
-                                      SizedBox(height: 10,),
+                                      SizedBox(height: ScreenUtil().setWidth(20),),
                                       Text('金币', style: TextStyle(
                                           fontSize: AppFontsize.SIZE_36,
                                           color: Colors.white
                                       )),
-                                      SizedBox(height: 10,),
+                                      SizedBox(height: ScreenUtil().setWidth(20),),
                                       Price(color: Colors.white, price: userinfo.userIntegral.toString(), isShowUnit: false,)
                                     ],
                                   ),
@@ -145,12 +145,12 @@ class MyPage extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Image.asset(AppImages.MONEY_ICON_3, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
-                                      SizedBox(height: 10,),
+                                      SizedBox(height: ScreenUtil().setWidth(20),),
                                       Text('银币', style: TextStyle(
                                           fontSize: AppFontsize.SIZE_36,
                                           color: Colors.white
                                       )),
-                                      SizedBox(height: 10,),
+                                      SizedBox(height: ScreenUtil().setWidth(20),),
                                       Price(color: Colors.white, isShowUnit: false,)
                                     ],
                                   ),

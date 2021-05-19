@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
                                 crossAxisCount: 2,
                                 mainAxisSpacing: 20,
                                 crossAxisSpacing: 20,
-                                childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(660),
+                                childAspectRatio:   ScreenUtil().setWidth(492) / ScreenUtil().setWidth(680),
                               ),
                               delegate: SliverChildBuilderDelegate(
                                     (BuildContext context, int index) {
