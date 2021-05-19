@@ -38,7 +38,7 @@ class GoodsItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(ScreenUtil().setWidth(20)),
               ),
               clipBehavior: Clip.hardEdge,
-              child: Image.network(item.image, fit: BoxFit.cover, headers: {'Access-Control-Allow-Origin ': '*'}),
+              child: Image.network(item.image, fit: BoxFit.cover),
             ),
             Text(item.name, style: TextStyle(fontSize: AppFontsize.SIZE_44, color: AppColors.COLOR_BLACK_333333), maxLines: 2, overflow: TextOverflow.ellipsis,),
             Price(price: item.price),

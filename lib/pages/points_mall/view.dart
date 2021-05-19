@@ -64,8 +64,8 @@ class _PointsMallPageState extends State<PointsMallPage> with AutomaticKeepAlive
             body: Column(
               children: [
                 goodsList.length  > 0 ? Expanded(child: EasyRefresh.custom(
-                  header: ClassicalHeader(),
-                  footer: ClassicalFooter(),
+                  header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
+                  footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
                   onRefresh: () async => await logic.onGoodsList(int.parse(type)),
                   onLoad: () async => await logic.onLoadMore(int.parse(type)),
                   slivers: [

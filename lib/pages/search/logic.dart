@@ -24,7 +24,8 @@ class SearchLogic extends GetxController {
     if (state.hasMore.value > 0) {
       final page = state.page.value + 1;
       final RealResponseData response = await HomeService.goodsList(page, keyname: keyname);
-      final List list =  state.searchGoodsList.value;
+      final List list = [];
+      list.addAll(state.searchGoodsList.value);
       list.addAll(response.data);
       state.searchGoodsList.value = list;
       state.hasMore.value = response.more;

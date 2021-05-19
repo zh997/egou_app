@@ -85,8 +85,8 @@ class _BalancePageState extends State<BalancePage> {
               textColor:Colors.white ,
             ),
             body:  EasyRefresh.custom(
-              header: MaterialHeader(),
-              footer: MaterialFooter(enableInfiniteLoad: false),
+              header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
+              footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
               onRefresh: () async => await logic.onGetAccountLog({'source': getTitle(type)['source']}),
               onLoad: () async => await logic.onLoadMore({'source': getTitle(type)['source']}),
               slivers: [

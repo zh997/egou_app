@@ -14,10 +14,13 @@ class CartLogic extends GetxController {
     EasyLoading.show(status: '加载中');
     final RealResponseData response = await CartService.cartList();
     if (response.result) {
+      EasyLoading.dismiss();
       state.cartList.value = response.data;
-      onChangeSelectData(response.data, isDel: false);
+      if (response.data.lists.length > 0) {
+        onChangeSelectData(response.data, isDel: false);
+      }
     }
-    EasyLoading.dismiss();
+
   }
   Future onCartChange(Map<String, dynamic> data) async {
     EasyLoading.show(status: '加载中');

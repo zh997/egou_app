@@ -45,6 +45,10 @@ class _MyStorePageState extends State<MyStorePage> {
                   child: Column(
                     children: [
                       collectGoods.length > 0 ? Expanded(child: EasyRefresh.custom(
+                        header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
+                        footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
+                        onRefresh: () async => await logic.onGetCollectGoods(),
+                        onLoad: () async => await logic.onLoadMore(),
                         slivers: [
                           SliverToBoxAdapter(child:  SizedBox(height: 15),),
                           SliverToBoxAdapter(child: Container(
@@ -55,10 +59,12 @@ class _MyStorePageState extends State<MyStorePage> {
                               children: [
                                 Text('${collectGoods.length}件商品', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
                                 Divider(),
-                                SizedBox(height: 15,)
                               ],
                             ),
-                          ),)
+                          ),),
+                          SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index){
+                            return _storeItem(collectGoods[index]);
+                          }, childCount: collectGoods.length))
                         ],
                       )) : Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
                         Get.offAllNamed(RouteConfig.main_page);},)

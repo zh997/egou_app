@@ -13,6 +13,7 @@ import 'package:egou_app/widgets/search.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
 
@@ -54,41 +55,27 @@ class _MerchantListPageState extends State<MerchantListPage> {
             ),
             body: Column(
               children: [
-                RawKeyboardListener(
-                  focusNode: searchFocusNode,// 焦点
-                  onKey: (RawKeyEvent event){
-                    // TODO: Key event here
-                    RawKeyDownEvent rawKeyDownEvent = event;
-                    RawKeyEventDataAndroid rawKeyEventDataAndroid = rawKeyDownEvent.data;
-                    if (rawKeyEventDataAndroid.keyCode == 288) {
-                      //
-                    }
-                    print("keyCode: ${rawKeyEventDataAndroid.keyCode}");
-                  },
-                  child: Container(
-                      padding: EdgeInsets.only(left: AppSpace.SPACE_52, right: AppSpace.SPACE_52, bottom: 10),
-                      color: Colors.white , child: Search('搜索商家', controller: searchController, focusNode: searchFocusNode,)
-                  ), // 子组件
-                ),
-                shopEntryList.length > 0 ? Expanded(child: CustomScrollView(
-                  slivers: [
-                    SliverPadding(padding: EdgeInsets.all(AppSpace.SPACE_52), sliver:  SliverList(delegate: SliverChildBuilderDelegate(
-                          (BuildContext context,int index) {
-                        return  _ShopItem(shopEntryList[index]);
-                      },
-                      childCount: shopEntryList.length,
-                    ))),
-                  ],
+                // Container(
+                //     padding: EdgeInsets.only(left: AppSpace.SPACE_52, right: AppSpace.SPACE_52, bottom: 10),
+                //     color: Colors.white , child: Search('搜索商家', controller: searchController, focusNode: searchFocusNode, onSubmitted: (String Value){
+                //
+                // },)
+                // ),
+                shopEntryList.length > 0 ? Expanded(child:  EasyRefresh.custom(
+                    header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
+                    footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
+                    onRefresh: () async => await logic.onGetShopEntryLists({'category_id': int.parse(category_id)}),
+                    onLoad: () async => await logic.onLoadMore({'category_id': int.parse(category_id)}),
+                    slivers: [
+                      SliverPadding(padding: EdgeInsets.all(AppSpace.SPACE_52), sliver:  SliverList(delegate: SliverChildBuilderDelegate(
+                            (BuildContext context,int index) {
+                          return  _ShopItem(shopEntryList[index]);
+                        },
+                        childCount: shopEntryList.length,
+                      ))),
+                    ]
                 )): Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
                   Get.offAllNamed(RouteConfig.main_page);},),
-                // Expanded(child: ListView(
-                //   padding: EdgeInsets.all(AppSpace.SPACE_52),
-                //   children: [
-                //     Text('分类', style: TextStyle(color: Colors.black, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
-                //     _ShopItem(),
-                //     _ShopItem()
-                //   ],
-                // ))
               ],
             ),
           );
@@ -125,7 +112,7 @@ class _MerchantListPageState extends State<MerchantListPage> {
                       border: Border.all(width: 1, color: AppColors.COLOR_GRAY_EFEFEF)
                   ),
                   clipBehavior: Clip.hardEdge,
-                  child: Image.asset(item.shopPhoto, fit: BoxFit.cover),
+                  child: Image.network(item.shopPhoto, fit: BoxFit.cover),
                 ),
                 Expanded(child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -20,7 +20,7 @@ class Price extends StatelessWidget {
   final double bottom;
   final bool isShowUnit;
   final MainAxisAlignment mainAxisAlignment;
-  Price({this.color, Key key, this.price, this.size, this.bottom = 1.8, this.unitSize, this.mainAxisAlignment, this.isShowUnit = true}): super(key: key);
+  Price({this.color, Key key, this.price, this.size, this.bottom = 0, this.unitSize, this.mainAxisAlignment, this.isShowUnit = true}): super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(

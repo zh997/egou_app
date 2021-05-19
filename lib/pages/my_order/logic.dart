@@ -23,7 +23,8 @@ class MyOrderLogic extends GetxController {
     if (state.hasMore.value > 0) {
       final page = state.page.value + 1;
       final RealResponseData response = await OrderService.orderLists(page, type);
-      final List list =  state.orderLists.value;
+      final List list = [];
+      list.addAll(state.orderLists.value);
       list.addAll(response.data);
       state.orderLists.value = list;
       state.hasMore.value = response.more;

@@ -1,5 +1,7 @@
-import 'package:egou_app/constant/app_refresh.dart';
+import 'package:egou_app/constant/app_colors.dart';
+import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_space.dart';
+import 'package:egou_app/constant/app_strings.dart';
 import 'package:egou_app/widgets/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -34,31 +36,12 @@ class _SearchPageState extends State<SearchPage> {
       body: SafeArea(
           child: Column(
             children: [
-              Container(
-                color: Colors.white,
-                padding: EdgeInsets.all(15),
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap:(){
-                        Get.back();
-                      },
-                      child: Icon(Icons.arrow_back_ios_outlined),
-                    ),
-                    Expanded(child: Search('请输入商品名称搜索', controller: _searchController, focusNode: _searchFocusNode, autofocus: true,
-                      onSubmitted: (String value){
-                        keyname = value;
-                        logic.onBaseGoodsList(value);
-                      },
-                    ))
-                  ],
-                ),
-              ),
+              _HeaderSearch(context),
               Obx(() {
                 final List searchGoodsList = state.searchGoodsList.value;
                 return Expanded(child: EasyRefresh.custom(
-                  header: AppRefresh.getHeader(GlobalKey()),
-                  footer: AppRefresh.getFooter(GlobalKey()),
+                  header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
+                  footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
                   onLoad: () async => await logic.onLoadMore(keyname),
                   slivers: <Widget>[
                     SliverToBoxAdapter(child: SizedBox(height: 20),),
@@ -96,6 +79,29 @@ class _SearchPageState extends State<SearchPage> {
             ],
           )
       ),
+    );
+  }
+
+
+  Widget _HeaderSearch(context) {
+    return Container(
+      padding: EdgeInsets.only(top: 5, bottom: 5,left: AppSpace.SPACE_52,right: AppSpace.SPACE_52), color: Colors.white,
+      child: Row(
+        children: [
+          InkWell(
+            onTap:(){
+              Get.back();
+            },
+            child: Icon(Icons.arrow_back_ios_outlined, size: 20,),
+          ),
+          Expanded(child: Search('请输入商品名称搜索', controller: _searchController, focusNode: _searchFocusNode, autofocus: true,
+            onSubmitted: (String value){
+              keyname = value;
+              logic.onBaseGoodsList(value);
+            },
+          ))
+        ],
+      )
     );
   }
 }

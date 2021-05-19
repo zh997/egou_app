@@ -35,7 +35,8 @@ class HomeLogic extends GetxController {
     if (state.hasMore.value > 0) {
       final page = state.page.value + 1;
       final RealResponseData response = await HomeService.goodsList(page, category_id: category_id);
-      final List list =  state.goodsList.value;
+      final List list = [];
+      list.addAll(state.goodsList.value);
       list.addAll(response.data);
       state.goodsList.value = list;
       state.hasMore.value = response.more;

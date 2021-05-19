@@ -111,6 +111,7 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
           key: GlobalKey(), controller: _collection_typeController,
           isRequired: true, padding: EdgeInsets.only(left: 15, right: 15),
           labelText: '请输入', labelAlignment: AlignmentDirectional.centerEnd,
+          contentPaddingTop: 9,
           textAlign: TextAlign.end, suffixIcon: Padding(
               padding: EdgeInsets.only(left: 5),
               child: Image.asset(AppImages.ARROW_RIGHT_ICON, width: 8, height: 18)),

@@ -24,7 +24,8 @@ class MerchantListLogic extends GetxController {
       final page = state.page.value + 1;
       data['page_no'] = page;
       final RealResponseData response = await ShopService.shopList(data);
-      final List list =  state.shopEntryList.value;
+      final List list = [];
+      list.addAll(state.shopEntryList.value);
       list.addAll(response.data);
       state.shopEntryList.value = list;
       state.hasMore.value = response.more;

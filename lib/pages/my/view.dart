@@ -151,7 +151,7 @@ class MyPage extends StatelessWidget {
                                           color: Colors.white
                                       )),
                                       SizedBox(height: 10,),
-                                      Price(color: Colors.white)
+                                      Price(color: Colors.white, isShowUnit: false,)
                                     ],
                                   ),
                                 ),

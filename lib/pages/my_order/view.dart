@@ -2,10 +2,7 @@ import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_enums.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
-import 'package:egou_app/constant/app_images.dart';
-import 'package:egou_app/constant/app_refresh.dart';
 import 'package:egou_app/constant/app_space.dart';
-import 'package:egou_app/models/home.dart';
 import 'package:egou_app/models/order_list.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/small_widget.dart';
@@ -13,8 +10,6 @@ import 'package:egou_app/widgets/tab_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_easyrefresh/material_footer.dart';
-import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -84,8 +79,8 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
                   children: List.generate(OrderTabValueItems.length, (index) => Column(
                       children: [
                         orderList.length > 0 ? Expanded(child: EasyRefresh.custom(
-                          header: AppRefresh.getHeader(GlobalKey()),
-                          footer: AppRefresh.getFooter(GlobalKey()),
+                          header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
+                          footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
                           onRefresh: _onRefresh,
                           onLoad: _onLoad,
                           slivers: <Widget>[

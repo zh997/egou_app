@@ -141,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       final isPass = Utils.validate(context, textFieldItems, false);
                       logic.onChangeDisabled(!isPass);
                     }),
-                    SizedBox(height: 50),
+                    SizedBox(height: 40),
                     Obx(() => RadiusButton('立即注册', disabled: state.disabled.value, width: 903, height: 156, onTap: (){
                       final isPass = Utils.validate(context, textFieldItems, false);
                       if (isPass) {

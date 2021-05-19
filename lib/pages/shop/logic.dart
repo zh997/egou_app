@@ -1,4 +1,5 @@
 import 'package:egou_app/http/response_data.dart';
+import 'package:egou_app/models/shop_entry_list.dart';
 import 'package:egou_app/services/shop.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -37,11 +38,16 @@ class ShopLogic extends GetxController {
       final page = state.page.value + 1;
       data['page_no'] = page;
       final RealResponseData response = await ShopService.shopList(data);
-      final List list =  state.shopEntryList.value;
+      final List list = [];
+      list.addAll(state.shopEntryList.value);
       list.addAll(response.data);
       state.shopEntryList.value = list;
       state.hasMore.value = response.more;
       state.page.value = page;
     }
+  }
+
+  void onSelectShop(ShopEntryListModel shop) {
+     state.selectedShop.value = shop;
   }
 }

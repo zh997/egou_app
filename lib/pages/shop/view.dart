@@ -52,9 +52,8 @@ class _ShopPageState extends State<ShopPage> {
                   //     color: Colors.white , child: Search('搜索商家')
                   // ),
                   Expanded(child:  EasyRefresh.custom(
-                    header: MaterialHeader(),
-                    footer: MaterialFooter(enableInfiniteLoad: false),
-                    onRefresh: () async => await logic.onGetShopEntryLists({}),
+                    header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
+                    footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
                     onLoad: () async => await logic.onLoadMore({}),
                     slivers: [
                       SliverToBoxAdapter(child: Container(color: Colors.white, padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, AppSpace.SPACE_52, AppSpace.SPACE_52, 0),
@@ -116,6 +115,7 @@ class _ShopPageState extends State<ShopPage> {
   Widget _ShopItem(ShopEntryListModel item){
     return GestureDetector(
       onTap: (){
+        logic.onSelectShop(item);
         Get.toNamed(RouteConfig.shop_detail);
       },
       child: Container(

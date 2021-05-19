@@ -44,8 +44,8 @@ class _MyTeamPageState extends State<MyTeamPage> {
               appBar: CustomAppBar(title: '我的团队', leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333)),
               body: SafeArea(
                   child: EasyRefresh.custom(
-                    header: MaterialHeader(),
-                    footer: MaterialFooter(enableInfiniteLoad: false),
+                    header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
+                    footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
                     onRefresh: () async => await  logic.onGetTeamList(),
                     onLoad: () async => await logic.onLoadMore(),
                     slivers: [

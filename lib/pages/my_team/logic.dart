@@ -25,7 +25,8 @@ class MyTeamLogic extends GetxController {
     if (state.hasMore.value > 0) {
       final page = state.page.value + 1;
       final RealResponseData response = await TeamService.userMyTeam({'page_no': page});
-      final List list =  state.teamLists.value;
+      final List list = [];
+      list.addAll(state.teamLists.value);
       list.addAll(response.data);
       state.teamLists.value = list;
       state.hasMore.value = response.more;

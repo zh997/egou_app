@@ -2,7 +2,6 @@ import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_enums.dart';
-import 'package:egou_app/constant/app_refresh.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/constant/app_strings.dart';
 import 'package:egou_app/widgets/goods_item.dart';
@@ -15,10 +14,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 import 'logic.dart';
 import 'state.dart';
-
-final double _padding_lr = ScreenUtil().setWidth(52);
 
 class HomePage extends StatefulWidget {
   @override
@@ -29,13 +28,12 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
 
   final HomeLogic logic = Get.put(HomeLogic());
   final HomeState state = Get.find<HomeLogic>().state;
+  final FocusNode _searchFocusNode = FocusNode();
   Future _future;
-
   int tabIndex = 0;
-
   int category_id;
-
   TabController tabController;
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -44,16 +42,15 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
     _future = logic.onInitData(true);
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    tabController.dispose();
+  Future onQrScan() async{
+    String cameraScanResult = await scanner.scan();
+    print(cameraScanResult);
   }
 
 
   @override
   Widget build(BuildContext context) {
+    FocusScope.of(context).unfocus();
     return FutureBuilder(
        future: _future,
         builder: (BuildContext context, AsyncSnapshot snapshot){
@@ -76,8 +73,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
                       Expanded(child: TabBarView(
                         controller: tabController,
                         children: List.generate(state.Category.value.length, (index) => EasyRefresh.custom(
-                          header: AppRefresh.getHeader(GlobalKey()),
-                          footer: AppRefresh.getFooter(GlobalKey()),
+                          header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
+                          footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
                           onRefresh: () async => await logic.onCategoryData(category_id),
                           onLoad: () async => await logic.onLoadMore(category_id),
                           slivers: <Widget>[
@@ -154,18 +151,22 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
                 children: [
                   Expanded(child: Search('搜索商品', readOnly: true, onTap: (){
                     Get.toNamed(RouteConfig.search_page);
-                  },)),
-                  Container(
-                      alignment: Alignment.centerRight,
-                      width: 50,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(AppImages.SCAN_ICON,  width: ScreenUtil().setWidth(56), height: ScreenUtil().setWidth(56)),
-                          Text(AppStrings.SCAN, style: TextStyle(fontSize: ScreenUtil().setSp(42),color: AppColors.COLOR_BLACK_333333))
-                        ],
-                      )
+                  },focusNode: _searchFocusNode)),
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: onQrScan,
+                    child: Container(
+                        alignment: Alignment.centerRight,
+                        width: 50,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(AppImages.SCAN_ICON,  width: ScreenUtil().setWidth(56), height: ScreenUtil().setWidth(56)),
+                            Text(AppStrings.SCAN, style: TextStyle(fontSize: ScreenUtil().setSp(42),color: AppColors.COLOR_BLACK_333333))
+                          ],
+                        )
+                    ),
                   )
                 ],
               )),

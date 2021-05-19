@@ -18,11 +18,12 @@ class MyStoreLogic extends GetxController {
     EasyLoading.dismiss();
   }
 
-  Future onLoadMore(String type) async {
+  Future onLoadMore() async {
     if (state.hasMore.value > 0) {
       final page = state.page.value + 1;
       final RealResponseData response = await CommonService.getCollectGoods({'page_no': page});
-      final List list =  state.collectGoods.value;
+      final List list = [] ;
+      list.addAll(state.collectGoods.value);
       list.addAll(response.data);
       state.collectGoods.value = list;
       state.hasMore.value = response.more;

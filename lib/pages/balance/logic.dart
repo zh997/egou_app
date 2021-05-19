@@ -18,7 +18,8 @@ class BalanceLogic extends GetxController {
       final page = state.page.value + 1;
       data['page_no'] = page;
       final RealResponseData response = await AccountService.userAccountLog(data);
-      final List list =  state.accounLogList.value;
+      final List list = [] ;
+      list.addAll(state.accounLogList.value);
       list.addAll(response.data);
       state.accounLogList.value = list;
       state.hasMore.value = response.more;
