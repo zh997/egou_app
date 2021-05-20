@@ -26,22 +26,20 @@ class MakeQrcodeLogic extends GetxController {
         final response = json.decode(res.response);
         if (response['code'] == 1) {
           state.image.value = response['data']['url'];
-          EasyLoading.showSuccess('上传成功！');
-        } else {
-          EasyLoading.dismiss();
         }
+        EasyLoading.dismiss();
       });
     });
 
   }
 
   void appUploadImg(data) async {
+    EasyLoading.show(status: '正在上传');
     final RealResponseData response = await CommonService.uploadImg(data);
     if (response.result) {
       state.image.value = response.data.url;
-      EasyLoading.showSuccess('上传成功！');
-      EasyLoading.showSuccess('上传成功！');
     }
+    EasyLoading.dismiss();
   }
 
   void onChangeImage(String img){

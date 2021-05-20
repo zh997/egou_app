@@ -9,14 +9,12 @@ class MyOrderLogic extends GetxController {
   final state = MyOrderState();
 
   Future onGetOrderLists(String type) async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await OrderService.orderLists(1, type);
     if (response.result) {
        state.orderLists.value = response.data;
        state.hasMore.value = response.more;
        state.page.value = 1;
     }
-    EasyLoading.dismiss();
   }
 
   Future onLoadMore(String type) async {

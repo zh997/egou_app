@@ -15,6 +15,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'logic.dart';
 import 'state.dart';
@@ -42,7 +43,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
     _future = logic.onInitData(true);
   }
 
-  Future onQrScan() async{
+  Future onQrScan() async {
+    await Permission.camera.request();
     String cameraScanResult = await scanner.scan();
     print(cameraScanResult);
   }
@@ -139,7 +141,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
     return Container(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.COLOR_PRIMARY_D22315,
           border: Border(bottom: BorderSide(width: 1, color: AppColors.COLOR_GRAY_F7F7F7))
       ),
       child: Column(
@@ -162,15 +164,15 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(AppImages.SCAN_ICON,  width: ScreenUtil().setWidth(56), height: ScreenUtil().setWidth(56)),
-                            Text(AppStrings.SCAN, style: TextStyle(fontSize: ScreenUtil().setSp(42),color: AppColors.COLOR_BLACK_333333))
+                            Image.asset(AppImages.SCAN_ICON,  width: ScreenUtil().setWidth(56), height: ScreenUtil().setWidth(56), color: Colors.white,),
+                            Text(AppStrings.SCAN, style: TextStyle(fontSize: ScreenUtil().setSp(42),color: Colors.white ))
                           ],
                         )
                     ),
                   )
                 ],
               )),
-              TabBarWidget(state.Category.value, tabController)
+              TabBarWidget(state.Category.value, tabController, labelColor: Colors.white, unselectedLabelColor: Colors.white,)
         ],
       ),
     );

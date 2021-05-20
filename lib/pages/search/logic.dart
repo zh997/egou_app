@@ -6,9 +6,9 @@ import 'package:egou_app/services/home.dart';
 
 class SearchLogic extends GetxController {
   final state = SearchState();
-  Future onBaseGoodsList (String keyname) async  {
+  Future onBaseGoodsList (String keyword) async  {
     EasyLoading.show(status: '正在搜索');
-    final RealResponseData response = await HomeService.goodsList(1, keyname: keyname);
+    final RealResponseData response = await HomeService.goodsList(1, keyword: keyword);
     if (response.result) {
       state.searchGoodsList.value = response.data;
       state.hasMore.value = response.more;
@@ -20,10 +20,10 @@ class SearchLogic extends GetxController {
     EasyLoading.dismiss();
   }
 
-  Future onLoadMore(String keyname) async {
+  Future onLoadMore(String keyword) async {
     if (state.hasMore.value > 0) {
       final page = state.page.value + 1;
-      final RealResponseData response = await HomeService.goodsList(page, keyname: keyname);
+      final RealResponseData response = await HomeService.goodsList(page, keyword: keyword);
       final List list = [];
       list.addAll(state.searchGoodsList.value);
       list.addAll(response.data);

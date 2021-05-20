@@ -28,8 +28,8 @@ class Price extends StatelessWidget {
       mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
       children: [
         isShowUnit ?  Padding(padding: EdgeInsets.only(bottom: bottom),
-            child: Text('￥',  style: TextStyle(fontSize:
-            unitSize ?? AppFontsize.SIZE_32, color:
+            child: Text('¥',  style: TextStyle(fontSize:
+            unitSize ?? AppFontsize.SIZE_36, color:
             color ?? AppColors.COLOR_PRIMARY_D22315,fontWeight: FontWeight.bold))) : SizedBox(),
         Text('${price ?? '0.00'}',  style: TextStyle(
             fontSize: size ?? AppFontsize.SIZE_56,

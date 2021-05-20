@@ -3,8 +3,8 @@ import 'package:egou_app/models/cart.dart';
 import 'package:egou_app/models/order.dart';
 import 'package:egou_app/services/cart.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:string_num_calculate/string_num_calculate.dart';
 import 'package:get/get.dart';
+import 'package:egou_app/common/utils.dart';
 
 import 'state.dart';
 
@@ -23,23 +23,24 @@ class CartLogic extends GetxController {
 
   }
   Future onCartChange(Map<String, dynamic> data) async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await CartService.cartChange(data);
     if (response.result) {
       final cartList = state.cartList.value.toJson();
       final lists = state.cartList.value.lists;
       final List goodsList = [];
+      double totalAmount = 0.00;
       lists.forEach((element) {
         final item = element.toJson();
         if (data != null && data['cart_id'] == item['cart_id']) {
           item['goods_num'] = data['goods_num'];
         }
+        totalAmount = Utils.add(totalAmount, Utils.mul(double.parse(item['goods_num'].toString()), double.parse(element.price)));
         goodsList.add(item);
       });
       cartList['lists'] = goodsList;
+      state.totalAmount.value = totalAmount;
       state.cartList.value = CartListGoodsModelFromJson(cartList);
     }
-    EasyLoading.dismiss();
   }
 
   Future onCartSelected(Map<String, dynamic> data) async {
@@ -79,7 +80,7 @@ class CartLogic extends GetxController {
           goods['price'] = item['price'];
           goods['id'] = item['goods_id'];
           selectedGoods.add(OrderGoodsModelFromJson(goods));
-          totalAmount = Calculate.plus(totalAmount, Calculate.multiply(element.goodsNum, double.parse(element.price)));
+          totalAmount =  Utils.add(totalAmount, Utils.mul(double.parse(element.goodsNum.toString()), double.parse(element.price)));
         }
         if( data != null && data['cart_id'].indexOf(item['cart_id']) == -1) {
           goodsList.add(item);
@@ -97,7 +98,7 @@ class CartLogic extends GetxController {
           goods['price'] = item['price'];
           goods['id'] = item['goods_id'];
           selectedGoods.add(OrderGoodsModelFromJson(goods));
-          totalAmount = Calculate.plus(totalAmount, Calculate.multiply(element.goodsNum, double.parse(element.price)));
+          totalAmount =  Utils.add(totalAmount, Utils.mul(double.parse(element.goodsNum.toString()), double.parse(element.price)));
         }
         goodsList.add(item);
       }

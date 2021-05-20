@@ -7,7 +7,9 @@ class TabBarWidget extends StatefulWidget {
   final TabController tabController;
   final List labelList;
   final double itemPadding;
-  TabBarWidget(this.labelList,  this.tabController, {Key key, this.itemPadding}):super(key: key);
+  final Color labelColor;
+  final Color unselectedLabelColor;
+  TabBarWidget(this.labelList,  this.tabController, {Key key, this.itemPadding, this.labelColor, this.unselectedLabelColor}):super(key: key);
   @override
   _TabBarWidgetState createState() => _TabBarWidgetState();
 }
@@ -16,14 +18,14 @@ class _TabBarWidgetState extends State<TabBarWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: ScreenUtil().setWidth(140),
+        height: ScreenUtil().setWidth(120),
         alignment: Alignment.center,
         child: TabBar(
             controller: widget.tabController,
             isScrollable: true,
-            labelColor: AppColors.COLOR_BLACK_000000,
-            unselectedLabelColor: AppColors.COLOR_GRAY_666666,
-            labelStyle: TextStyle(fontSize: ScreenUtil().setSp(58), fontWeight: FontWeight.bold),
+            labelColor: widget.labelColor,
+            unselectedLabelColor: widget.unselectedLabelColor,
+            labelStyle: TextStyle(fontSize: ScreenUtil().setSp(50), fontWeight: FontWeight.bold),
             unselectedLabelStyle:  TextStyle(fontSize: ScreenUtil().setSp(50)),
             labelPadding: EdgeInsets.only(),
             indicator: CustomIndicator(),

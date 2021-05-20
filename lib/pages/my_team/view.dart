@@ -55,7 +55,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
                             color: Colors.white,
                             child: Column(
                               children: [
-                                _infoItem(30.0, true, user),
+                                _infoItem(130.0, true, user),
                                 SizedBox(height: 15),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -83,7 +83,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
                         SizedBox(height: 15)
                       ]),),
                       SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index){
-                        return Container(color: Colors.white, child: _infoItem(20.0, false, teamLists[index]),);
+                        return Container(color: Colors.white, child: _infoItem(100.0, false, teamLists[index]),);
                       }, childCount: teamLists.length))
                     ],
                   )
@@ -103,9 +103,14 @@ class _MyTeamPageState extends State<MyTeamPage> {
             children: [
               Padding(
                   padding: EdgeInsets.only(right: 10, left: 20),
-                  child: CircleAvatar(
-                      radius: radius,
-                      child:  Image.network(item.avatar, fit: BoxFit.cover)
+                  child: Container(
+                    width: ScreenUtil().setWidth(radius),
+                    height:  ScreenUtil().setWidth(radius),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(radius)
+                    ),
+                    clipBehavior: Clip.hardEdge,
+                    child: Image.network(item.avatar, fit: BoxFit.cover),
                   )
               ),
               Column(

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 class PayResultState {
-  RxList goodsList = [].obs;
+  RxList goodsGuessLike = [].obs;
   PayResultState() {
     ///Initialize variables
   }

@@ -61,7 +61,8 @@ class MyPage extends StatelessWidget {
                                   height: ScreenUtil().setWidth(182),
                                   margin: EdgeInsets.only(right: 10),
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(ScreenUtil().setWidth(182))
+                                      borderRadius: BorderRadius.circular(ScreenUtil().setWidth(182)),
+                                      color: Colors.white
                                   ),
                                   clipBehavior: Clip.hardEdge,
                                   child: Image.network(userinfo.avatar, fit: BoxFit.cover),

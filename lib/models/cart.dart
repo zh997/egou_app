@@ -14,7 +14,7 @@ class CartListGoodsModel {
         lists.add(new Lists.fromJson(v));
       });
     }
-    totalAmount = json['total_amount'];
+    totalAmount = double.parse(json['total_amount'].toString());
     totalNum = json['total_num'];
   }
 

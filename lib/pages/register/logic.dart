@@ -45,7 +45,7 @@ class RegisterLogic extends GetxController {
     RealResponseData response = await RegisterService.register(data);
     if (response.result) {
       EasyLoading.showToast('注册成功, 请重新登录!');
-      Get.back();
+      Get.offAllNamed(RouteConfig.login_page);
     } else {
       EasyLoading.dismiss();
     }

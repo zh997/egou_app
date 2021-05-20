@@ -45,6 +45,6 @@ class AppApiUrls  {
   static String USER_BANKCARD_LIST = '/api/User/cardList';
   static String SHOP_SETTING_ABOUT = '/api/Shop_Setting/about';
   static String SHOP_SETTING_POLICY = '/api/Shop_Setting/policy';
-
+  static String GOODS_GUESS_LIKE = '/api/goods/likeList';
 
 }

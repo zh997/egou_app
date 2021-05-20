@@ -40,8 +40,11 @@ class _ConcatUsPageState extends State<ConcatUsPage> {
                     children: [
                       SizedBox(height: 15),
                       _listItem('电话', concatUs.phone.toString()),
+                      Divider(color: AppColors.COLOR_GRAY_F7F7F7, height: 1,),
                       _listItem('邮箱', concatUs.mailbox),
-                      _ColumnListItem('地址', concatUs.address)
+                      Divider(color: AppColors.COLOR_GRAY_F7F7F7, height: 1,),
+                      _ColumnListItem('地址', concatUs.address),
+                      Divider(color: AppColors.COLOR_GRAY_F7F7F7, height: 1,),
                     ]
                 )
             );
@@ -56,10 +59,6 @@ class _ConcatUsPageState extends State<ConcatUsPage> {
   Widget _listItem(text, value) {
     return Container(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(width: 1, color: AppColors.COLOR_GRAY_F7F7F7)),
-          color: Colors.white,
-        ),
         child: Row(
             mainAxisAlignment:  MainAxisAlignment.spaceBetween,
             children: [
@@ -73,10 +72,6 @@ class _ConcatUsPageState extends State<ConcatUsPage> {
   Widget _ColumnListItem(text, value) {
     return Container(
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(width: 1, color: AppColors.COLOR_GRAY_F7F7F7)),
-          color: Colors.white,
-        ),
         child: Column(
             mainAxisAlignment:  MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

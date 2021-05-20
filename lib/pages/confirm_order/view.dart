@@ -4,8 +4,6 @@ import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_space.dart';
-import 'package:egou_app/models/address.dart';
-import 'package:egou_app/models/order.dart';
 import 'package:egou_app/pages/main/logic.dart';
 import 'package:egou_app/pages/main/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
@@ -13,11 +11,10 @@ import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/app_order_item.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
-import 'package:string_num_calculate/string_num_calculate.dart';
+import 'package:egou_app/common/utils.dart';
 
 import 'logic.dart';
 import 'state.dart';
@@ -43,11 +40,11 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
            body: Obx((){
              final List orderGoods = mainState.orderGoods.value;
              double totalPrice = 0.00;
-             int goodsNum = 0;
+             double goodsNum = 0;
              if (orderGoods.length > 0) {
                orderGoods.forEach((element) {
-                 totalPrice = Calculate.plus(totalPrice, Calculate.multiply(element.num, double.parse(element.price)));
-                 goodsNum = Calculate.plus(goodsNum, element.num);
+                 totalPrice = Utils.add(totalPrice, Utils.mul(double.parse(element.num.toString()), double.parse(element.price)));
+                 goodsNum = Utils.add(double.parse(goodsNum.toString()), double.parse(element.num.toString()));
                });
              }
              return Column(

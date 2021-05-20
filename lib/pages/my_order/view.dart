@@ -64,47 +64,47 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
       if (snapshot.connectionState == ConnectionState.done) {
         return Scaffold(
           appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '我的订单'),
-          body: Obx(() {
-            List orderList = state.orderLists.value;
-            return Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white
-                  ),
-                  child: TabBarWidget(OrderTabValueItems, tabController, itemPadding: 40),
+          body:Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.white
                 ),
-                Expanded(child: TabBarView(
-                  controller: tabController,
-                  children: List.generate(OrderTabValueItems.length, (index) => Column(
-                      children: [
-                        orderList.length > 0 ? Expanded(child: EasyRefresh.custom(
-                          header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
-                          footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
-                          onRefresh: _onRefresh,
-                          onLoad: _onLoad,
-                          slivers: <Widget>[
-                            SliverToBoxAdapter(
-                              child: SizedBox(height: 15),
+                child: TabBarWidget(OrderTabValueItems, tabController, itemPadding: 40, labelColor: AppColors.COLOR_BLACK_333333, unselectedLabelColor: AppColors.COLOR_GRAY_999999,),
+              ),
+              Expanded(child: TabBarView(
+                controller: tabController,
+                children: List.generate(OrderTabValueItems.length, (index) => Column(
+                  children: [
+                    Expanded(child: Obx((){
+                      final List orderList = state.orderLists.value;
+                      return orderList.length > 0 ? EasyRefresh.custom(
+                        header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
+                        footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
+                        onRefresh: _onRefresh,
+                        onLoad: _onLoad,
+                        slivers: <Widget>[
+                          SliverToBoxAdapter(
+                            child: SizedBox(height: 15),
+                          ),
+                          SliverList(
+                            delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                              return Padding(
+                                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                child: _OrderItem(orderList[index]),
+                              );
+                            }, childCount: orderList.length
                             ),
-                            SliverList(
-                              delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                                return Padding(
-                                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                  child: _OrderItem(orderList[index]),
-                                );
-                              }, childCount: orderList.length
-                              ),
-                            )
-                          ],
-                        ) ) : Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
-                          Get.offAllNamed(RouteConfig.main_page);},)
-                      ],
-                  )),
-                ))
-              ],
-            );
-          }),
+                          )
+                        ],
+                      ) : Empty(text: '列表是空的', btnText: '去逛逛',onTap: () {
+                        Get.offAllNamed(RouteConfig.main_page);},);
+                    }))
+                  ],
+                )),
+              ))
+            ],
+          )
         );
       }
       return SizedBox();

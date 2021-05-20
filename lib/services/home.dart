@@ -18,8 +18,8 @@ class HomeService {
 
 
   // 商品列表
-  static Future<RealResponseData> goodsList(int page_no, {int category_id, String keyname}) async {
-    final DioResponseData response = await HttpRequest.request(AppApiUrls.GET_BESTLIST, {'page_no': page_no, 'category_id': category_id, 'keyname': keyname}, 'GET');
+  static Future<RealResponseData> goodsList(int page_no, {int category_id, String keyword}) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.GET_BESTLIST, {'page_no': page_no, 'category_id': category_id, 'keyword': keyword}, 'GET');
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: GoodsListModelFromJson));
     }

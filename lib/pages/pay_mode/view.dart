@@ -1,4 +1,5 @@
 import 'package:egou_app/common/routes.dart';
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
@@ -44,7 +45,7 @@ class _PayModePageState extends State<PayModePage> {
   final TextEditingController _pwdController = TextEditingController();
   bool isFocus = false;
   String pwd = '';
-  int pay_way = 1;
+  int pay_way = PayMode.balance;
 
   @override
   void initState() {
@@ -74,7 +75,7 @@ class _PayModePageState extends State<PayModePage> {
           double totalPrice = 0.00;
           if ( mainState.orderGoods.value.length > 0) {
             mainState.orderGoods.value.forEach((element) {
-              totalPrice = (totalPrice + double.parse(element.price)) * element.num;
+              totalPrice = Utils.add(totalPrice, Utils.mul(double.parse(element.price), double.parse(element.num.toString())));
             });
           }
           final UserInfoModel userinfo = mainState.userInfo.value;
@@ -140,7 +141,7 @@ class _PayModePageState extends State<PayModePage> {
                               obscureText: true,
                               textAlign: TextAlign.center,
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(15),
+                                contentPadding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                                 hasFloatingPlaceholder: false,
                                 focusColor:  AppColors.COLOR_PRIMARY_D22315,
                                 border: InputBorder.none,

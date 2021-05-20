@@ -1,10 +1,16 @@
+import 'dart:typed_data';
+
+import 'package:dio/dio.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/widgets/app_bar.dart';
+import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 import 'logic.dart';
 import 'state.dart';
@@ -12,6 +18,16 @@ import 'state.dart';
 class SharePage extends StatelessWidget {
   final ShareLogic logic = Get.put(ShareLogic());
   final ShareState state = Get.find<ShareLogic>().state;
+
+  _save() async {
+    var response = await Dio().get(state.url.value,
+        options: Options(responseType: ResponseType.bytes));
+    final result = await ImageGallerySaver.saveImage(
+        Uint8List.fromList(response.data),
+        quality: 60,
+        name: "qrcode");
+    EasyLoading.showSuccess('已保存到相册');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +44,40 @@ class SharePage extends StatelessWidget {
                           child: Image.asset(AppImages.SHARE_BG, fit: BoxFit.fill, width: 10000)
                       ),
                       Positioned(
-                          top: ScreenUtil().setWidth(1030),
-                          left: ScreenUtil().setWidth(315),
-                          child: Text('邀请好友得返现', style: TextStyle(
-                              color: AppColors.COLOR_AC5A04, fontSize: AppFontsize.SIZE_80,
-                              fontWeight: FontWeight.bold
-                          ))
+                          top: ScreenUtil().setWidth(1040),
+                          left: 0,
+                          child: Container(
+                            width: ScreenUtil().setWidth(1125),
+                            alignment: Alignment.center,
+                            child:  Text('邀请好友得返现', style: TextStyle(
+                                color: AppColors.COLOR_AC5A04, fontSize: AppFontsize.SIZE_80,
+                                fontWeight: FontWeight.bold
+                            )),
+                          )
                       ),
                       Positioned(
                           top: ScreenUtil().setWidth(1350),
-                          left: ScreenUtil().setWidth(360),
-                          child: Obx(() => Image.network(state.url.value,
-                              width: ScreenUtil().setWidth(400),
-                              height: ScreenUtil().setWidth(400),
-                              errorBuilder: (BuildContext context, Object object, StackTrace stackTrace) {
-                                 return SizedBox();
-                              }
+                          left: 0,
+                          child: Container(
+                            width: ScreenUtil().setWidth(1125),
+                            alignment: Alignment.center,
+                            child:  Obx(() => Image.network(state.url.value,
+                                width: ScreenUtil().setWidth(400),
+                                height: ScreenUtil().setWidth(400),
+                                errorBuilder: (BuildContext context, Object object, StackTrace stackTrace) {
+                                  return SizedBox();
+                                }
                             ),
+                            ),
+                          )
+                      ),
+                      Positioned(
+                          top: ScreenUtil().setWidth(2000),
+                          left: 0,
+                          child: Container(
+                            width: ScreenUtil().setWidth(1125),
+                            alignment: Alignment.center,
+                            child: RadiusButton('保存二维码',onTap: _save,),
                           )
                       )
                     ],

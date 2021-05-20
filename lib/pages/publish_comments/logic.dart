@@ -35,10 +35,8 @@ class PublishCommentsLogic extends GetxController {
           shop_photo.addAll(state.image.value);
           shop_photo.add(response['data']['url']);
           state.image.value = shop_photo;
-          EasyLoading.showSuccess('上传成功！');
-        } else {
-          EasyLoading.dismiss();
         }
+        EasyLoading.dismiss();
       });
     });
   }
@@ -69,13 +67,14 @@ class PublishCommentsLogic extends GetxController {
   }
 
   void appUploadImg(data) async {
+    EasyLoading.show(status: '正在上传');
     final RealResponseData response = await CommonService.uploadImg(data);
     if (response.result) {
       final List shop_photo = [];
       shop_photo.addAll(state.image.value);
       shop_photo.add(response.data.url);
       state.image.value = shop_photo;
-      EasyLoading.showSuccess('上传成功！');
     }
+    EasyLoading.dismiss();
   }
 }
