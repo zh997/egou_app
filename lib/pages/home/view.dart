@@ -49,10 +49,15 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
     print(cameraScanResult);
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    FocusScope.of(context).unfocus();
     return FutureBuilder(
        future: _future,
         builder: (BuildContext context, AsyncSnapshot snapshot){

@@ -45,22 +45,22 @@ class HttpRequest{
     // options.headers['token'] = '81db4474cdaf61cb99855b309354b683';
     addHeaders('token', AppStorage.getString('token'));
     Dio dio = new Dio(options);
-    if (!Utils.inProduction) {
-      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) {
-          return Platform.isAndroid;
-        };
-        client.findProxy = (url) {
-          ///设置代理 电脑ip地址
-          return "PROXY 10.11.1.46:8866";
-
-          ///不设置代理
-//          return 'DIRECT';
-        };
-
-      };
-    }
+//     if (!Utils.inProduction) {
+//       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+//         client.badCertificateCallback =
+//             (X509Certificate cert, String host, int port) {
+//           return Platform.isAndroid;
+//         };
+//         client.findProxy = (url) {
+//           ///设置代理 电脑ip地址
+//           return "PROXY 192.168.0.105:8866";
+//
+//           ///不设置代理
+// //          return 'DIRECT';
+//         };
+//
+//       };
+//     }
 
     try {
       if (method == 'POST') {

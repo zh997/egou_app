@@ -90,6 +90,7 @@ class _SearchPageState extends State<SearchPage> {
         children: [
           InkWell(
             onTap:(){
+              FocusScope.of(context).unfocus();
               Get.back();
             },
             child: Icon(Icons.arrow_back_ios_outlined, size: 20,),
