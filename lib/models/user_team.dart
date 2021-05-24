@@ -276,6 +276,7 @@ class User {
   int noticeNum;
   String nextLevelTips;
   String makerLevelStr;
+  String mobile;
 
   User(
       {this.id,
@@ -296,6 +297,7 @@ class User {
         this.coupon,
         this.noticeNum,
         this.nextLevelTips,
+        this.mobile,
         this.makerLevelStr});
 
   User.fromJson(Map<String, dynamic> json) {
@@ -317,6 +319,7 @@ class User {
     coupon = json['coupon'];
     noticeNum = json['notice_num'];
     nextLevelTips = json['next_level_tips'];
+    mobile = json['mobile'];
     makerLevelStr = json['maker_level_str'];
   }
 
@@ -341,6 +344,7 @@ class User {
     data['notice_num'] = this.noticeNum;
     data['next_level_tips'] = this.nextLevelTips;
     data['maker_level_str'] = this.makerLevelStr;
+    data['mobile'] = this.mobile;
     return data;
   }
 }

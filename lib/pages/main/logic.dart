@@ -25,8 +25,6 @@ class MainLogic extends GetxController {
           selectAddress = item;
         }
       });
-      print(selectAddress.id);
-      print(response.data);
       if (selectAddress.id == null && response.data.length > 0) {
         selectAddress = response.data[0];
       }

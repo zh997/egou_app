@@ -5,8 +5,20 @@ import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/models/order.dart';
 import 'package:egou_app/models/order_list.dart';
 import 'package:egou_app/models/order_detail.dart';
+import 'package:egou_app/models/order_buy_info.dart';
 
 class OrderService {
+
+  // 结算详情
+  static Future<RealResponseData> orderBuyInfo(Map<String, dynamic> data) async {
+    data['order_source'] = 2;
+    data['type'] = 'buy_now';
+    data['action'] = 'info';
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.ORDER_BUY, data, 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: OrderBuyInfoModelFromJson));
+    }
+  }
 
   // 下单
   static Future<RealResponseData> orderBuy(Map<String, dynamic> data) async {

@@ -80,64 +80,61 @@ class _MyStorePageState extends State<MyStorePage> {
 
 
   Widget _storeItem(MyCollectItemModel item) {
-    return Container(
-      color: Colors.white,
-      padding: EdgeInsets.fromLTRB(15, 0, 15, 15) ,
-      child: Row(
-        children: [
-          Container(
-            width:  ScreenUtil().setWidth(350),
-            height:  ScreenUtil().setWidth(350),
-            margin: EdgeInsets.only( right: 10),
-            decoration: BoxDecoration(
-                border: Border.all(color: AppColors.COLOR_GRAY_F4F4F4, width: 3)
+    return InkWell(
+      onTap: (){
+        Get.toNamed(RouteConfig.goods_detail + '?id=' + item.id.toString());
+      },
+      child:Container(
+        color: Colors.white,
+        padding: EdgeInsets.fromLTRB(15, 0, 15, 15) ,
+        child: Row(
+          children: [
+            Container(
+              width:  ScreenUtil().setWidth(350),
+              height:  ScreenUtil().setWidth(350),
+              margin: EdgeInsets.only( right: 10),
+              decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.COLOR_GRAY_F4F4F4, width: 3)
+              ),
+              child: Image.network(item.image, fit: BoxFit.cover),
             ),
-            child: Image.network(item.image, fit: BoxFit.cover),
-          ),
-          Expanded(child: Container(
-            height:  ScreenUtil().setWidth(350),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(item.name, style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_48), maxLines: 2, overflow: TextOverflow.ellipsis,),
-                // SizedBox(height: 3),
-                // Text('996人收藏', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_36), maxLines: 1),
-                Price(price: item.price),
-                Row(
-                    children: [
-                      _CircleButton(ButtonType.border, '加入购物车', () {
-                        Get.toNamed(RouteConfig.goods_detail + '?id=' + item.id.toString());
-                      }),
-                      SizedBox(width: 10),
-                      _CircleButton(ButtonType.primary, '立即购买', (){
-                        Get.toNamed(RouteConfig.goods_detail + '?id=' + item.id.toString());
-                      })
-                    ]
-                )
-              ],
-            ),
-          ))
-        ],
-      ),
+            Expanded(child: Container(
+              height:  ScreenUtil().setWidth(350),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(item.name, style: TextStyle(color: AppColors.COLOR_BLACK_222222, fontSize: AppFontsize.SIZE_48), maxLines: 2, overflow: TextOverflow.ellipsis,),
+                  // SizedBox(height: 3),
+                  // Text('996人收藏', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_36), maxLines: 1),
+                  Price(price: item.price),
+                  Row(
+                      children: [
+                        _CircleButton(ButtonType.border, '加入购物车'),
+                        SizedBox(width: 10),
+                        _CircleButton(ButtonType.primary, '立即购买')
+                      ]
+                  )
+                ],
+              ),
+            ))
+          ],
+        ),
+      ) ,
     );
   }
 
-  Widget _CircleButton(type, text,Function onTap) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Container(
-        alignment: Alignment.center,
-        width: ScreenUtil().setWidth(286),
-        height: ScreenUtil().setWidth(92),
-        decoration: BoxDecoration(
-          color: type == ButtonType.primary ? AppColors.COLOR_PRIMARY_D22315 : Colors.transparent,
-          border: Border.all(color: AppColors.COLOR_PRIMARY_D22315, width: 1),
-          borderRadius: BorderRadius.circular(92),
-        ),
-        child: Text(text, style: TextStyle(color: type == ButtonType.primary ? Colors.white : AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
+  Widget _CircleButton(type, text,{Function onTap}) {
+    return Container(
+      alignment: Alignment.center,
+      width: ScreenUtil().setWidth(286),
+      height: ScreenUtil().setWidth(92),
+      decoration: BoxDecoration(
+        color: type == ButtonType.primary ? AppColors.COLOR_PRIMARY_D22315 : Colors.transparent,
+        border: Border.all(color: AppColors.COLOR_PRIMARY_D22315, width: 1),
+        borderRadius: BorderRadius.circular(92),
       ),
+      child: Text(text, style: TextStyle(color: type == ButtonType.primary ? Colors.white : AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
     );
   }
 }

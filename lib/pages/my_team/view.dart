@@ -27,7 +27,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _future = logic.onGetTeamList();
+    _future = logic.onGetTeamList(state.type.value);
   }
 
   @override
@@ -39,6 +39,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
           final int count = state.count.value;
           final int first_count = state.first_count.value;
           final User user = state.user.value;
+          final int type = state.type.value;
           return Scaffold(
               backgroundColor: AppColors.COLOR_GRAY_F7F7F7,
               appBar: CustomAppBar(title: '我的团队', leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333)),
@@ -46,8 +47,8 @@ class _MyTeamPageState extends State<MyTeamPage> {
                   child: EasyRefresh.custom(
                     header: BallPulseHeader(color: AppColors.COLOR_PRIMARY_D22315),
                     footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
-                    onRefresh: () async => await  logic.onGetTeamList(),
-                    onLoad: () async => await logic.onLoadMore(),
+                    onRefresh: () async => await  logic.onGetTeamList(state.type.value),
+                    onLoad: () async => await logic.onLoadMore(state.type.value),
                     slivers: [
                       SliverList(delegate: SliverChildListDelegate([
                         SizedBox(height: 15),
@@ -58,25 +59,51 @@ class _MyTeamPageState extends State<MyTeamPage> {
                                 _infoItem(130.0, true, user),
                                 SizedBox(height: 15),
                                 Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Column(
-                                          children: [
-                                            Text('直推团友', style: TextStyle(fontSize: AppFontsize.SIZE_36, color: AppColors.COLOR_GRAY_B7B7B7)),
-                                            SizedBox(height: 5),
-                                            Text(first_count.toString(), style: TextStyle(fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold, color: AppColors.COLOR_PRIMARY_D22315))
-                                          ]
+                                      Expanded(
+                                        child: InkWell(
+                                          onTap: (){
+                                            logic.onGetTeamList(0);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.only(bottom: 15),
+                                            decoration: BoxDecoration(
+                                                border: type == 0 ? Border(bottom: BorderSide(width: 2, color: AppColors.COLOR_PRIMARY_D22315)) : Border()
+                                            ),
+                                            child: Column(
+                                                children: [
+                                                  Text('直推团友', style: TextStyle(fontSize: AppFontsize.SIZE_36, color: AppColors.COLOR_GRAY_B7B7B7)),
+                                                  SizedBox(height: 5),
+                                                  Text(first_count.toString(), style: TextStyle(fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold, color: AppColors.COLOR_PRIMARY_D22315))
+                                                ]
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                      Column(
-                                          children: [
-                                            Text('全部团友', style: TextStyle(fontSize: AppFontsize.SIZE_36, color: AppColors.COLOR_GRAY_B7B7B7)),
-                                            SizedBox(height: 5),
-                                            Text(count.toString(), style: TextStyle(fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold, color: AppColors.COLOR_PRIMARY_D22315))
-                                          ]
+                                      Expanded(
+                                        child: InkWell(
+                                          onTap: (){
+                                            logic.onGetTeamList(1);
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.only(bottom: 15),
+                                            decoration: BoxDecoration(
+                                                border: type == 1 ? Border(bottom: BorderSide(width: 2, color: AppColors.COLOR_PRIMARY_D22315)) : Border()
+                                            ),
+                                            child: Column(
+                                                children: [
+                                                  Text('全部团友', style: TextStyle(fontSize: AppFontsize.SIZE_36, color: AppColors.COLOR_GRAY_B7B7B7)),
+                                                  SizedBox(height: 5),
+                                                  Text(count.toString(), style: TextStyle(fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold, color: AppColors.COLOR_PRIMARY_D22315))
+                                                ]
+                                            ),
+                                          )
+                                        ),
                                       )
                                     ]
                                 ),
-                                SizedBox(height: 15)
+                                // SizedBox(height: 15)
                               ],
                             )
                         ),
@@ -95,7 +122,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
     });
   }
 
-  Widget _infoItem(radius, isShowId,item) {
+  Widget _infoItem(radius, isShowId, item) {
     return Column(
         children: [
           SizedBox(height: 15),
@@ -119,7 +146,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
                 children: [
                   Row(
                     children: [
-                      Text(item.nickname, style: TextStyle(
+                      Text(item.mobile, style: TextStyle(
                           fontSize: AppFontsize.SIZE_56,
                           color: AppColors.COLOR_BLACK_000000
                       )),

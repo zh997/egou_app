@@ -14,8 +14,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
-import 'package:egou_app/common/utils.dart';
+import 'package:egou_app/models/order_buy_info.dart';
+import 'package:egou_app/models/address.dart';
 
+import '../../main.dart';
 import 'logic.dart';
 import 'state.dart';
 
@@ -24,7 +26,7 @@ class ConfirmOrderPage extends StatefulWidget {
   _ConfirmOrderPageState createState() => _ConfirmOrderPageState();
 }
 
-class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
+class _ConfirmOrderPageState extends State<ConfirmOrderPage>  with RouteAware {
   final ConfirmOrderLogic logic = Get.put(ConfirmOrderLogic());
   final ConfirmOrderState state = Get.find<ConfirmOrderLogic>().state;
   final MainLogic mainLogic = Get.put(MainLogic());
@@ -32,21 +34,75 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
   String isGiftBag = Get.parameters['isGiftBag'];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    routeObserver.unsubscribe(this);
+  }
+
+  @override
+  void didPopNext() async {
+     if (mainState.selectAddress.value.id == null) {
+      await _future();
+     } else {
+       _onGetOrderBuyDetail();
+     }
+  }
+
+  Future _onGetOrderBuyDetail() async {
+    final Map<String, dynamic> data = {};
+    data['address_id'] = mainState.selectAddress.value.id;
+    // 普通商品购买
+    final List goods = [];
+
+    mainState.orderGoods.forEach((element) {
+      if (element.itemId != null) {
+        goods.add({
+          'item_id': element.itemId,
+          'num': element.num,
+          'goods_id': element.id
+        });
+      } else if(element.goodsSpec != null && element.goodsSpec.length > 0) {
+        final List<int> specIds = [];
+        element.goodsSpec.forEach((goodSpecItem){
+          specIds.add(goodSpecItem.specValue[0].id);
+        });
+        goods.add({
+          'item_id': specIds.join(','),
+          'num': element.num,
+          'goods_id': element.id
+        });
+      }
+    });
+    data['goods'] = goods;
+
+    await logic.onOrderBuyInfo(data);
+  }
+
+  Future _future () async {
+    await mainLogic.onGetAddressList();
+    await _onGetOrderBuyDetail();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder(future: mainLogic.onGetAddressList(),builder: (BuildContext context, AsyncSnapshot snapshot){
+    return FutureBuilder(future: _future(), builder: (BuildContext context, AsyncSnapshot snapshot){
        if(snapshot.connectionState == ConnectionState.done) {
          return Scaffold(
            appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '确认订单'),
            body: Obx((){
-             final List orderGoods = mainState.orderGoods.value;
-             double totalPrice = 0.00;
-             double goodsNum = 0;
-             if (orderGoods.length > 0) {
-               orderGoods.forEach((element) {
-                 totalPrice = Utils.add(totalPrice, Utils.mul(double.parse(element.num.toString()), double.parse(element.price)));
-                 goodsNum = Utils.add(double.parse(goodsNum.toString()), double.parse(element.num.toString()));
-               });
-             }
+             final OrderBuyInfoModel orderBuyInfoModel = state.orderBuyInfo.value;
              return Column(
                children: [
                  Expanded(child:  ListView(
@@ -82,18 +138,18 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                              decoration: BoxDecoration(
                                  border: Border(bottom: BorderSide(width: 1, color:  AppColors.COLOR_GRAY_DDDDDD))
                              ),
-                             child: Text('${goodsNum}件商品', style: TextStyle(
+                             child: Text('${orderBuyInfoModel.totalNum}件商品', style: TextStyle(
                                  fontSize: AppFontsize.SIZE_48,
                                  color: AppColors.COLOR_BLACK_222222
                              )),
                            ),
                            SizedBox(height: 15),
                            Column(
-                             children: List.generate(orderGoods.length, (index) => Padding(
+                             children: List.generate(orderBuyInfoModel.goodsLists.length, (index) => Padding(
                                padding: EdgeInsets.only(bottom: 10),
-                               child: OrderItem(img: orderGoods[index].image,
-                                 name: orderGoods[index].name, price: orderGoods[index].price, goodsSpec: orderGoods[index].goodsSpec,
-                                 specValueStr: orderGoods[index].specValueStr, num:  orderGoods[index].num,) ,
+                               child: OrderItem(img: orderBuyInfoModel.goodsLists[index].image,
+                                 name: orderBuyInfoModel.goodsLists[index].goodsName, price: orderBuyInfoModel.goodsLists[index].goodsPrice,
+                                 specValueStr: orderBuyInfoModel.goodsLists[index].specValueStr, num:  orderBuyInfoModel.goodsLists[index].goodsNum,) ,
                              )),
                            ),
                          ],
@@ -109,7 +165,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                              children: [
                                Text('商品总额', style: TextStyle(fontSize: AppFontsize.SIZE_46, color: AppColors.COLOR_GRAY_999999)),
-                               Text('¥${totalPrice}', style: TextStyle(fontSize: AppFontsize.SIZE_46, color: AppColors.COLOR_BLACK_222222))
+                               Text('¥${orderBuyInfoModel.totalAmount}', style: TextStyle(fontSize: AppFontsize.SIZE_46, color: AppColors.COLOR_BLACK_222222))
                              ],
                            ),
                            SizedBox(height: 10),
@@ -117,7 +173,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                              children: [
                                Text('运费', style: TextStyle(fontSize: AppFontsize.SIZE_46, color: AppColors.COLOR_GRAY_999999)),
-                               Text('¥0.00', style: TextStyle(fontSize: AppFontsize.SIZE_46, color: AppColors.COLOR_BLACK_222222))
+                               Text('¥${orderBuyInfoModel.shippingPrice}', style: TextStyle(fontSize: AppFontsize.SIZE_46, color: AppColors.COLOR_BLACK_222222))
                              ],
                            )
                          ],
@@ -145,7 +201,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage> {
                                  color: AppColors.COLOR_BLACK_333333
                              )),
                            ) ,
-                           Price(color: AppColors.COLOR_BLACK_333333,size: AppFontsize.SIZE_67, price: '${totalPrice}')
+                           Price(color: AppColors.COLOR_BLACK_333333,size: AppFontsize.SIZE_67, price: '${orderBuyInfoModel.orderAmount}')
                          ],
                        ),
                        RadiusButton('结算', width: 410, onTap: (){

@@ -7,27 +7,18 @@ class OrderGoodsModel {
   int id;
   String image;
   String name;
-  List<GoodsSpec> goodsSpec;
-  String specValueStr;
-  String itemId;
+  int itemId;
   int num;
   String price;
 
   OrderGoodsModel(
-      {this.id, this.image, this.name, this.goodsSpec, this.num, this.price, this.specValueStr, this.itemId});
+      {this.id, this.image, this.name, this.num, this.price, this.itemId});
 
   OrderGoodsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     image = json['image'];
     name = json['name'];
-    if (json['goods_spec'] != null) {
-      goodsSpec = new List<GoodsSpec>();
-      json['goods_spec'].forEach((v) {
-        goodsSpec.add(new GoodsSpec.fromJson(v));
-      });
-    }
     itemId = json['item_id'];
-    specValueStr = json['spec_value_str'];
     num = json['num'];
     price = json['price'];
   }
@@ -37,11 +28,7 @@ class OrderGoodsModel {
     data['id'] = this.id;
     data['image'] = this.image;
     data['name'] = this.name;
-    if (this.goodsSpec != null) {
-      data['goods_spec'] = this.goodsSpec.map((v) => v.toJson()).toList();
-    }
     data['item_id'] = this.itemId;
-    data['spec_value_str'] = this.specValueStr;
     data['num'] = this.num;
     data['price'] = this.price;
     return data;

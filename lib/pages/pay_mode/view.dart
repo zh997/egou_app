@@ -15,6 +15,7 @@ import 'package:egou_app/pages/points_mall/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/small_widget.dart';
+import 'package:egou_app/models/order_buy_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -36,6 +37,7 @@ class PayModePage extends StatefulWidget {
 class _PayModePageState extends State<PayModePage> {
   final PayModeLogic logic = Get.put(PayModeLogic());
   final PayModeState state = Get.find<PayModeLogic>().state;
+  final ConfirmOrderState confirmOrderstate = Get.find<ConfirmOrderLogic>().state;
   final MainState mainState = Get.find<MainLogic>().state;
   final MainLogic mainLogic = Get.put(MainLogic());
   Future _future;
@@ -72,13 +74,8 @@ class _PayModePageState extends State<PayModePage> {
       if (snapshot.connectionState == ConnectionState.done) {
         return Obx(() {
           final int shopType = mainState.shopType.value;
-          double totalPrice = 0.00;
-          if ( mainState.orderGoods.value.length > 0) {
-            mainState.orderGoods.value.forEach((element) {
-              totalPrice = Utils.add(totalPrice, Utils.mul(double.parse(element.price), double.parse(element.num.toString())));
-            });
-          }
           final UserInfoModel userinfo = mainState.userInfo.value;
+          final OrderBuyInfoModel orderBuyInfo = confirmOrderstate.orderBuyInfo.value;
           return Scaffold(
             appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '支付方式'),
             body: ListView(
@@ -95,7 +92,7 @@ class _PayModePageState extends State<PayModePage> {
                           fontSize: AppFontsize.SIZE_50,
                           color: AppColors.COLOR_BLACK_000000
                       )),
-                      Price(price: totalPrice.toString())
+                      Price(price: orderBuyInfo.orderAmount.toString())
                     ],
                   ) ,
                 ),
@@ -170,25 +167,12 @@ class _PayModePageState extends State<PayModePage> {
                     } else {
                       // 普通商品购买
                       final List goods = [];
-
-                      mainState.orderGoods.forEach((element) {
-                        if (element.itemId != null) {
-                          goods.add({
-                            'item_id': element.itemId,
-                            'num': element.num,
-                            'goods_id': element.id
-                          });
-                        } else if(element.goodsSpec != null && element.goodsSpec.length > 0) {
-                          final List<int> specIds = [];
-                          element.goodsSpec.forEach((goodSpecItem){
-                            specIds.add(goodSpecItem.specValue[0].id);
-                          });
-                          goods.add({
-                            'item_id': specIds.join(','),
-                            'num': element.num,
-                            'goods_id': element.id
-                          });
-                        }
+                      orderBuyInfo.goodsLists.forEach((element) {
+                        goods.add({
+                          'item_id': element.itemId,
+                          'num': element.goodsNum,
+                          'goods_id': element.goodsId
+                        });
                       });
                       data['goods'] = goods;
                       logic.onOrderBuy(data);

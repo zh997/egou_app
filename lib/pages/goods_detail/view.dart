@@ -347,11 +347,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                           }
                           if (isPass) {
                             final Map<String, dynamic> data = {};
-                            final List good_spec = [];
-                            selectedGoodsSpec.forEach((element) {
-                              good_spec.add(element.toJson());
-                            });
-                            data['goods_spec'] = good_spec;
+                            data['item_id'] = selectedGoodsItem.id;
                             data['image'] = state.goodsDetail.value.image;
                             data['name'] = state.goodsDetail.value.name;
                             data['num'] = state.num.value;
@@ -363,7 +359,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                                 Get.toNamed(RouteConfig.confirm_order);
                               } else if (type == 'cart'){
                                 logic.onAddCart({
-                                  'item_id': state.selectedGoodsSpecIds.value.join(','),
+                                  'item_id':  selectedGoodsItem.id,
                                   'goods_num': state.num.value
                                 });
                               }

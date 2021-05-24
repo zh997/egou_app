@@ -8,6 +8,7 @@ class MyTeamState {
   RxInt count = 0.obs;
   RxInt first_count = 0.obs;
   Rx<User> user = User().obs;
+  RxInt type = 0.obs;
   MyTeamState() {
     ///Initialize variables
   }

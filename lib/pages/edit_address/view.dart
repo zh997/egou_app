@@ -27,7 +27,6 @@ class EditAddressPage extends StatefulWidget {
 
 class _EditAddressPageState extends State<EditAddressPage>{
   final EditAddressLogic logic = Get.put(EditAddressLogic());
-  final MainLogic mainLogic = Get.put(MainLogic());
   final EditAddressState state = Get.find<EditAddressLogic>().state;
   final MainState mainState = Get.find<MainLogic>().state;
   String id = Get.parameters['id'];
@@ -58,13 +57,6 @@ class _EditAddressPageState extends State<EditAddressPage>{
         }
       });
     }
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    mainLogic.onGetAddressList();
   }
 
   @override
