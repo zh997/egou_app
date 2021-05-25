@@ -108,7 +108,7 @@ class BeGuestPage extends StatelessWidget {
                             data['price'] = giftBagDetail.price;
                             data['id'] = giftBagDetail.id;
                             mainLogic.onSelectOrderGoods([OrderGoodsModelFromJson(data)]);
-                            Get.toNamed(RouteConfig.confirm_order + '?isGiftBag=1');
+                            Get.toNamed(RouteConfig.pay_mode + '?isGiftBag=1');
                         })
                     )
                   ]

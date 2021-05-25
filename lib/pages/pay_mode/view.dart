@@ -35,13 +35,13 @@ class PayModePage extends StatefulWidget {
 }
 
 class _PayModePageState extends State<PayModePage> {
+  String isGiftBag = Get.parameters['isGiftBag'];
   final PayModeLogic logic = Get.put(PayModeLogic());
   final PayModeState state = Get.find<PayModeLogic>().state;
-  final ConfirmOrderState confirmOrderstate = Get.find<ConfirmOrderLogic>().state;
+  ConfirmOrderState confirmOrderstate;
   final MainState mainState = Get.find<MainLogic>().state;
   final MainLogic mainLogic = Get.put(MainLogic());
   Future _future;
-  String isGiftBag = Get.parameters['isGiftBag'];
 
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _pwdController = TextEditingController();
@@ -66,6 +66,9 @@ class _PayModePageState extends State<PayModePage> {
       }
     });
     _future = mainLogic.onGetUserInfo();
+    if (isGiftBag == null ) {
+      confirmOrderstate = Get.find<ConfirmOrderLogic>().state;
+    }
   }
 
   @override
@@ -75,7 +78,11 @@ class _PayModePageState extends State<PayModePage> {
         return Obx(() {
           final int shopType = mainState.shopType.value;
           final UserInfoModel userinfo = mainState.userInfo.value;
-          final OrderBuyInfoModel orderBuyInfo = confirmOrderstate.orderBuyInfo.value;
+          OrderBuyInfoModel orderBuyInfo;
+          if (isGiftBag == null) {
+            orderBuyInfo = confirmOrderstate.orderBuyInfo.value;
+          }
+          final String giftBagPrice = mainState.orderGoods.value[0].price;
           return Scaffold(
             appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '支付方式'),
             body: ListView(
@@ -92,7 +99,7 @@ class _PayModePageState extends State<PayModePage> {
                           fontSize: AppFontsize.SIZE_50,
                           color: AppColors.COLOR_BLACK_000000
                       )),
-                      Price(price: orderBuyInfo.orderAmount.toString())
+                      Price(price: isGiftBag != null ? giftBagPrice : orderBuyInfo.orderAmount.toString())
                     ],
                   ) ,
                 ),

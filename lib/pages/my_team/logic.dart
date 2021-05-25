@@ -12,8 +12,8 @@ class MyTeamLogic extends GetxController {
     final RealResponseData response = await TeamService.userMyTeam({'page_no': 1, 'type': type});
     if (response.result) {
       state.teamLists.value = response.data.list;
-      state.count.value = response.data.count;
-      state.first_count.value = response.data.firstCount;
+      state.first_count.value = response.data.first_count;
+      state.team_count.value = response.data.team_count;
       state.hasMore.value = response.data.more;
       state.user.value = response.data.user;
       state.page.value = 1;

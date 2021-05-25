@@ -31,7 +31,6 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage>  with RouteAware {
   final ConfirmOrderState state = Get.find<ConfirmOrderLogic>().state;
   final MainLogic mainLogic = Get.put(MainLogic());
   final MainState mainState = Get.find<MainLogic>().state;
-  String isGiftBag = Get.parameters['isGiftBag'];
 
   @override
   void initState() {
@@ -206,11 +205,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage>  with RouteAware {
                        ),
                        RadiusButton('结算', width: 410, onTap: (){
                          if (mainState.selectAddress.value.id != null) {
-                           if (isGiftBag != null ) {
-                             Get.toNamed(RouteConfig.pay_mode + '?isGiftBag=${isGiftBag}');
-                           } else {
-                             Get.toNamed(RouteConfig.pay_mode);
-                           }
+                           Get.toNamed(RouteConfig.pay_mode);
                          } else {
                            EasyLoading.showToast('请先添加收货地址');
                          }

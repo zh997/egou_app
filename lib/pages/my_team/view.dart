@@ -36,8 +36,8 @@ class _MyTeamPageState extends State<MyTeamPage> {
       if (snapshot.connectionState == ConnectionState.done) {
         return Obx((){
           final List teamLists = state.teamLists.value;
-          final int count = state.count.value;
           final int first_count = state.first_count.value;
+          final int team_count  = state.team_count.value;
           final User user = state.user.value;
           final int type = state.type.value;
           return Scaffold(
@@ -75,7 +75,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
                                                 children: [
                                                   Text('直推团友', style: TextStyle(fontSize: AppFontsize.SIZE_36, color: AppColors.COLOR_GRAY_B7B7B7)),
                                                   SizedBox(height: 5),
-                                                  Text(first_count.toString(), style: TextStyle(fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold, color: AppColors.COLOR_PRIMARY_D22315))
+                                                  Text( first_count.toString(), style: TextStyle(fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold, color: AppColors.COLOR_PRIMARY_D22315))
                                                 ]
                                             ),
                                           ),
@@ -95,7 +95,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
                                                 children: [
                                                   Text('全部团友', style: TextStyle(fontSize: AppFontsize.SIZE_36, color: AppColors.COLOR_GRAY_B7B7B7)),
                                                   SizedBox(height: 5),
-                                                  Text(count.toString(), style: TextStyle(fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold, color: AppColors.COLOR_PRIMARY_D22315))
+                                                  Text(team_count.toString(), style: TextStyle(fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold, color: AppColors.COLOR_PRIMARY_D22315))
                                                 ]
                                             ),
                                           )

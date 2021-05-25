@@ -54,8 +54,8 @@ class OrderStatus {
  * 商城类型:1-社区商城; 2-场景商城;
  * */
 class MallType{
-  static int community_mall = 1;
-  static int scene_mall = 2;
+  static int community_mall = 0;
+  static int scene_mall = 1;
 }
 
 /****
