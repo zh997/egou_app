@@ -1,5 +1,5 @@
 class AppApiUrls  {
-  static String BASE_URL = 'http://shop.hlnsqz.cn';
+  static String BASE_URL = 'https://shop.hlnsqz.cn';
 
   static String SEND_CODE = '/api/sms/send';
   static String ACCOUNT_LOGIN = '/api/account/login';

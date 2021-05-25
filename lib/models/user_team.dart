@@ -3,6 +3,7 @@ UserTeamListModel UserTeamListModelFromJson(json) => UserTeamListModel.fromJson(
 
 class UserTeamListModel {
   int firstCount;
+  int teamCount;
   List<UserList> list;
   int page;
   int size;
@@ -21,6 +22,7 @@ class UserTeamListModel {
 
   UserTeamListModel.fromJson(Map<String, dynamic> json) {
     firstCount = json['first_count'];
+    teamCount = json['team_count'];
     if (json['list'] != null) {
       list = new List<UserList>();
       json['list'].forEach((v) {
@@ -37,6 +39,7 @@ class UserTeamListModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['first_count'] = this.firstCount;
+    data['team_count'] = this.teamCount;
     if (this.list != null) {
       data['list'] = this.list.map((v) => v.toJson()).toList();
     }

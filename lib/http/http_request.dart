@@ -53,7 +53,7 @@ class HttpRequest{
         };
         client.findProxy = (url) {
           ///设置代理 电脑ip地址
-          return "PROXY 10.11.1.46:8866";
+          return "PROXY 192.168.0.104:8866";
 
           ///不设置代理
 //          return 'DIRECT';

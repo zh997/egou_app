@@ -51,7 +51,7 @@ class OrderStatus {
 
 
 /**
- * 商城类型:1-社区商城; 2-场景商城;
+ * 商城类型:0-社区商城; 1-场景商城;
  * */
 class MallType{
   static int community_mall = 0;
