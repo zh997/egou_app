@@ -8,7 +8,7 @@ class TeamService {
 
   // 团队列表
   static Future<RealResponseData> userMyTeam(Map<String, dynamic> data) async {
-    final DioResponseData response = await HttpRequest.request(AppApiUrls.USER_MYTEAM, data, 'GET');
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.USER_MYTEAM, data, 'POST');
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: UserTeamListModelFromJson, noList: true));
     }

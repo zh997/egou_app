@@ -10,6 +10,7 @@ import 'package:egou_app/pages/concat_us/view.dart';
 import 'package:egou_app/pages/confirm_order/view.dart';
 import 'package:egou_app/pages/edit_address/view.dart';
 import 'package:egou_app/pages/forget_pwd/view.dart';
+import 'package:egou_app/pages/gift_confirm_order/view.dart';
 import 'package:egou_app/pages/goods_detail/view.dart';
 import 'package:egou_app/pages/make_qrcode/view.dart';
 import 'package:egou_app/pages/merchant_list/view.dart';
@@ -80,6 +81,7 @@ class RouteConfig {
   static final String order_detail = '/order_detail';
   static final String agreenment_page = '/agreenment_page';
   static final String search_page = '/search_page';
+  static final String gift_confirm_order = '/gift_confirm_order';
 
   static final List<GetPage> getPages = [
     GetPage(name: guide_page, page: () => GuidePage()),
@@ -121,5 +123,6 @@ class RouteConfig {
     GetPage(name: publish_comments, page: () => PublishCommentsPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: order_detail, page: () => OrderDetailPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
     GetPage(name: agreenment_page, page: () => AgreementPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
+    GetPage(name: gift_confirm_order, page: () => GiftConfirmOrderPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
   ];
 }

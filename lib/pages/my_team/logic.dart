@@ -8,7 +8,6 @@ class MyTeamLogic extends GetxController {
   final state = MyTeamState();
 
   Future onGetTeamList(int type) async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await TeamService.userMyTeam({'page_no': 1, 'type': type});
     if (response.result) {
       state.teamLists.value = response.data.list;
