@@ -46,5 +46,5 @@ class AppApiUrls  {
   static String SHOP_SETTING_ABOUT = '/api/Shop_Setting/about';
   static String SHOP_SETTING_POLICY = '/api/Shop_Setting/policy';
   static String GOODS_GUESS_LIKE = '/api/goods/likeList';
-
+  static String GOODS_GET_GOODSLIST = '/api/goods/getGoodsList';
 }

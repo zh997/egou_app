@@ -129,7 +129,7 @@ class MyPage extends StatelessWidget {
                                     children: [
                                       Image.asset(AppImages.MONEY_ICON_2, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
                                       SizedBox(height: ScreenUtil().setWidth(20),),
-                                      Text('金币', style: TextStyle(
+                                      Text('金牛', style: TextStyle(
                                           fontSize: AppFontsize.SIZE_36,
                                           color: Colors.white
                                       )),
@@ -147,7 +147,7 @@ class MyPage extends StatelessWidget {
                                     children: [
                                       Image.asset(AppImages.MONEY_ICON_3, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
                                       SizedBox(height: ScreenUtil().setWidth(20),),
-                                      Text('银币', style: TextStyle(
+                                      Text('金马', style: TextStyle(
                                           fontSize: AppFontsize.SIZE_36,
                                           color: Colors.white
                                       )),
