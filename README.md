@@ -1,4 +1,4 @@
-# zb_app
+# egou_app
 
 A new Flutter project.
 
