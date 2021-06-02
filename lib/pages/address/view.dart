@@ -14,7 +14,7 @@ import 'package:flutter_screenutil/screen_util.dart';
 import 'package:egou_app/models/address.dart';
 import 'package:get/get.dart';
 
-import '../../main.dart';
+import 'package:egou_app/middleware/app_middleware.dart';
 import 'logic.dart';
 import 'state.dart';
 

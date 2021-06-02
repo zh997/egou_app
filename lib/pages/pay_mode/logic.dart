@@ -9,11 +9,12 @@ import 'state.dart';
 
 class PayModeLogic extends GetxController {
   final state = PayModeState();
-
+  String type = Get.parameters['type'];
 
   // 普通商品下单
   Future onOrderBuy(Map<String, dynamic> data) async {
     EasyLoading.show(status: '加载中');
+    data['type'] = type;
     final RealResponseData response = await OrderService.orderBuy(data);
     if (response.result) {
       Get.toNamed(RouteConfig.pay_result);

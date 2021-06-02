@@ -6,10 +6,12 @@ import 'package:get/get.dart';
 import 'state.dart';
 
 class ConfirmOrderLogic extends GetxController {
+  String type = Get.parameters['type'];
   final state = ConfirmOrderState();
 
   Future onOrderBuyInfo(Map<String, dynamic> data) async {
     EasyLoading.show(status: '加载中');
+    data['type'] = type;
     final RealResponseData response = await OrderService.orderBuyInfo(data);
     if (response.result) {
        state.orderBuyInfo.value = response.data;

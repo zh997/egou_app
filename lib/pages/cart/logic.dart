@@ -45,7 +45,7 @@ class CartLogic extends GetxController {
       lists.forEach((element) {
         final item = element.toJson();
         if (data != null && data['cart_id'].indexOf(item['cart_id']) != -1 ) {
-          item['selected'] = element.selected == 1 ? 0 : 1;
+          item['selected'] = data['selected'];
         }
         goodsList.add(item);
       });

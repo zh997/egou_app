@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 import 'package:egou_app/models/order_buy_info.dart';
 import 'package:egou_app/models/address.dart';
 
-import '../../main.dart';
+import 'package:egou_app/middleware/app_middleware.dart';
 import 'logic.dart';
 import 'state.dart';
 
@@ -31,6 +31,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage>  with RouteAware {
   final ConfirmOrderState state = Get.find<ConfirmOrderLogic>().state;
   final MainLogic mainLogic = Get.put(MainLogic());
   final MainState mainState = Get.find<MainLogic>().state;
+  String type = Get.parameters['type'];
 
   @override
   void initState() {
@@ -205,7 +206,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage>  with RouteAware {
                        ),
                        RadiusButton('结算', width: 410, onTap: (){
                          if (mainState.selectAddress.value.id != null) {
-                           Get.toNamed(RouteConfig.pay_mode);
+                           Get.toNamed(RouteConfig.pay_mode + '?type=' + type);
                          } else {
                            EasyLoading.showToast('请先添加收货地址');
                          }

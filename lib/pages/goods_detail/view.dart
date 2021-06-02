@@ -356,7 +356,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                             if (selectedGoodsItem.stock > 0) {
                               mainLogic.onSelectOrderGoods([OrderGoodsModelFromJson(data)]);
                               if (type == 'pay') {
-                                Get.toNamed(RouteConfig.confirm_order);
+                                Get.toNamed(RouteConfig.confirm_order + '?type=buy_now');
                               } else if (type == 'cart'){
                                 logic.onAddCart({
                                   'item_id':  selectedGoodsItem.id,

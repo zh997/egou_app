@@ -18,7 +18,7 @@ import 'package:get/get.dart';
 import 'package:egou_app/models/order_buy_info.dart';
 import 'package:egou_app/models/address.dart';
 
-import '../../main.dart';
+import 'package:egou_app/middleware/app_middleware.dart';
 import 'logic.dart';
 import 'state.dart';
 

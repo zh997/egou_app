@@ -38,3 +38,6 @@ class RouteAuthMiddleware extends GetMiddleware{
     }
   }
 }
+
+
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
