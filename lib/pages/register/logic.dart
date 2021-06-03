@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/common/storage.dart';
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/services/login.dart';
 import 'package:egou_app/services/register.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import 'state.dart';
@@ -30,25 +30,18 @@ class RegisterLogic extends GetxController {
   }
 
   void sendSms(String mobile) async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await RegisterService.getSms(mobile);
     if (response.result) {
       StartCountDown();
-      EasyLoading.showToast('发送成功!');
-    }else {
-      EasyLoading.dismiss();
+      Utils.toast('发送成功');
     }
   }
 
   void onAccountRegister(data) async {
-    EasyLoading.show(status: '加载中');
     RealResponseData response = await RegisterService.register(data);
     if (response.result) {
-      EasyLoading.showToast('注册成功, 请重新登录!');
+      Utils.toast('注册成功, 请重新登录');
       Get.offAllNamed(RouteConfig.login_page);
-    } else {
-      EasyLoading.dismiss();
     }
-
   }
 }

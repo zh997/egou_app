@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:egou_app/common/routes.dart';
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/services/user.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import 'state.dart';
@@ -28,30 +27,25 @@ class PwdUpdateLogic extends GetxController {
   }
 
   void sendSms(String mobile) async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await UserService.getSms(mobile);
     if (response.result) {
       StartCountDown();
-      EasyLoading.showToast('发送成功!');
-    }else {
-      EasyLoading.dismiss();
+      Utils.toast('发送成功');
     }
   }
   
   Future onUpdateLoginPwd (Map<String, dynamic> data) async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await UserService.updateLoginPwd(data);
     if (response.result) {
-      EasyLoading.showToast('修改成功!');
+      Utils.toast('修改成功');
       Get.back();
     }
   }
 
   Future onUpdatePayPwd (Map<String, dynamic> data) async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await UserService.updatePayPwd(data);
     if (response.result) {
-      EasyLoading.showToast('修改成功!');
+      Utils.toast('修改成功');
       Get.back();
     }
   }

@@ -7,6 +7,7 @@ class AppApiUrls  {
   static String ACCOUNT_REGISTER = '/api/account/register';
 
   static String UPLOAD_IMG = BASE_URL + '/api/file/formimage';
+  static String APP_UPLOAD_IMG = '/api/file/formimage';
   static String ENTRY_ADD = '/api/Entry/add';
   static String AD_LISTS = '/api/ad/lists';
   static String GET_BESTLIST = '/api/goods/getBestList';

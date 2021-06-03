@@ -8,6 +8,7 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:egou_app/models/goods_detail.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 import 'app_buttons.dart';
@@ -183,4 +184,19 @@ class Empty extends StatelessWidget {
         ],
       ),
     ));
-  }}
+  }
+}
+
+
+class SpinKit extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Center(
+      child: SpinKitFadingCircle(
+        color: AppColors.COLOR_PRIMARY_D22315,
+        size: 50.0,
+      ),
+    );
+  }
+}

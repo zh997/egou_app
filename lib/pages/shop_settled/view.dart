@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:universal_html/html.dart' as html;
 // import 'package:image_picker_web/image_picker_web.dart';
@@ -47,11 +46,7 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
         _upLoadImage(_image, key);
-      } else {
-        EasyLoading.dismiss();
       }
-    } else {
-      EasyLoading.dismiss();
     }
 
     // html.File infos = await ImagePickerWeb.getImage(outputType: ImageType.file);
@@ -187,7 +182,6 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
         ),
       ];
 
-      print( state.collection_type.value);
 
        return Scaffold(
          appBar: CustomAppBar(title: '商家入驻'),

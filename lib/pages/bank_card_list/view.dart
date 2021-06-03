@@ -9,6 +9,7 @@ import 'package:egou_app/constant/app_enums.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/models/bank_card_list.dart';
 import 'package:egou_app/widgets/app_bar.dart';
+import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screen_util.dart';
@@ -102,7 +103,7 @@ class _BankCardListPageState extends State<BankCardListPage> {
           ),
         );
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

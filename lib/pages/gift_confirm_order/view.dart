@@ -1,4 +1,5 @@
 import 'package:egou_app/common/routes.dart';
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
@@ -12,7 +13,6 @@ import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/app_order_item.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
 import 'package:egou_app/models/order_buy_info.dart';
@@ -174,7 +174,7 @@ class _GiftConfirmOrderPageState extends State<GiftConfirmOrderPage>  with Route
                         if (mainState.selectAddress.value.id != null) {
                           Get.toNamed(RouteConfig.pay_mode + '?isGiftBag=1');
                         } else {
-                          EasyLoading.showToast('请先添加收货地址');
+                          Utils.toast('请先添加收货地址');
                         }
                       })
                     ],
@@ -185,7 +185,7 @@ class _GiftConfirmOrderPageState extends State<GiftConfirmOrderPage>  with Route
           }),
         );
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

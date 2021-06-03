@@ -81,7 +81,7 @@ class _MerchantListPageState extends State<MerchantListPage> {
           );
         });
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

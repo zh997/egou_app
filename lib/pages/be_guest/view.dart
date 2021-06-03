@@ -116,7 +116,7 @@ class BeGuestPage extends StatelessWidget {
           );
         });
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

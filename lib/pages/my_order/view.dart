@@ -107,7 +107,7 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
           )
         );
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

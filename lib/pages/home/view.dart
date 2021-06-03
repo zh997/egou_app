@@ -6,6 +6,7 @@ import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/constant/app_strings.dart';
 import 'package:egou_app/widgets/goods_item.dart';
 import 'package:egou_app/widgets/search.dart';
+import 'package:egou_app/widgets/small_widget.dart';
 import 'package:egou_app/widgets/tab_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'logic.dart';
 import 'state.dart';
 
@@ -138,7 +140,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
               );
             });
           }
-          return SizedBox();
+
+          return SpinKit();
     });
   }
 

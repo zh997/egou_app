@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'package:egou_app/common/utils.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/http/response_data.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart' as getx;
 import 'package:egou_app/services/common.dart';
 
@@ -12,7 +12,6 @@ class ShopSettledLogic extends getx.GetxController {
   final state = ShopSettledState();
 
   void uploadImg(data, String key) async {
-    EasyLoading.show(status: '正在上传');
     html.HttpRequest.request(AppApiUrls.UPLOAD_IMG, method: 'post', sendData: data).then((res){
       res.onLoadEnd.listen((e) {
         final response = json.decode(res.response);
@@ -29,14 +28,12 @@ class ShopSettledLogic extends getx.GetxController {
             state.other_img.value = other_img;
           }
         }
-        EasyLoading.dismiss();
       });
     });
 
   }
 
   void appUploadImg(data, String key) async {
-    EasyLoading.show(status: '正在上传');
     final RealResponseData response = await CommonService.uploadImg(data);
     if (response.result) {
       if (key == 'shop_photo') {
@@ -51,7 +48,6 @@ class ShopSettledLogic extends getx.GetxController {
         state.other_img.value = other_img;
       }
     }
-    EasyLoading.dismiss();
   }
 
   void removeImg(String key, int index) {
@@ -69,10 +65,9 @@ class ShopSettledLogic extends getx.GetxController {
   }
 
   void entryAdd(data) async {
-    EasyLoading.show(status: '入驻中');
     final RealResponseData response = await CommonService.entryAdd(data);
     if (response.result) {
-      EasyLoading.showSuccess('入驻成功！');
+      Utils.toast('入驻成功');
     }
   }
 

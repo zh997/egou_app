@@ -12,7 +12,7 @@ class CommonService {
 
   // 上传图片
   static Future<RealResponseData> uploadImg(data) async {
-    final DioResponseData response = await HttpRequest.request('http://shop.hlnsqz.cn/api/file/formimage', data, 'POST');
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.APP_UPLOAD_IMG, data, 'POST');
     print(response.data);
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: uploadImgModelFromJson));

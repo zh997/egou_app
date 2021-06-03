@@ -1,13 +1,14 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
+import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -26,7 +27,7 @@ class SharePage extends StatelessWidget {
         Uint8List.fromList(response.data),
         quality: 60,
         name: "qrcode");
-    EasyLoading.showSuccess('已保存到相册');
+    Utils.toast('已保存到相册');
   }
 
   @override
@@ -86,7 +87,7 @@ class SharePage extends StatelessWidget {
             )
         );
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 }

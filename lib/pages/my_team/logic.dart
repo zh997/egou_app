@@ -1,5 +1,4 @@
 import 'package:egou_app/http/response_data.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:egou_app/services/team.dart';
 import 'state.dart';
@@ -18,7 +17,6 @@ class MyTeamLogic extends GetxController {
       state.page.value = 1;
       state.type.value = type;
     }
-    EasyLoading.dismiss();
   }
 
   Future onLoadMore(int type) async {

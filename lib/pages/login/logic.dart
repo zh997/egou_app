@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/common/storage.dart';
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/http/response_data.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:egou_app/services/login.dart';
 
@@ -28,35 +28,28 @@ class LoginLogic extends GetxController {
   }
 
   void sendSms(String mobile) async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await LoginService.getSms(mobile);
     if (response.result) {
       StartCountDown();
-      EasyLoading.showToast('发送成功!');
+      Utils.toast('发送成功');
     }
   }
 
   void onLogin(data) async {
-    EasyLoading.show(status: '加载中');
     RealResponseData response = await LoginService.smsLogin(data);
     if (response.result) {
       AppStorage.setString('token', response.data.token);
-      EasyLoading.showToast('登录成功!');
+      Utils.toast('登录成功');
       Get.offAllNamed(RouteConfig.main_page);
-    }else {
-      EasyLoading.dismiss();
     }
   }
 
   void onAccountLogin(data) async {
-    EasyLoading.show(status: '加载中');
     RealResponseData response = await LoginService.accountLogin(data);
     if (response.result) {
       AppStorage.setString('token', response.data.token);
-      EasyLoading.showToast('登录成功!');
+      Utils.toast('登录成功');
       Get.offAllNamed(RouteConfig.main_page);
-    }else {
-      EasyLoading.dismiss();
     }
   }
 }

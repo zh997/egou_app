@@ -3,6 +3,7 @@ import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/widgets/app_bar.dart';
+import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/screen_util.dart';
@@ -118,7 +119,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
           );
         });
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

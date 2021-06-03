@@ -2,6 +2,7 @@ import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/models/concat_us.dart';
+import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,7 +52,7 @@ class _ConcatUsPageState extends State<ConcatUsPage> {
           }),
         );
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

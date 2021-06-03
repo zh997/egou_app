@@ -1,14 +1,12 @@
 import 'package:get/get.dart';
 import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/services/shop.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'state.dart';
 
 class MerchantListLogic extends GetxController {
   final state = MerchantListState();
   Future onGetShopEntryLists(Map<String, dynamic> data) async {
-    EasyLoading.show(status: '加载中');
     data['page_no'] = 1;
     final RealResponseData response = await ShopService.shopList(data);
     if (response.result) {
@@ -16,7 +14,6 @@ class MerchantListLogic extends GetxController {
       state.hasMore.value = response.more;
       state.page.value = data['page_no'];
     }
-    EasyLoading.dismiss();
   }
 
   Future onLoadMore(Map<String, dynamic> data) async {

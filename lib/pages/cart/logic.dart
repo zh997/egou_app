@@ -2,7 +2,6 @@ import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/models/cart.dart';
 import 'package:egou_app/models/order.dart';
 import 'package:egou_app/services/cart.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:egou_app/common/utils.dart';
 
@@ -11,10 +10,8 @@ import 'state.dart';
 class CartLogic extends GetxController {
   final state = CartState();
   Future onGetCartList() async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await CartService.cartList();
     if (response.result) {
-      EasyLoading.dismiss();
       state.cartList.value = response.data;
       onUpdateCartData(response.data.toJson()['lists']);
     }
@@ -37,7 +34,6 @@ class CartLogic extends GetxController {
   }
 
   Future onCartSelected(Map<String, dynamic> data) async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await CartService.cartSelected(data);
     if (response.result) {
       final lists = state.cartList.value.lists;
@@ -51,11 +47,9 @@ class CartLogic extends GetxController {
       });
       onUpdateCartData(goodsList);
     }
-    EasyLoading.dismiss();
   }
 
   Future onCartDel(Map<String, dynamic> data) async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await CartService.cartDel(data);
     if (response.result) {
       final lists = state.cartList.value.lists;
@@ -68,7 +62,6 @@ class CartLogic extends GetxController {
       });
       onUpdateCartData(goodsList);
     }
-    EasyLoading.dismiss();
   }
 
   void onUpdateCartData(List lists) {

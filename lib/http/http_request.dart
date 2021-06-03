@@ -11,7 +11,7 @@ import 'package:egou_app/http/status_code.dart';
 import 'package:get/get.dart' as navigator;
 import 'package:flutter/foundation.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 
 
 class HttpRequest{
@@ -37,7 +37,7 @@ class HttpRequest{
       // I am connected to a wifi network.
     } else if (connectivityResult == ConnectivityResult.none) {
       // no network
-      EasyLoading.showError('请检查网络');
+      Utils.toast('请检查网络');
       return DioResponseData(StatusCode.NETWORK_ERROR, '' , false, '请检查网络');
     }
 
@@ -45,22 +45,22 @@ class HttpRequest{
     // options.headers['token'] = '81db4474cdaf61cb99855b309354b683';
     addHeaders('token', AppStorage.getString('token'));
     Dio dio = new Dio(options);
-    if (!Utils.inProduction) {
-      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) {
-          return Platform.isAndroid;
-        };
-        client.findProxy = (url) {
-          ///设置代理 电脑ip地址
-          return "PROXY 10.11.1.46:8866";
-
-          ///不设置代理
-//          return 'DIRECT';
-        };
-
-      };
-    }
+//     if (!Utils.inProduction) {
+//       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+//         client.badCertificateCallback =
+//             (X509Certificate cert, String host, int port) {
+//           return Platform.isAndroid;
+//         };
+//         client.findProxy = (url) {
+//           ///设置代理 电脑ip地址
+//           return "PROXY 10.11.1.46:8866";
+//
+//           ///不设置代理
+// //          return 'DIRECT';
+//         };
+//
+//       };
+//     }
 
     try {
       if (method == 'POST') {
@@ -81,7 +81,7 @@ class HttpRequest{
         print('请求异常: ' + e.toString());
         print('请求异常 url: ' + baseUrl + url);
       }
-      EasyLoading.showError(errorResponse.statusMessage);
+      Utils.toast(errorResponse.statusMessage);
       return DioResponseData(errorResponse.statusCode, '' , false, errorResponse.statusMessage);
     }
 
@@ -96,7 +96,7 @@ class HttpRequest{
 
   static RealResponseData catchError(ResponseData response) {
     if (response.code != 1) {
-      EasyLoading.showError(response.msg);
+      Utils.toast(response.msg);
       // 未登录
       if (response.code == -1) {
         AppStorage.remove('token');

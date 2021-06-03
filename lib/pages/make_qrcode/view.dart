@@ -8,7 +8,6 @@ import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:egou_app/models/bank_card_list.dart';
 import 'dart:io';
@@ -61,11 +60,7 @@ class _MakeQrcodePageState extends State<MakeQrcodePage> {
         if (pickedFile != null) {
           _image = File(pickedFile.path);
           _upLoadImage(_image);
-        } else {
-          EasyLoading.dismiss();
         }
-    } else {
-      EasyLoading.dismiss();
     }
     // html.File infos = await ImagePickerWeb.getImage(outputType: ImageType.file);
     // var formData = html.FormData();

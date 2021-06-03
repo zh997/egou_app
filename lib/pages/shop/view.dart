@@ -9,6 +9,7 @@ import 'package:egou_app/models/shop_category_list.dart';
 import 'package:egou_app/models/shop_entry_list.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/search.dart';
+import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -108,7 +109,7 @@ class _ShopPageState extends State<ShopPage> {
           );
         });
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

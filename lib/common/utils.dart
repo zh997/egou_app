@@ -2,7 +2,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Utils {
 
@@ -17,6 +17,18 @@ class Utils {
   }
   static double div(double a, double b){
     return (Decimal.parse(a.toString()) / Decimal.parse(b.toString())).toDouble();
+  }
+
+  static toast(msg, {Color backgroundColor, Color textColor}) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: backgroundColor,
+        textColor: textColor,
+        fontSize: 16.0
+    );
   }
 
   static const bool inProduction = const bool.fromEnvironment("dart.vm.product");

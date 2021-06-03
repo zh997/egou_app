@@ -1,7 +1,6 @@
 import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/models/shop_entry_list.dart';
 import 'package:egou_app/services/shop.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 import 'state.dart';
@@ -10,10 +9,8 @@ class ShopLogic extends GetxController {
   final state = ShopState();
 
   Future onInitData() async  {
-    EasyLoading.show(status: '加载中');
     await this.onGetShopCategoryLists();
     await this.onGetShopEntryLists({});
-    EasyLoading.dismiss();
   }
 
   Future onGetShopCategoryLists() async {

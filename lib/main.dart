@@ -1,9 +1,9 @@
+import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/middleware/app_middleware.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'common/storage.dart';
 void main() {
@@ -20,16 +20,16 @@ class MyApp extends StatelessWidget {
           designSize: Size(1125, 2346),
           allowFontScaling: false,
           builder: () => GetMaterialApp(
-            title: '牛木马app',
+            title: '牛木马',
             builder: (context, child){
-              return EasyLoading.init()(context, Scaffold(
+              return Scaffold(
                 // Global GestureDetector that will dismiss the keyboard
                   body: GestureDetector(
                     onTap: () {
                       hideKeyboard(context);
                     },
                     child:  child,
-                  )));
+                  ));
             },
             theme: ThemeData(
               // This is the theme of your application.
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
               // is not restarted.
               primarySwatch: Colors.blue,
             ),
-            initialRoute: RouteConfig.launch_page,
+            initialRoute: RouteConfig.main_page,
             onInit: AppMiddleWare.onInit,
             onReady: AppMiddleWare.onReady(),
             routingCallback: AppMiddleWare.RoutingCallback,
@@ -53,7 +53,9 @@ class MyApp extends StatelessWidget {
           ),
         );
       }
-      return SizedBox();
+      return MaterialApp(
+        home: SpinKit(),
+      );
     });
   }
 }

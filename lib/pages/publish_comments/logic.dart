@@ -1,3 +1,4 @@
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/services/order.dart';
 import 'package:get/get.dart';
 import 'dart:async';
@@ -5,7 +6,6 @@ import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
 import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/http/response_data.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart' as getx;
 import 'package:egou_app/services/common.dart';
 import 'package:egou_app/services/comment.dart';
@@ -26,7 +26,6 @@ class PublishCommentsLogic extends GetxController {
     }
   }
   void uploadImg(data) async {
-    EasyLoading.show(status: '正在上传');
     html.HttpRequest.request(AppApiUrls.UPLOAD_IMG, method: 'post', sendData: data).then((res){
       res.onLoadEnd.listen((e) {
         final response = json.decode(res.response);
@@ -36,27 +35,23 @@ class PublishCommentsLogic extends GetxController {
           shop_photo.add(response['data']['url']);
           state.image.value = shop_photo;
         }
-        EasyLoading.dismiss();
       });
     });
   }
 
   Future onAddComment(Map<String, dynamic> data) async {
-    EasyLoading.show(status: '提交中');
     final RealResponseData response = await CommentService.addComment(data);
     if (response.result) {
-      EasyLoading.showSuccess('评价成功');
+      Utils.toast('评价成功');
       Get.back();
     }
   }
 
   Future onGetOrderDetail(int id) async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await OrderService.orderDetail(id);
     if (response.result) {
       state.orderDetail.value = response.data;
     }
-    EasyLoading.dismiss();
   }
 
   void removeImg( int index) {
@@ -67,7 +62,6 @@ class PublishCommentsLogic extends GetxController {
   }
 
   void appUploadImg(data) async {
-    EasyLoading.show(status: '正在上传');
     final RealResponseData response = await CommonService.uploadImg(data);
     if (response.result) {
       final List shop_photo = [];
@@ -75,6 +69,5 @@ class PublishCommentsLogic extends GetxController {
       shop_photo.add(response.data.url);
       state.image.value = shop_photo;
     }
-    EasyLoading.dismiss();
   }
 }

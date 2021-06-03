@@ -74,7 +74,7 @@ class _MyStorePageState extends State<MyStorePage> {
           );
         });
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

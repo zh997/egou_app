@@ -343,7 +343,7 @@ class MyPage extends StatelessWidget {
           ),
         );
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

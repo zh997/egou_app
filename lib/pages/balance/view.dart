@@ -129,7 +129,7 @@ class _BalancePageState extends State<BalancePage> {
           );
         });
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

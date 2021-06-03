@@ -1,4 +1,5 @@
 import 'package:egou_app/common/routes.dart';
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_enums.dart';
@@ -10,9 +11,7 @@ import 'package:egou_app/pages/bank_card_list/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/app_text_field.dart';
-import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -83,16 +82,16 @@ class _BindCardPageState extends State<BindCardPage> {
             SizedBox(height: 50),
             RadiusButton('确认绑定', width: 1080, height: 186, onTap: (){
               if (_card_number_controller.text.isEmpty) {
-                return EasyLoading.showToast('请输入银行卡号');
+                return Utils.toast('请输入银行卡号');
               }
               if (_phone_controller.text.isEmpty) {
-                return EasyLoading.showToast('请输入银行预留手机号');
+                return Utils.toast('请输入银行预留手机号');
               }
               if (_back_card_type_controller.text.isEmpty) {
-                return EasyLoading.showToast('请输入开户银行');
+                return Utils.toast('请输入开户银行');
               }
               if (_card_holder_controller.text.isEmpty) {
-                return EasyLoading.showToast('请输入卡持有人&打款名称');
+                return Utils.toast('请输入卡持有人&打款名称');
               }
               final Map<String, dynamic> data = {};
               data['card_number'] = _card_number_controller.text;

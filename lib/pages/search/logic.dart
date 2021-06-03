@@ -1,23 +1,21 @@
+import 'package:egou_app/common/utils.dart';
 import 'package:get/get.dart';
 import 'state.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/services/goods.dart';
 
 class SearchLogic extends GetxController {
   final state = SearchState();
   Future onBaseGoodsList (String keyword) async  {
-    EasyLoading.show(status: '正在搜索');
     final RealResponseData response = await GoodsService.goodsList(1, keyword: keyword);
     if (response.result) {
       state.searchGoodsList.value = response.data;
       state.hasMore.value = response.more;
       state.page.value = 1;
       if ( response.data.length <= 0) {
-        EasyLoading.showToast('没有找到相关的商品');
+        Utils.toast('没有找到相关的商品');
       }
     }
-    EasyLoading.dismiss();
   }
 
   Future onLoadMore(String keyword) async {

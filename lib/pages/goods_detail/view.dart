@@ -1,8 +1,8 @@
 import 'dart:ui';
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/models/goods_detail.dart';
 import 'package:egou_app/models/order.dart';
 import 'package:egou_app/pages/main/logic.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
@@ -163,7 +163,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(isCollect ? AppImages.ICON_22 : AppImages.ICON_21, width: ScreenUtil().setWidth(71), height: ScreenUtil().setWidth(71)),
+                              Image.asset(isCollect ? AppImages.ICON_22 : AppImages.ICON_21, width: ScreenUtil().setWidth(65), height: ScreenUtil().setWidth(65)),
+                              SizedBox(height: ScreenUtil().setWidth(15),),
                               Text('${isCollect ? '已' : ''}收藏', style: TextStyle(
                                   fontSize: AppFontsize.SIZE_32, color: AppColors.COLOR_BLACK_000000
                               ))
@@ -180,6 +181,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(AppImages.ICON_23, width: ScreenUtil().setWidth(71), height: ScreenUtil().setWidth(71)),
+                              SizedBox(height: ScreenUtil().setWidth(15),),
                               Text('购物车', style: TextStyle(
                                   fontSize: AppFontsize.SIZE_32, color: AppColors.COLOR_BLACK_000000
                               ))
@@ -236,7 +238,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
             );
           });
         }
-        return SizedBox();
+        return SpinKit();
       });
   }
 
@@ -258,7 +260,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
             });
           }
           if (selectedGoodsItem.id != null && selectedGoodsItem.stock <= 0) {
-            EasyLoading.showToast('库存不足');
+            Utils.toast('库存不足');
           }
           return Container(
               height: 500,
@@ -314,7 +316,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                                 )),
                                 Obx(() => Counter(leftTap: (){
                                   if (selectedGoodsItem.id == null){
-                                    EasyLoading.showToast('请先选择规格');
+                                    Utils.toast('请先选择规格');
                                   } else {
                                     if (state.num.value > 1) {
                                       logic.onChangeNum(state.num.value - 1);
@@ -323,7 +325,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
 
                                 },rightTap: () {
                                   if (selectedGoodsItem.id == null){
-                                    EasyLoading.showToast('请先选择规格');
+                                    Utils.toast('请先选择规格');
                                   } else {
                                     if (state.num.value <  selectedGoodsItem.stock) {
                                       logic.onChangeNum(state.num.value + 1);
@@ -341,7 +343,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                           for (var i = selectedGoodsSpec.length - 1; i >= 0; i -- ) {
                             if (selectedGoodsSpec[i].specValue.length == 0) {
                               isPass = false;
-                              EasyLoading.showToast('请选择${selectedGoodsSpec[i].name}');
+                              Utils.toast('请选择${selectedGoodsSpec[i].name}');
                               continue;
                             }
                           }
@@ -364,7 +366,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                                 });
                               }
                             } else {
-                              EasyLoading.showToast('库存不足');
+                              Utils.toast('库存不足');
                             }
                           }
                         },

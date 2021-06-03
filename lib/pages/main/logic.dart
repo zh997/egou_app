@@ -1,9 +1,7 @@
 import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/models/address.dart';
-import 'package:egou_app/models/order.dart';
 import 'package:egou_app/services/address.dart';
 import 'package:egou_app/services/user.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'state.dart';
 
@@ -16,7 +14,6 @@ class MainLogic extends GetxController {
   }
 
   Future onGetAddressList() async {
-    EasyLoading.show(status: '加载中');
     final RealResponseData response = await AddressService.addressList();
     if (response.result) {
       AddressListModel selectAddress = AddressListModel();
@@ -31,7 +28,6 @@ class MainLogic extends GetxController {
       state.selectAddress.value = selectAddress;
       state.addressList.value = response.data;
     }
-    EasyLoading.dismiss();
   }
 
   Future onGetUserInfo () async {

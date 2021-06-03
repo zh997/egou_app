@@ -149,7 +149,7 @@ class _PointsMallPageState extends State<PointsMallPage> with AutomaticKeepAlive
           );
         });
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

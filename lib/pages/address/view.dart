@@ -77,7 +77,7 @@ class _AddressPageState extends State<AddressPage>  with RouteAware {
                 ))
             );
           }
-          return SizedBox();
+          return SpinKit();
         });
   }
 

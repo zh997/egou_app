@@ -1,4 +1,5 @@
 import 'package:egou_app/common/routes.dart';
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
@@ -11,7 +12,6 @@ import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
 
@@ -143,7 +143,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
                             mainLogic.onSelectOrderGoods(state.selectedGoods.value);
                             Get.toNamed(RouteConfig.confirm_order + '?type=cart');
                           } else {
-                            EasyLoading.showToast('请选择商品');
+                            Utils.toast('请选择商品');
                           }
                         }): RadiusButton('删除', width: 311, height: 130, onTap: (){
                           if (state.selectedGoods.value.length > 0) {
@@ -155,7 +155,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
                               Get.back(result: 'success');
                             });
                           } else {
-                            EasyLoading.showToast('请选择商品');
+                            Utils.toast('请选择商品');
                           }
                         })
                       ],
@@ -166,7 +166,7 @@ class _CartPageState extends State<CartPage> with RouteAware {
           );
         });
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

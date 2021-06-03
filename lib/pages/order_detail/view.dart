@@ -260,7 +260,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
           );
         });
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 

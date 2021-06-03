@@ -191,7 +191,7 @@ class _PayModePageState extends State<PayModePage> {
           );
         });
       }
-      return SizedBox();
+      return SpinKit();
     });
   }
 
