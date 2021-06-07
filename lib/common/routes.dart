@@ -32,6 +32,8 @@ import 'package:egou_app/pages/share/view.dart';
 import 'package:egou_app/pages/shop/view.dart';
 import 'package:egou_app/pages/shop_detail/view.dart';
 import 'package:egou_app/pages/shop_settled/view.dart';
+import 'package:egou_app/pages/transformation/view.dart';
+import 'package:egou_app/pages/transformation_record/view.dart';
 import 'package:egou_app/pages/with_drawal_record/view.dart';
 import 'package:egou_app/pages/withdrawal/view.dart';
 import 'package:get/get.dart';
@@ -82,6 +84,8 @@ class RouteConfig {
   static final String agreenment_page = '/agreenment_page';
   static final String search_page = '/search_page';
   static final String gift_confirm_order = '/gift_confirm_order';
+  static final String transformation_page = '/transformation_page';
+  static final String transformation_record_page = '/transformation_record_page';
 
   static final List<GetPage> getPages = [
     GetPage(name: guide_page, page: () => GuidePage()),
@@ -124,5 +128,7 @@ class RouteConfig {
     GetPage(name: order_detail, page: () => OrderDetailPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
     GetPage(name: agreenment_page, page: () => AgreementPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
     GetPage(name: gift_confirm_order, page: () => GiftConfirmOrderPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
+    GetPage(name: transformation_page, page: () => TransformationPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
+    GetPage(name: transformation_record_page, page: () => TransformationRecordPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
   ];
 }

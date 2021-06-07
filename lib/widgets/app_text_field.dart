@@ -46,6 +46,7 @@ class RowTextField extends StatefulWidget {
   final bool showBorder;
   final List<String> imgList;
   final int maxImgLength;
+  final bool isCollapsed;
   String Function(dynamic value) validate;
   RowTextField({
     this.key,
@@ -75,7 +76,7 @@ class RowTextField extends StatefulWidget {
     this.height, this.textAlign = TextAlign.start,
     this.textFieldType = TextFieldType.Input,
     this.labelTop,
-    this.showBorder = true, this.imgList, this.maxImgLength = 2
+    this.showBorder = true, this.imgList, this.maxImgLength = 2, this.isCollapsed = false
   }) : super(key: key);
 
   @override
@@ -209,13 +210,14 @@ class _RowTextFieldState extends State<RowTextField> {
               },
               decoration: InputDecoration(
                   icon: widget.icon,
+                  isCollapsed: widget.isCollapsed,
                   contentPadding: EdgeInsets.only(
                       top: widget.contentPaddingTop,
                       left:  widget.contentPaddingLeft,
                       right:  widget.contentPaddingRight,
                       bottom:  widget.contentPaddingBottom
                   ),
-                  hasFloatingPlaceholder: false,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
                   border: InputBorder.none,
                   hoverColor: AppColors.COLOR_PRIMARY_D22315,
                   focusColor: AppColors.COLOR_PRIMARY_D22315

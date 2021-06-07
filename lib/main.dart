@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
               // is not restarted.
               primarySwatch: Colors.blue,
             ),
-            initialRoute: RouteConfig.main_page,
+            initialRoute: RouteConfig.transformation_page,
             onInit: AppMiddleWare.onInit,
             onReady: AppMiddleWare.onReady(),
             routingCallback: AppMiddleWare.RoutingCallback,
