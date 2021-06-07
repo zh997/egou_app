@@ -78,26 +78,25 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
             name: 'name',
             key: GlobalKey(), controller: _nameController,
             isRequired: true, titleFlexType: TitleFlexType.Column,
-            height: 150, padding: EdgeInsets.only(left: 15, right: 15),
+            height: 130, padding: EdgeInsets.only(left: 15, right: 15),
             labelText: '请输入', labelAlignment: AlignmentDirectional.topStart,
-            contentPaddingTop: 10, contentPaddingBottom: 10,
-            maxLength: 50, minLines: 3, maxLines: 3, labelTop: 6
+            maxLength: 50, minLines: 3, maxLines: 3, labelTop: 0,
         ),
         SizedBox(height: 15),
         RowTextField(title: '地址',
             name: 'address',
             key: GlobalKey(), controller: _addressController,
             isRequired: true, titleFlexType: TitleFlexType.Column,
-            height: 150, padding: EdgeInsets.only(left: 15, right: 15),
+            height: 130, padding: EdgeInsets.only(left: 15, right: 15),
             labelText: '请输入', labelAlignment: AlignmentDirectional.topStart,
-            contentPaddingTop: 10, contentPaddingBottom: 10,
-            maxLength: 50, minLines: 3, maxLines: 3,labelTop: 6
+            maxLength: 50, minLines: 3, maxLines: 3
         ),
         RowTextField(title: '联系方式',
             name: 'phone',
             key: GlobalKey(), controller: _phoneController,
             isRequired: true, padding: EdgeInsets.only(left: 15, right: 15),
             labelText: '请输入', labelAlignment: AlignmentDirectional.centerEnd,
+            contentPaddingTop: 5, labelBottom: ScreenUtil().setWidth(45),
             textAlign: TextAlign.end
         ),
 
@@ -204,12 +203,12 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
                      color: Colors.white,
                      child: Column(
                        children: [
-                         UploadBtn(titleText:'门头照片',maxImgLength: 2, imgList: state.shop_photo.value, onTap: (){
+                         UploadBtn(titleText:'门头照片',maxImgLength: 6, imgList: state.shop_photo.value, onTap: (){
                            getImage('shop_photo');
                          }, isRequired: true, onDelete: (index) {
                            logic.removeImg('shop_photo', index);
                          }, ),
-                         UploadBtn(titleText:'产品或服务照片',maxImgLength: 2, imgList: state.other_img.value, onTap: (){
+                         UploadBtn(titleText:'产品或服务照片',maxImgLength: 6, imgList: state.other_img.value, onTap: (){
                            getImage('other_img');
                          },isRequired: true, onDelete: (index) {
                            logic.removeImg('other_img', index);

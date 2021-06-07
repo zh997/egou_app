@@ -210,6 +210,7 @@ class _RowTextFieldState extends State<RowTextField> {
               },
               decoration: InputDecoration(
                   icon: widget.icon,
+                  alignLabelWithHint: true,
                   isCollapsed: widget.isCollapsed,
                   contentPadding: EdgeInsets.only(
                       top: widget.contentPaddingTop,

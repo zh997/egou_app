@@ -45,7 +45,6 @@ dependencies:
   universal_html: ^2.0.8
   permission_handler: ^7.1.0
   qrscan: ^0.2.22
-  flustars: ^2.0.1
   decimal: ^1.1.0
   image_gallery_saver: ^1.6.9
   flutter_native_splash: ^1.1.8+4

@@ -23,7 +23,7 @@ class TransformationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> selectOptions = ['现金', '支付宝', '微信', '银联'];
+    final List<String> selectOptions = ['余额', '金牛', '金马'];
     return Scaffold(
       appBar: CustomAppBar(
         leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),
@@ -63,6 +63,7 @@ class TransformationPage extends StatelessWidget {
                 showBorder: false,
                 readOnly: true,
                 onTap: () {
+
                   showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,

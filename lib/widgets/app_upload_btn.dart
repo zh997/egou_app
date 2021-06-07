@@ -36,7 +36,7 @@ class UploadBtn extends StatelessWidget {
             Text('添加照片', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48))
           ],
         ),
-        Text('最多可上传两张', style: TextStyle(color: AppColors.COLOR_GRAY_CCCCCC, fontSize: AppFontsize.SIZE_42))
+        Text('最多可上传${maxImgLength}张', style: TextStyle(color: AppColors.COLOR_GRAY_CCCCCC, fontSize: AppFontsize.SIZE_42))
       ],
     );
 

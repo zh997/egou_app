@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
   Future onQrScan() async {
     await Permission.camera.request();
     String cameraScanResult = await scanner.scan();
+    Get.toNamed(RouteConfig.discount_pay);
     print(cameraScanResult);
   }
 

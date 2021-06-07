@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
               // is not restarted.
               primarySwatch: Colors.blue,
             ),
-            initialRoute: RouteConfig.transformation_page,
+            initialRoute: RouteConfig.main_page,
             onInit: AppMiddleWare.onInit,
             onReady: AppMiddleWare.onReady(),
             routingCallback: AppMiddleWare.RoutingCallback,
@@ -54,6 +54,7 @@ class MyApp extends StatelessWidget {
         );
       }
       return MaterialApp(
+
         home: SpinKit(),
       );
     });

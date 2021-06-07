@@ -31,7 +31,7 @@ class TransformationRecordPage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20),
       margin: EdgeInsets.only(bottom: 15),
-      height: ScreenUtil().setWidth(353),
+      height: ScreenUtil().setWidth(594),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(AppRadius.RADIUS_16),

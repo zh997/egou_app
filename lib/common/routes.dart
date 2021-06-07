@@ -8,6 +8,8 @@ import 'package:egou_app/pages/be_guest/view.dart';
 import 'package:egou_app/pages/bind_card/view.dart';
 import 'package:egou_app/pages/concat_us/view.dart';
 import 'package:egou_app/pages/confirm_order/view.dart';
+import 'package:egou_app/pages/discount_pay/view.dart';
+import 'package:egou_app/pages/discount_pay_record/view.dart';
 import 'package:egou_app/pages/edit_address/view.dart';
 import 'package:egou_app/pages/forget_pwd/view.dart';
 import 'package:egou_app/pages/gift_confirm_order/view.dart';
@@ -86,6 +88,8 @@ class RouteConfig {
   static final String gift_confirm_order = '/gift_confirm_order';
   static final String transformation_page = '/transformation_page';
   static final String transformation_record_page = '/transformation_record_page';
+  static final String discount_pay = '/discount_pay';
+  static final String discount_pay_record = '/discount_pay_record';
 
   static final List<GetPage> getPages = [
     GetPage(name: guide_page, page: () => GuidePage()),
@@ -130,5 +134,7 @@ class RouteConfig {
     GetPage(name: gift_confirm_order, page: () => GiftConfirmOrderPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
     GetPage(name: transformation_page, page: () => TransformationPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
     GetPage(name: transformation_record_page, page: () => TransformationRecordPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
+    GetPage(name: discount_pay, page: () => DiscountPayPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
+    GetPage(name: discount_pay_record, page: () => DiscountPayRecordPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
   ];
 }

@@ -193,10 +193,13 @@ class SpinKit extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Center(
-      child: SpinKitFadingCircle(
-        color: AppColors.COLOR_PRIMARY_D22315,
-        size: 50.0,
-      ),
+      child: Container(
+        color: Colors.white,
+        child: SpinKitFadingCircle(
+          color: AppColors.COLOR_PRIMARY_D22315,
+          size: 50.0,
+        ),
+      ) ,
     );
   }
 }

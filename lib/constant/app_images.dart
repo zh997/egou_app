@@ -91,4 +91,5 @@ class AppImages {
   static String MONEY_ICON_2 = 'static/images/money_icon_2@2x.png';
   static String MONEY_ICON_3 = 'static/images/money_icon_3@2x.png';
   static String MY_HEADER_BG = 'static/images/my_header_bg@2x.png';
+  static String TRANSFORMATION_ICON = 'static/images/transformation_icon@2x.png';
 }
