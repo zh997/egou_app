@@ -1,4 +1,4 @@
-package com.example.egou_app
+package com.nmmhbstl.egou
 
 import io.flutter.embedding.android.FlutterActivity
 

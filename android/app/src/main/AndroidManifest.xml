@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.egou_app">
+    package="com.nmmhbstl.egou">
    <application
         android:label="牛木马"
         android:icon="@mipmap/ic_launcher">
