@@ -1,10 +1,48 @@
 import 'package:decimal/decimal.dart';
+import 'package:egou_app/constant/app_pay_config.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:egou_app/models/pay_config.dart';
 
 class Utils {
+
+  static Future<bool> initFluwx(WxPayConfigModel options, {Function success, Function fail}) async {
+    await fluwx.registerWxApi(
+        appId: AppPayConfig.appId,
+        doOnAndroid: true,
+        doOnIOS: true,
+        universalLink: AppPayConfig.universalLink);
+    var result = await fluwx.isWeChatInstalled;
+    if (result) {
+      // 配置
+      fluwx.payWithWeChat(
+        appId: options.appid,
+        partnerId: options.partnerid,
+        prepayId: options.prepayid,
+        packageValue: options.package,
+        nonceStr: options.noncestr,
+        timeStamp: options.timestamp,
+        sign: options.sign,
+      );
+      // 监听支付结果
+      fluwx.weChatResponseEventHandler.listen((event) async {
+        print(event.errCode);
+        // 支付成功
+        if (event.errCode == 0) {
+          if (success != null) success(event.errCode);
+        } else {
+          if (fail != null) fail(event.errCode);
+        }
+      });
+    } else {
+      toast('请先安装微信');
+    }
+
+    return result;
+  }
 
   static double add(double a, double b){
     return (Decimal.parse(a.toString()) + Decimal.parse(b.toString())).toDouble();

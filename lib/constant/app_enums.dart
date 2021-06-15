@@ -85,3 +85,12 @@ class BankCardTypeItem{
   BankCardTypeItem({this.type, this.text});
 
 }
+
+/**
+ * 支付方式
+ */
+class PayMode {
+  static int wechat = 1;
+  static int alipay = 2;
+  static int balance = 3;
+}

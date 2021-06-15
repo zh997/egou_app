@@ -1,17 +1,14 @@
-import 'package:egou_app/common/routes.dart';
-import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_space.dart';
+import 'package:egou_app/constant/app_enums.dart';
 import 'package:egou_app/models/user.dart';
 import 'package:egou_app/pages/confirm_order/logic.dart';
 import 'package:egou_app/pages/confirm_order/state.dart';
 import 'package:egou_app/pages/main/logic.dart';
 import 'package:egou_app/pages/main/state.dart';
-import 'package:egou_app/pages/points_mall/logic.dart';
-import 'package:egou_app/pages/points_mall/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/small_widget.dart';
@@ -23,11 +20,7 @@ import 'package:get/get.dart';
 import 'logic.dart';
 import 'state.dart';
 
-class PayMode {
-  static int wechat = 1;
-  static int alipay = 2;
-  static int balance = 3;
-}
+
 
 class PayModePage extends StatefulWidget {
   @override
@@ -69,6 +62,7 @@ class _PayModePageState extends State<PayModePage> {
     if (isGiftBag == null ) {
       confirmOrderstate = Get.find<ConfirmOrderLogic>().state;
     }
+
   }
 
   @override

@@ -48,4 +48,5 @@ class AppApiUrls  {
   static String SHOP_SETTING_POLICY = '/api/Shop_Setting/policy';
   static String GOODS_GUESS_LIKE = '/api/goods/likeList';
   static String GOODS_GET_GOODSLIST = '/api/goods/getGoodsList';
+  static String WX_PAYMENT_PREPAY = '/api/payment/prepay';
 }
