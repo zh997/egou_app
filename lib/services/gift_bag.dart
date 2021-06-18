@@ -20,7 +20,7 @@ class GiftBagService {
 
   // 大礼包下单
   static Future<RealResponseData> giftBuy(Map<String, dynamic> data) async {
-    data['order_source'] = 2;
+    data['order_source'] = 3;
     data['type'] = 'gift';
     data['action'] = 'submit';
     final DioResponseData response = await HttpRequest.request(AppApiUrls.ORDER_BUYGIFT, data , 'POST');

@@ -94,3 +94,9 @@ class PayMode {
   static int alipay = 2;
   static int balance = 3;
 }
+
+enum EnumEnv {
+  local,
+  dev,
+  release
+}

@@ -5,9 +5,9 @@ class OrderBuyInfoModel {
   List<GoodsLists> goodsLists;
   int couponId;
   int totalNum;
-  int totalGoodsPrice;
-  int totalAmount;
-  int orderAmount;
+  dynamic totalGoodsPrice;
+  dynamic totalAmount;
+  dynamic orderAmount;
   Address address;
   int discountAmount;
   int shippingPrice;
@@ -44,7 +44,7 @@ class OrderBuyInfoModel {
     totalAmount = json['total_amount'];
     orderAmount = json['order_amount'];
     address =
-    json['address'] != null && json['address'] is Map ? new Address.fromJson(json['address']) : null;
+    json['address'] != null ? new Address.fromJson(json['address']) : null;
     discountAmount = json['discount_amount'];
     shippingPrice = json['shipping_price'];
     remark = json['remark'];
@@ -93,6 +93,8 @@ class GoodsLists {
   String volume;
   String weight;
   int thirdCategoryId;
+  int shoppingType;
+  int integral;
   int goodsNum;
   String imageStr;
   int discountPrice;
@@ -115,6 +117,8 @@ class GoodsLists {
         this.volume,
         this.weight,
         this.thirdCategoryId,
+        this.shoppingType,
+        this.integral,
         this.goodsNum,
         this.imageStr,
         this.discountPrice});
@@ -137,6 +141,8 @@ class GoodsLists {
     volume = json['volume'];
     weight = json['weight'];
     thirdCategoryId = json['third_category_id'];
+    shoppingType = json['shopping_type'];
+    integral = json['integral'];
     goodsNum = json['goods_num'];
     imageStr = json['image_str'];
     discountPrice = json['discount_price'];
@@ -161,6 +167,8 @@ class GoodsLists {
     data['volume'] = this.volume;
     data['weight'] = this.weight;
     data['third_category_id'] = this.thirdCategoryId;
+    data['shopping_type'] = this.shoppingType;
+    data['integral'] = this.integral;
     data['goods_num'] = this.goodsNum;
     data['image_str'] = this.imageStr;
     data['discount_price'] = this.discountPrice;

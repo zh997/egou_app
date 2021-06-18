@@ -65,7 +65,7 @@ class MyPage extends StatelessWidget {
                                       color: Colors.white
                                   ),
                                   clipBehavior: Clip.hardEdge,
-                                  child: Image.network(userinfo.avatar, fit: BoxFit.cover),
+                                  child: Image.asset(AppImages.APP_LOGO, fit: BoxFit.cover),
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

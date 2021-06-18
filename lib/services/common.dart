@@ -53,11 +53,19 @@ class CommonService {
     }
   }
 
-  // 支付配置
+  // 微信支付配置
   static Future<RealResponseData> getWxPayConfig(Map<String, dynamic> data) async {
     final DioResponseData response = await HttpRequest.request(AppApiUrls.WX_PAYMENT_PREPAY, data , 'POST');
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: WxPayConfigModelFromJson));
+    }
+  }
+
+  // 支付宝支付配置
+  static Future<RealResponseData> getAliPayConfig(Map<String, dynamic> data) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.WX_PAYMENT_PREPAY, data , 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data));
     }
   }
 }

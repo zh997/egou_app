@@ -66,7 +66,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage>  with RouteAware {
     // 普通商品购买
     final List goods = [];
 
-    mainState.orderGoods.forEach((element) {
+    mainState.orderGoods.value.forEach((element) {
       if (element.itemId != null) {
         goods.add({
           'item_id': element.itemId,
@@ -103,6 +103,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage>  with RouteAware {
            appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '确认订单'),
            body: Obx((){
              final OrderBuyInfoModel orderBuyInfoModel = state.orderBuyInfo.value;
+             print(orderBuyInfoModel.orderAmount);
              return Column(
                children: [
                  Expanded(child:  ListView(

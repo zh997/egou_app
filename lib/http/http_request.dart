@@ -8,6 +8,7 @@ import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/http/status_code.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart' as navigator;
 import 'package:flutter/foundation.dart';
 import 'package:connectivity/connectivity.dart';
@@ -37,6 +38,7 @@ class HttpRequest{
       // I am connected to a wifi network.
     } else if (connectivityResult == ConnectivityResult.none) {
       // no network
+      EasyLoading.dismiss();
       Utils.toast('请检查网络');
       return DioResponseData(StatusCode.NETWORK_ERROR, '' , false, '请检查网络');
     }
@@ -45,22 +47,22 @@ class HttpRequest{
     // options.headers['token'] = '81db4474cdaf61cb99855b309354b683';
     addHeaders('token', AppStorage.getString('token'));
     Dio dio = new Dio(options);
-//     if (!Utils.inProduction) {
-//       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
-//         client.badCertificateCallback =
-//             (X509Certificate cert, String host, int port) {
-//           return Platform.isAndroid;
-//         };
-//         client.findProxy = (url) {
-//           ///设置代理 电脑ip地址
-//           return "PROXY 10.11.1.46:8866";
-//
-//           ///不设置代理
-// //          return 'DIRECT';
-//         };
-//
-//       };
-//     }
+    if (!Utils.inProduction) {
+      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) {
+          return Platform.isAndroid;
+        };
+        client.findProxy = (url) {
+          ///设置代理 电脑ip地址
+          return "PROXY 10.11.1.46:8866";
+
+          ///不设置代理
+//          return 'DIRECT';
+        };
+
+      };
+    }
 
     try {
       if (method == 'POST') {
@@ -82,6 +84,7 @@ class HttpRequest{
         print('请求异常 url: ' + baseUrl + url);
       }
       Utils.toast(errorResponse.statusMessage);
+      EasyLoading.dismiss();
       return DioResponseData(errorResponse.statusCode, '' , false, errorResponse.statusMessage);
     }
 
@@ -102,6 +105,7 @@ class HttpRequest{
         AppStorage.remove('token');
         navigator.Get.toNamed(RouteConfig.login_page);
       }
+      EasyLoading.dismiss();
       return RealResponseData(result: false, data: null);
     } else {
       return RealResponseData(result: true, data: response.data, more: response.more);

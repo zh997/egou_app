@@ -1,13 +1,33 @@
+import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/middleware/app_middleware.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'common/storage.dart';
 void main() {
   runApp(MyApp());
+  configLoading();
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor =  Colors.transparent
+    ..backgroundColor =  Colors.transparent
+    ..indicatorColor =  Colors.transparent
+    ..textColor =  Colors.transparent
+    ..maskColor = Colors.transparent
+    ..userInteractions = true
+    ..dismissOnTap = false
+    ..indicatorWidget = SpinKit();
 }
 
 class MyApp extends StatelessWidget {
@@ -19,18 +39,18 @@ class MyApp extends StatelessWidget {
         return ScreenUtilInit(
           designSize: Size(1125, 2346),
           allowFontScaling: false,
-          builder: () => GetMaterialApp(
+          builder: () =>  GetMaterialApp(
             title: '牛木马',
-            builder: (context, child){
+            builder: EasyLoading.init(builder: (BuildContext context, Widget child){
               return Scaffold(
                 // Global GestureDetector that will dismiss the keyboard
-                  body: GestureDetector(
-                    onTap: () {
-                      hideKeyboard(context);
-                    },
-                    child:  child,
-                  ));
-            },
+                body: GestureDetector(
+                  onTap: () {
+                    hideKeyboard(context);
+                  },
+                  child:  child,
+                ));
+            }),
             theme: ThemeData(
               // This is the theme of your application.
               //

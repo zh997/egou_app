@@ -1,5 +1,7 @@
+import 'package:egou_app/config/env_config.dart';
+
 class AppApiUrls  {
-  static String BASE_URL = 'https://shop.hlnsqz.cn';
+  static String BASE_URL = EnvConfig.env.apiUrl;
 
   static String SEND_CODE = '/api/sms/send';
   static String ACCOUNT_LOGIN = '/api/account/login';
@@ -49,4 +51,5 @@ class AppApiUrls  {
   static String GOODS_GUESS_LIKE = '/api/goods/likeList';
   static String GOODS_GET_GOODSLIST = '/api/goods/getGoodsList';
   static String WX_PAYMENT_PREPAY = '/api/payment/prepay';
+
 }

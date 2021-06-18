@@ -7,7 +7,7 @@ class UserInfoModel {
   String avatar;
   String level;
   String userMoney;
-  int userIntegral;
+  String userIntegral;
   String totalOrderAmount;
   String totalRechargeAmount;
   int makerLevel;

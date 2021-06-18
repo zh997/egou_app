@@ -49,9 +49,11 @@ dependencies:
   image_gallery_saver: ^1.6.9
   flutter_native_splash: ^1.1.8+4
   flutter_spinkit: ^5.0.0
+  flutter_easyloading: ^3.0.0
   fluttertoast: ^8.0.7
   octo_image: ^1.0.0+1
   fluwx: ^3.4.2
+  tobias: ^2.1.0
 
 dev_dependencies:
   flutter_test:

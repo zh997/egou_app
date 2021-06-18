@@ -5,10 +5,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:tobias/tobias.dart' as tobias;
 import 'package:egou_app/models/pay_config.dart';
 
 class Utils {
-
+  // 微信支付
   static Future<bool> initFluwx(WxPayConfigModel options, {Function success, Function fail}) async {
     await fluwx.registerWxApi(
         appId: AppPayConfig.appId,
@@ -29,7 +30,6 @@ class Utils {
       );
       // 监听支付结果
       fluwx.weChatResponseEventHandler.listen((event) async {
-        print(event.errCode);
         // 支付成功
         if (event.errCode == 0) {
           if (success != null) success(event.errCode);
@@ -40,6 +40,27 @@ class Utils {
     } else {
       toast('请先安装微信');
     }
+
+    return result;
+  }
+
+  // 支付宝支付
+  static Future<bool> initAlipay(String order, {Function success, Function fail}) async {
+    var result = await tobias.isAliPayInstalled();
+    if (result) {
+      final payResult = await tobias.aliPay(order);
+      print(payResult);
+      if (payResult["resultStatus"] == "9000") {
+        if (success != null) success(payResult);
+      } else {
+        if (fail != null) fail(payResult);
+        toast(payResult["memo"]);
+      }
+    } else {
+      toast('请先安装支付宝');
+    }
+    await tobias.aliPay(order);
+
 
     return result;
   }

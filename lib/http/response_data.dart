@@ -45,6 +45,8 @@ class ResponseData<T>{
         }
 
       }
+    } else {
+      data = json['data'];
     }
     code = json['code'];
   }

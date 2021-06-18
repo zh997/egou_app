@@ -11,7 +11,7 @@ class OrderService {
 
   // 结算详情
   static Future<RealResponseData> orderBuyInfo(Map<String, dynamic> data) async {
-    data['order_source'] = 2;
+    data['order_source'] = 3;
     data['action'] = 'info';
     final DioResponseData response = await HttpRequest.request(AppApiUrls.ORDER_BUY, data, 'POST');
     if (response.result && response.data != null) {
@@ -21,7 +21,7 @@ class OrderService {
 
   // 下单
   static Future<RealResponseData> orderBuy(Map<String, dynamic> data) async {
-    data['order_source'] = 2;
+    data['order_source'] = 3;
     data['action'] = 'submit';
     final DioResponseData response = await HttpRequest.request(AppApiUrls.ORDER_BUY, data, 'POST');
     if (response.result && response.data != null) {
