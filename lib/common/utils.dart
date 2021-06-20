@@ -54,7 +54,6 @@ class Utils {
         if (success != null) success(payResult);
       } else {
         if (fail != null) fail(payResult);
-        toast(payResult["memo"]);
       }
     } else {
       toast('请先安装支付宝');

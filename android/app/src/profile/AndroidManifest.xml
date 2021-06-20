@@ -3,4 +3,7 @@
     <!-- Flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
     -->
+    <queries>
+      <package android:name="com.tencent.mm" />
+    </queries>
 </manifest>

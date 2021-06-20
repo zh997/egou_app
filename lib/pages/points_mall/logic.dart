@@ -17,7 +17,8 @@ class PointsMallLogic extends GetxController {
     if (state.hasMore.value > 0) {
       final page = state.page.value + 1;
       final RealResponseData response = await GoodsService.goodsList(page, shopping_type: shopping_type);
-      final List list =  state.goodsList.value;
+      final List list = [];
+      list.addAll(state.goodsList.value);
       list.addAll(response.data);
       state.goodsList.value = list;
       state.hasMore.value = response.more;
