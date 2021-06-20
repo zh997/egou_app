@@ -19,7 +19,7 @@ class Utils {
     var result = await fluwx.isWeChatInstalled;
     if (result) {
       // 配置
-      fluwx.payWithWeChat(
+      await fluwx.payWithWeChat(
         appId: options.appid,
         partnerId: options.partnerid,
         prepayId: options.prepayid,
@@ -34,6 +34,7 @@ class Utils {
         if (event.errCode == 0) {
           if (success != null) success(event.errCode);
         } else {
+          print(event);
           if (fail != null) fail(event.errCode);
         }
       });
