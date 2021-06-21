@@ -8,6 +8,7 @@ import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_enums.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/models/bank_card_list.dart';
+import 'package:egou_app/pages/withdrawal/logic.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,8 @@ class BankCardListPage extends StatefulWidget {
 class _BankCardListPageState extends State<BankCardListPage> {
   final BankCardListLogic logic = Get.put(BankCardListLogic());
   final BankCardListState state = Get.find<BankCardListLogic>().state;
+  final WithdrawalLogic withdrawLogic = Get.put(WithdrawalLogic());
+  bool isSelect = Get.parameters['isSelect'] != null;
   
   Future _future;
   
@@ -69,7 +72,7 @@ class _BankCardListPageState extends State<BankCardListPage> {
                       onRefresh: () async => await logic.onGetBankCardList() ,
                       onLoad:  () async => await logic.onLoadMore(),
                       slivers: <Widget>[
-                        SliverList(delegate: SliverChildListDelegate([
+                        !isSelect ? SliverList(delegate: SliverChildListDelegate([
                           _CardItem(AppImages.CARD_LOGO_3, '微信号', wechatBankCardTypeItem.cardNumber, qrcode: wechatBankCardTypeItem.image, onTap: () {
                             logic.onSelectedBankCard(wechatBankCardTypeItem);
                             Get.toNamed(RouteConfig.make_qrcode+'?type=${CardListType.wachat}');
@@ -78,7 +81,7 @@ class _BankCardListPageState extends State<BankCardListPage> {
                             logic.onSelectedBankCard(aliBankCardTypeItem);
                             Get.toNamed(RouteConfig.make_qrcode+'?type=${CardListType.ali}');
                           }),
-                        ])),
+                        ])) : SliverToBoxAdapter(),
                         SliverList(
                           delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
                             BankCardTypeItem bankCardTypeItem = BankCardTypeItem();
@@ -88,8 +91,13 @@ class _BankCardListPageState extends State<BankCardListPage> {
                               }
                             });
                             return _CardItem(AppImages.CARD_LOGO_2,  bankCardList[index].backCardType, bankCardList[index].cardNumber, cardType: bankCardTypeItem.text, onTap: (){
-                              logic.onSelectedBankCard( bankCardList[index]);
-                              Get.toNamed(RouteConfig.bind_card);
+                              if (isSelect) {
+                                withdrawLogic.onSelectCard(bankCardList[index]);
+                                Get.back();
+                              } else {
+                                logic.onSelectedBankCard( bankCardList[index]);
+                                Get.toNamed(RouteConfig.bind_card);
+                              }
                             });
                           }, childCount:bankCardList.length),
                         ),
@@ -149,7 +157,7 @@ class _BankCardListPageState extends State<BankCardListPage> {
             Row(
               children: [
                 qrcode != null ?   Image.network(qrcode, width: ScreenUtil().setWidth(150), height: ScreenUtil().setWidth(150)) : SizedBox(),
-                Icon(Icons.keyboard_arrow_right_sharp, size: 30, color: AppColors.COLOR_GRAY_999999)
+                !isSelect ? Icon(Icons.keyboard_arrow_right_sharp, size: 30, color: AppColors.COLOR_GRAY_999999) : SizedBox()
               ],
             )
           ],

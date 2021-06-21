@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
         labelText: '请输入手机号', icon: Text('+86', style: TextStyle(fontSize: ScreenUtil().setSp(48),
               fontWeight: FontWeight.bold, color: AppColors.COLOR_BLACK_000000)),
         contentPaddingLeft: ScreenUtil().setWidth(30), labelLeft: ScreenUtil().setWidth(160),
-          isRequired: true
+          isRequired: true,keyboardType: TextInputType.phone,
       ),
       SizedBox(height: 10),
       RowTextField(name: 'password', key: GlobalKey(), controller: TextEditingController(),

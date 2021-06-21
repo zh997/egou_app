@@ -95,8 +95,32 @@ class PayMode {
   static int balance = 3;
 }
 
+/**
+ * 开发环境
+ * **/
 enum EnumEnv {
   local,
   dev,
   release
 }
+
+/**
+ * 互转类型
+ * **/
+class ConversionType {
+  static int user_money = 1;
+  static int gold = 2;
+  static int user_integral = 3;
+}
+final List<ConversionTypeItem> ConversionTypeList = [
+  ConversionTypeItem(type: ConversionType.user_money, text: '余额'),
+  ConversionTypeItem(type: ConversionType.gold, text: '金马'),
+  ConversionTypeItem(type: ConversionType.user_integral, text: '金牛')
+];
+class ConversionTypeItem {
+  final int type;
+  final String text;
+
+  ConversionTypeItem({this.type, this.text});
+}
+

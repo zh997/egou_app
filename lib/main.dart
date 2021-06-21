@@ -14,20 +14,20 @@ void main() {
 }
 
 void configLoading() {
-  EasyLoading.instance
-    ..displayDuration = const Duration(milliseconds: 2000)
-    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-    ..loadingStyle = EasyLoadingStyle.custom
-    ..indicatorSize = 45.0
-    ..radius = 10.0
-    ..progressColor =  Colors.transparent
-    ..backgroundColor =  Colors.transparent
-    ..indicatorColor =  Colors.transparent
-    ..textColor =  Colors.transparent
-    ..maskColor = Colors.transparent
-    ..userInteractions = true
-    ..dismissOnTap = false
-    ..indicatorWidget = SpinKit();
+  // EasyLoading.instance
+  //   // ..displayDuration = const Duration(milliseconds: 2000)
+  //   // ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+  //   // ..loadingStyle = EasyLoadingStyle.light
+  //   ..indicatorSize = 0
+  //   ..radius = 0
+  //   ..progressColor =   Colors.black
+  //   ..backgroundColor =  Colors.black
+  //   ..indicatorColor =  Colors.black
+  //   ..textColor = Colors.black
+  //   ..maskColor =  Colors.black
+  //   // ..userInteractions = false
+  //   // ..dismissOnTap = false
+  //   ..indicatorWidget = SpinKit();
 }
 
 class MyApp extends StatelessWidget {

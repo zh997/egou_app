@@ -48,6 +48,8 @@ class RowTextField extends StatefulWidget {
   final int maxImgLength;
   final bool isCollapsed;
   String Function(dynamic value) validate;
+  final Function(String value) onChanged;
+  final TextInputType keyboardType;
   RowTextField({
     this.key,
     this.labelText,
@@ -76,7 +78,8 @@ class RowTextField extends StatefulWidget {
     this.height, this.textAlign = TextAlign.start,
     this.textFieldType = TextFieldType.Input,
     this.labelTop,
-    this.showBorder = true, this.imgList, this.maxImgLength = 2, this.isCollapsed = false
+    this.showBorder = true, this.imgList, this.maxImgLength = 2, this.isCollapsed = false, this.onChanged,
+    this.keyboardType = TextInputType.text
   }) : super(key: key);
 
   @override
@@ -147,6 +150,7 @@ class _RowTextFieldState extends State<RowTextField> {
         });
       }
     }
+    widget.onChanged(val);
   }
 
 
@@ -196,6 +200,7 @@ class _RowTextFieldState extends State<RowTextField> {
               minLines: widget.minLines,
               maxLength: widget.maxLength,
               textAlign: widget.textAlign,
+              keyboardType: widget.keyboardType,
               buildCounter: (BuildContext context, { int currentLength,bool isFocused, int maxLength}) {
                 return widget.maxLength != null ? Container(
                   margin: EdgeInsets.only(bottom: 10),

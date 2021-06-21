@@ -51,5 +51,9 @@ class AppApiUrls  {
   static String GOODS_GUESS_LIKE = '/api/goods/likeList';
   static String GOODS_GET_GOODSLIST = '/api/goods/getGoodsList';
   static String WX_PAYMENT_PREPAY = '/api/payment/prepay';
-
+  static String CONVERSION_USER = '/api/Conversion/user';
+  static String CONVERSION_MOVE = '/api/Conversion/move';
+  static String CONVERSION_RECORD = '/api/Conversion/lists';
+  static String WITHDRAW_APPLY = '/api/money_withdraw/apply';
+  static String MONEY_WITHDRAS_RECORD = '/api/money_withdraw/records';
 }

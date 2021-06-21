@@ -65,7 +65,7 @@ class PayModeLogic extends GetxController {
   Future onAliPayment(Map<String, dynamic> data) async {
     final RealResponseData response = await CommonService.getAliPayConfig(data);
     if (response.result) {
-      Utils.initAlipay(response.data.toString(), success: () {
+      Utils.initAlipay(response.data.dataStr, success: () {
         Get.toNamed(RouteConfig.pay_result);
       }, fail: (){
         Utils.toast('支付失败');

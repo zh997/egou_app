@@ -8,6 +8,7 @@ import 'package:egou_app/models/upload_img.dart';
 import 'package:egou_app/models/global.dart';
 import 'package:egou_app/models/my_collect_item.dart';
 import 'package:egou_app/models/pay_config.dart';
+import 'package:egou_app/models/alipay_config.dart';
 
 class CommonService {
 
@@ -65,7 +66,7 @@ class CommonService {
   static Future<RealResponseData> getAliPayConfig(Map<String, dynamic> data) async {
     final DioResponseData response = await HttpRequest.request(AppApiUrls.WX_PAYMENT_PREPAY, data , 'POST');
     if (response.result && response.data != null) {
-      return HttpRequest.catchError(ResponseData.fromJson(response.data));
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: AlipayConfigModelFromJson));
     }
   }
 }
