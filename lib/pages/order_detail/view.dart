@@ -219,7 +219,9 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     ) : SizedBox(),
                     orderDetailModel.orderStatus == OrderStatusEnums.wait_pay ?Padding(
                       padding: EdgeInsets.only(left: 15),
-                      child: RadiusButton('继续支付', width: 300, height: 100,),
+                      child: RadiusButton('继续支付', width: 300, height: 100, onTap: (){
+                        Get.toNamed(RouteConfig.pay_mode + '?order_id=${orderDetailModel.id}&&from=order');
+                      },),
                     ) : SizedBox(),
                     orderDetailModel.orderStatus == OrderStatusEnums.wait_receiving ? Padding(
                       padding: EdgeInsets.only(left: 15),

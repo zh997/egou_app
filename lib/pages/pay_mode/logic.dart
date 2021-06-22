@@ -17,34 +17,26 @@ class PayModeLogic extends GetxController {
   final state = PayModeState();
   String type = Get.parameters['type'];
 
-  // 普通商品下单
-  Future onOrderBuy(Map<String, dynamic> data) async {
-    data['type'] = type;
-    EasyLoading.show();
-    final RealResponseData response = await OrderService.orderBuy(data);
+  Future onGetOrderDetail(int id) async {
+    final RealResponseData response = await OrderService.orderDetail(id);
     if (response.result) {
-      if (data['pay_way'] == PayMode.balance) {
-        Get.toNamed(RouteConfig.pay_result);
-      } else if (data['pay_way'] == PayMode.wechat) {
-        onWxPayment({'from': response.data.type, 'order_id': response.data.orderId, 'order_source': 3});
-      } else if (data['pay_way'] == PayMode.alipay) {
-        onAliPayment({'from': response.data.type, 'order_id': response.data.orderId, 'order_source': 3});
-      }
+      state.orderDetail.value = response.data;
     }
   }
 
-  // 大礼包下单
-  Future onGiftBuy(Map<String, dynamic> data) async {
+  // 订单支付
+  Future onOrderPay(Map<String, dynamic> data) async {
+    data['order_source'] = 3;
     EasyLoading.show();
-    final RealResponseData response = await GiftBagService.giftBuy(data);
-    if (response.result) {
-      if (data['pay_way'] == PayMode.balance) {
+    if (data['pay_way'] == PayMode.balance) {
+      final RealResponseData response = await CommonService.blancePrepay(data);
+      if (response.result) {
         Get.toNamed(RouteConfig.pay_result);
-      } else if (data['pay_way'] == PayMode.wechat) {
-        onWxPayment({'from': response.data.type, 'order_id': response.data.orderId, 'order_source': 3});
-      } else if (data['pay_way'] == PayMode.alipay) {
-        onAliPayment({'from': response.data.type, 'order_id': response.data.orderId, 'order_source': 3});
       }
+    } else if (data['pay_way'] == PayMode.wechat) {
+      onWxPayment(data);
+    } else if (data['pay_way'] == PayMode.alipay) {
+      onAliPayment(data);
     }
   }
 
@@ -52,9 +44,9 @@ class PayModeLogic extends GetxController {
   Future onWxPayment(Map<String, dynamic> data) async {
     final RealResponseData response = await CommonService.getWxPayConfig(data);
     if (response.result) {
-      Utils.initFluwx(response.data, success: () {
+      Utils.initFluwx(response.data, success: (res) {
         Get.toNamed(RouteConfig.pay_result);
-      }, fail: (){
+      }, fail: (err){
         Utils.toast('支付失败');
       });
     }
@@ -65,9 +57,9 @@ class PayModeLogic extends GetxController {
   Future onAliPayment(Map<String, dynamic> data) async {
     final RealResponseData response = await CommonService.getAliPayConfig(data);
     if (response.result) {
-      Utils.initAlipay(response.data.dataStr, success: () {
+      Utils.initAlipay(response.data.dataStr, success: (res) {
         Get.toNamed(RouteConfig.pay_result);
-      }, fail: (){
+      }, fail: (err){
         Utils.toast('支付失败');
       });
     }

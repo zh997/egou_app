@@ -172,7 +172,9 @@ class _GiftConfirmOrderPageState extends State<GiftConfirmOrderPage>  with Route
                       ),
                       RadiusButton('结算', width: 410, onTap: (){
                         if (mainState.selectAddress.value.id != null) {
-                          Get.toNamed(RouteConfig.pay_mode + '?isGiftBag=1');
+                          logic.onGiftBuy({
+                            'address_id': mainState.selectAddress.value.id
+                          });
                         } else {
                           Utils.toast('请先添加收货地址');
                         }

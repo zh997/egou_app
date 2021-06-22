@@ -221,7 +221,9 @@ class _MyOrderPageState extends State<MyOrderPage> with AutomaticKeepAliveClient
                         logic.onGetOrderLists(OrderTabValueItems[tabIndex].status);
                       });
                     }) : SizedBox(),
-                    item.orderStatus == OrderStatusEnums.wait_pay ? _Button('继续支付', AppColors.COLOR_PRIMARY_D22315, () {}) : SizedBox(),
+                    item.orderStatus == OrderStatusEnums.wait_pay ? _Button('继续支付', AppColors.COLOR_PRIMARY_D22315, () {
+                      Get.toNamed(RouteConfig.pay_mode + '?order_id=${item.id}&from=order');
+                    }) : SizedBox(),
                     item.orderStatus == OrderStatusEnums.wait_receiving ? _Button('查看物流', AppColors.COLOR_GRAY_666666, () {}) : SizedBox(),
                     item.orderStatus == OrderStatusEnums.wait_receiving ? _Button('确认收货', AppColors.COLOR_PRIMARY_D22315, () {
                       AppAnimatedDialog.onShowAnimatedDialog(context, '确定已收到货物吗？', () async {

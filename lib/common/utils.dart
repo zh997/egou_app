@@ -10,7 +10,7 @@ import 'package:egou_app/models/pay_config.dart';
 
 class Utils {
   // 微信支付
-  static Future<bool> initFluwx(WxPayConfigModel options, {Function success, Function fail}) async {
+  static Future<bool> initFluwx(WxPayConfigModel options, {Function success(r), Function fail(e)}) async {
     await fluwx.registerWxApi(
         appId: AppPayConfig.appId,
         doOnAndroid: true,
@@ -19,7 +19,7 @@ class Utils {
     var result = await fluwx.isWeChatInstalled;
     if (result) {
       // 配置
-      await fluwx.payWithWeChat(
+       var wxpayRes = await fluwx.payWithWeChat(
         appId: options.appid,
         partnerId: options.partnerid,
         prepayId: options.prepayid,
@@ -28,13 +28,14 @@ class Utils {
         timeStamp: options.timestamp,
         sign: options.sign,
       );
+      print(wxpayRes);
       // 监听支付结果
       fluwx.weChatResponseEventHandler.listen((event) async {
+        print(event);
         // 支付成功
         if (event.errCode == 0) {
           if (success != null) success(event.errCode);
         } else {
-          print(event);
           if (fail != null) fail(event.errCode);
         }
       });
@@ -46,7 +47,7 @@ class Utils {
   }
 
   // 支付宝支付
-  static Future<bool> initAlipay(String order, {Function success, Function fail}) async {
+  static Future<bool> initAlipay(String order, {Function success(r), Function fail(e)}) async {
     var result = await tobias.isAliPayInstalled();
     if (result) {
       final payResult = await tobias.aliPay(order);
@@ -59,9 +60,6 @@ class Utils {
     } else {
       toast('请先安装支付宝');
     }
-    await tobias.aliPay(order);
-
-
     return result;
   }
 

@@ -5,14 +5,12 @@ import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/constant/app_enums.dart';
 import 'package:egou_app/models/user.dart';
-import 'package:egou_app/pages/confirm_order/logic.dart';
-import 'package:egou_app/pages/confirm_order/state.dart';
 import 'package:egou_app/pages/main/logic.dart';
 import 'package:egou_app/pages/main/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/small_widget.dart';
-import 'package:egou_app/models/order_buy_info.dart';
+import 'package:egou_app/models/order_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,10 +26,10 @@ class PayModePage extends StatefulWidget {
 }
 
 class _PayModePageState extends State<PayModePage> {
-  String isGiftBag = Get.parameters['isGiftBag'];
+  String order_id = Get.parameters['order_id'];
+  String from = Get.parameters['from'];
   final PayModeLogic logic = Get.put(PayModeLogic());
   final PayModeState state = Get.find<PayModeLogic>().state;
-  ConfirmOrderState confirmOrderstate;
   final MainState mainState = Get.find<MainLogic>().state;
   final MainLogic mainLogic = Get.put(MainLogic());
   Future _future;
@@ -41,6 +39,11 @@ class _PayModePageState extends State<PayModePage> {
   bool isFocus = false;
   String pwd = '';
   int pay_way = PayMode.balance;
+
+  Future _onInitData() async {
+    await mainLogic.onGetUserInfo();
+    await logic.onGetOrderDetail(int.parse(order_id));
+  }
 
   @override
   void initState() {
@@ -58,25 +61,18 @@ class _PayModePageState extends State<PayModePage> {
         });
       }
     });
-    _future = mainLogic.onGetUserInfo();
-    if (isGiftBag == null ) {
-      confirmOrderstate = Get.find<ConfirmOrderLogic>().state;
-    }
-
+    _future = _onInitData();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(future: _future, builder: (BuildContext context, AsyncSnapshot snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
         return Obx(() {
-          final int shopType = mainState.shopType.value;
           final UserInfoModel userinfo = mainState.userInfo.value;
-          OrderBuyInfoModel orderBuyInfo;
-          if (isGiftBag == null) {
-            orderBuyInfo = confirmOrderstate.orderBuyInfo.value;
-          }
-          final String giftBagPrice = mainState.orderGoods.value[0].price;
+          final OrderDetailModel orderDetailModel = state.orderDetail.value;
           return Scaffold(
             appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '支付方式'),
             body: ListView(
@@ -93,7 +89,7 @@ class _PayModePageState extends State<PayModePage> {
                           fontSize: AppFontsize.SIZE_50,
                           color: AppColors.COLOR_BLACK_000000
                       )),
-                      Price(price: isGiftBag != null ? giftBagPrice : orderBuyInfo.orderAmount.toString())
+                      Price(price: orderDetailModel.orderAmount)
                     ],
                   ) ,
                 ),
@@ -152,32 +148,16 @@ class _PayModePageState extends State<PayModePage> {
                     ],
                   ) ,
                 ),
-                Divider(height: 1,  color: AppColors.COLOR_GRAY_DDDDDD),
+                // Divider(height: 1,  color: AppColors.COLOR_GRAY_DDDDDD),
                 SizedBox(height: 40),
                 Container(
                   padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, AppSpace.SPACE_52),
                   child:  RadiusButton('结算', onTap: (){
                     final Map<String, dynamic> data = {};
                     data['pay_way'] = pay_way;
-                    data['use_integral'] = 0;
-                    data['address_id'] = mainState.selectAddress.value.id;
                     data['pay_password'] = pwd;
-                    if (isGiftBag != null) {
-                      // 大礼包购买
-                      logic.onGiftBuy(data);
-                    } else {
-                      // 普通商品购买
-                      final List goods = [];
-                      orderBuyInfo.goodsLists.forEach((element) {
-                        goods.add({
-                          'item_id': element.itemId,
-                          'num': element.goodsNum,
-                          'goods_id': element.goodsId
-                        });
-                      });
-                      data['goods'] = goods;
-                      logic.onOrderBuy(data);
-                    }
+                    // 订单支付
+                    logic.onOrderPay({'from': from, 'order_id': order_id, 'pay_way': pay_way, 'pay_password': pwd});
                   }),
                 )
               ],

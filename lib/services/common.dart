@@ -54,7 +54,7 @@ class CommonService {
     }
   }
 
-  // 微信支付配置
+  // 微信支付配置(预支付)
   static Future<RealResponseData> getWxPayConfig(Map<String, dynamic> data) async {
     final DioResponseData response = await HttpRequest.request(AppApiUrls.WX_PAYMENT_PREPAY, data , 'POST');
     if (response.result && response.data != null) {
@@ -62,11 +62,19 @@ class CommonService {
     }
   }
 
-  // 支付宝支付配置
+  // 支付宝支付配置(预支付)
   static Future<RealResponseData> getAliPayConfig(Map<String, dynamic> data) async {
     final DioResponseData response = await HttpRequest.request(AppApiUrls.WX_PAYMENT_PREPAY, data , 'POST');
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: AlipayConfigModelFromJson));
+    }
+  }
+
+  // 余额预支付
+  static Future<RealResponseData> blancePrepay(Map<String, dynamic> data) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.WX_PAYMENT_PREPAY, data , 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data));
     }
   }
 }

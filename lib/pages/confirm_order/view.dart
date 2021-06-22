@@ -31,7 +31,6 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage>  with RouteAware {
   final ConfirmOrderState state = Get.find<ConfirmOrderLogic>().state;
   final MainLogic mainLogic = Get.put(MainLogic());
   final MainState mainState = Get.find<MainLogic>().state;
-  String type = Get.parameters['type'];
 
   @override
   void initState() {
@@ -205,9 +204,21 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage>  with RouteAware {
                            Price(color: AppColors.COLOR_BLACK_333333,size: AppFontsize.SIZE_67, price: '${orderBuyInfoModel.orderAmount}')
                          ],
                        ),
-                       RadiusButton('结算', width: 410, onTap: (){
+                       RadiusButton('提交订单', width: 410, onTap: (){
                          if (mainState.selectAddress.value.id != null) {
-                           Get.toNamed(RouteConfig.pay_mode + '?type=' + type);
+                           // 普通商品下单
+                           final List goods = [];
+                           orderBuyInfoModel.goodsLists.forEach((element) {
+                             goods.add({
+                               'item_id': element.itemId,
+                               'num': element.goodsNum,
+                               'goods_id': element.goodsId
+                             });
+                           });
+                           logic.onOrderBuy({
+                               'address_id': orderBuyInfoModel.address.id,
+                               'goods': goods
+                           });
                          } else {
                            Utils.toast('请先添加收货地址');
                          }
