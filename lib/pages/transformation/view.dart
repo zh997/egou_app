@@ -37,7 +37,8 @@ class _TransformationPageState extends State<TransformationPage> {
     final ConversionUserModel conversionUser = state.conversionUser.value;
     final int _rate = conversionUser.conversionRate;
     if (val.isNotEmpty) {
-      _rateController.text = Utils.mul(double.parse(val), double.parse(_rate.toString())).toString();
+      final _rateValue = Utils.div(double.parse(_rate.toString()), 100);
+      _rateController.text = Utils.mul(double.parse(val), _rateValue).toString();
     } else {
       _rateController.text = '';
     }
