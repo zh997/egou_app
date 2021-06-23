@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:egou_app/common/utils.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:egou_app/constant/app_api_urls.dart';
 import 'package:egou_app/http/response_data.dart';
@@ -65,10 +66,12 @@ class ShopSettledLogic extends getx.GetxController {
   }
 
   void entryAdd(data) async {
+    EasyLoading.show();
     final RealResponseData response = await CommonService.entryAdd(data);
     if (response.result) {
       Utils.toast('入驻成功');
     }
+    EasyLoading.dismiss();
   }
 
   void onChangeSelect(String index) {

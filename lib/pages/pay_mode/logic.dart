@@ -33,6 +33,7 @@ class PayModeLogic extends GetxController {
       if (response.result) {
         Get.toNamed(RouteConfig.pay_result);
       }
+      EasyLoading.dismiss();
     } else if (data['pay_way'] == PayMode.wechat) {
       onWxPayment(data);
     } else if (data['pay_way'] == PayMode.alipay) {
