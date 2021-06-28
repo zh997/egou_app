@@ -152,7 +152,7 @@ class MyPage extends StatelessWidget {
                                           color: Colors.white
                                       )),
                                       SizedBox(height: ScreenUtil().setWidth(20),),
-                                      Price(color: Colors.white, isShowUnit: false,)
+                                      Price(color: Colors.white, isShowUnit: false,price: userinfo.gold.toString())
                                     ],
                                   ),
                                 ),

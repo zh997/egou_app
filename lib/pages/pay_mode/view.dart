@@ -105,14 +105,14 @@ class _PayModePageState extends State<PayModePage> {
                       _payModeItem(AppImages.PAY_MODE_ICON_4, '微信支付', PayMode.wechat ),
                       _payModeItem(AppImages.PAY_MODE_ICON_5,'支付宝支付',  PayMode.alipay),
                       SizedBox(height: 20),
-                      Container(
+                      pay_way == PayMode.balance ? Container(
                         alignment: Alignment.center,
                         // width: ScreenUtil().setWidth(895),
                         decoration: BoxDecoration(
                             border: Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
                             borderRadius: BorderRadius.circular(AppRadius.RADIUS_20)
                         ),
-                        child: Stack(
+                        child:  Stack(
                           alignment: const FractionalOffset(0.5, 0.5),
                           children: [
                             !isFocus && !pwd.isNotEmpty ? Text('请填写6-20位交易密码',
@@ -144,7 +144,7 @@ class _PayModePageState extends State<PayModePage> {
                             )
                           ],
                         ),
-                      )
+                      ) : SizedBox()
                     ],
                   ) ,
                 ),
@@ -155,9 +155,13 @@ class _PayModePageState extends State<PayModePage> {
                   child:  RadiusButton('结算', onTap: (){
                     final Map<String, dynamic> data = {};
                     data['pay_way'] = pay_way;
-                    data['pay_password'] = pwd;
+                    data['order_id'] = order_id;
+                    data['from'] = from;
+                    if ( data['pay_way'] == PayMode.balance) {
+                      data['pay_password'] = pwd;
+                    }
                     // 订单支付
-                    logic.onOrderPay({'from': from, 'order_id': order_id, 'pay_way': pay_way, 'pay_password': pwd});
+                    logic.onOrderPay(data);
                   }),
                 )
               ],
@@ -174,6 +178,9 @@ class _PayModePageState extends State<PayModePage> {
       behavior: HitTestBehavior.opaque,
       onTap: () {
          setState(() {
+           if (payWay != PayMode.balance) {
+             FocusScope.of(context).unfocus();
+           }
            pay_way = payWay;
          });
       },

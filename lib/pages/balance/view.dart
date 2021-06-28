@@ -39,13 +39,13 @@ class _BalancePageState extends State<BalancePage> {
     }
     if (type == balanceType.goldcoin.toString()) {
       return {
-        'text': '金币',
+        'text': '金牛',
         'source': 2
       };
     }
     if (type == balanceType.silvercoin.toString()) {
       return {
-        'text': '银币',
+        'text': '金马',
         'source': 3
       };
     }
@@ -74,6 +74,11 @@ class _BalancePageState extends State<BalancePage> {
           }
           if (getTitle(type)['source'] == 2) {
             amount = userinfo.userIntegral.toString();
+            isShowUnit = false;
+            logTitle = '收益记录';
+          }
+          if (getTitle(type)['source'] == 3) {
+            amount = userinfo.gold.toString();
             isShowUnit = false;
             logTitle = '收益记录';
           }

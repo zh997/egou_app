@@ -3,12 +3,13 @@ UserTeamListModel UserTeamListModelFromJson(json) => UserTeamListModel.fromJson(
 
 class UserTeamListModel {
   int firstCount;
-  int teamCount;
   List<UserList> list;
   int page;
   int size;
   int count;
+  int teamCount;
   User user;
+  int mySumPrice;
   int more;
 
   UserTeamListModel(
@@ -17,12 +18,13 @@ class UserTeamListModel {
         this.page,
         this.size,
         this.count,
+        this.teamCount,
         this.user,
+        this.mySumPrice,
         this.more});
 
   UserTeamListModel.fromJson(Map<String, dynamic> json) {
     firstCount = json['first_count'];
-    teamCount = json['team_count'];
     if (json['list'] != null) {
       list = new List<UserList>();
       json['list'].forEach((v) {
@@ -32,23 +34,26 @@ class UserTeamListModel {
     page = json['page'];
     size = json['size'];
     count = json['count'];
+    teamCount = json['team_count'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    mySumPrice = json['my_sum_price'];
     more = json['more'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['first_count'] = this.firstCount;
-    data['team_count'] = this.teamCount;
     if (this.list != null) {
       data['list'] = this.list.map((v) => v.toJson()).toList();
     }
     data['page'] = this.page;
     data['size'] = this.size;
     data['count'] = this.count;
+    data['team_count'] = this.teamCount;
     if (this.user != null) {
       data['user'] = this.user.toJson();
     }
+    data['my_sum_price'] = this.mySumPrice;
     data['more'] = this.more;
     return data;
   }
@@ -64,8 +69,9 @@ class UserList {
   int level;
   int groupId;
   int sex;
+  int birthday;
   String userMoney;
-  int userIntegral;
+  String userIntegral;
   String totalOrderAmount;
   String totalRechargeAmount;
   String account;
@@ -75,41 +81,25 @@ class UserList {
   int firstLeader;
   int secondLeader;
   int thirdLeader;
+  String ancestorRelation;
   int isDistribution;
   int freezeDistribution;
   String distributionH5QrCode;
   String distributionMnpQrCode;
   String distributionAppQrCode;
-  String distributionCode;
-  String createTime;
-  String updateTime;
+  Null distributionCode;
+  int createTime;
+  int updateTime;
   int loginTime;
   String loginIp;
   int disable;
   int del;
   int userGrowth;
   int earnings;
-  String payPasswrod;
   int makerLevel;
-  int activeId;
-  String name;
-  String rebate;
-  int userCount;
-  int extensionCount;
-  int subId;
-  int subLevelCount;
-  String levelLogo;
-  String dailySalesRebate;
-  String monthlySalesRebate;
-  String annualSalesRebate;
-  String annualSalesQuota;
-  int delTime;
-  int parentid;
-  int sameLevelCount;
-  int teamCount;
-  int hasGradations;
-  String indirectReward;
+  String gold;
   String levelName;
+  String sumPrice;
 
   UserList(
       {this.id,
@@ -121,6 +111,7 @@ class UserList {
         this.level,
         this.groupId,
         this.sex,
+        this.birthday,
         this.userMoney,
         this.userIntegral,
         this.totalOrderAmount,
@@ -132,6 +123,7 @@ class UserList {
         this.firstLeader,
         this.secondLeader,
         this.thirdLeader,
+        this.ancestorRelation,
         this.isDistribution,
         this.freezeDistribution,
         this.distributionH5QrCode,
@@ -146,70 +138,52 @@ class UserList {
         this.del,
         this.userGrowth,
         this.earnings,
-        this.payPasswrod,
         this.makerLevel,
-        this.activeId,
-        this.name,
-        this.rebate,
-        this.userCount,
-        this.extensionCount,
-        this.subId,
-        this.subLevelCount,
-        this.levelLogo,
-        this.dailySalesRebate,
-        this.monthlySalesRebate,
-        this.annualSalesRebate,
-        this.annualSalesQuota,
-        this.delTime,
-        this.parentid,
-        this.sameLevelCount,
-        this.teamCount,
-        this.hasGradations,
-        this.indirectReward,
-        this.levelName});
+        this.gold,
+        this.levelName,
+        this.sumPrice});
 
   UserList.fromJson(Map<String, dynamic> json) {
-    id = json['id'] != null ? json['id'] : 0;
+    id = json['id'];
     sn = json['sn'];
     root = json['root'];
     nickname = json['nickname'];
     avatar = json['avatar'];
     mobile = json['mobile'];
     level = json['level'];
-    groupId = json['group_id'] != null ? json['group_id'] : 0;
+    groupId = json['group_id'];
     sex = json['sex'];
+    birthday = json['birthday'];
     userMoney = json['user_money'];
     userIntegral = json['user_integral'];
     totalOrderAmount = json['total_order_amount'];
     totalRechargeAmount = json['total_recharge_amount'];
     account = json['account'];
-    password =  json['password'] !=null ? json['password'] : '';
-    payPassword = json['pay_password'] != null ? json['pay_password'] : '';
+    password = json['password'];
+    payPassword = json['pay_password'];
     salt = json['salt'];
     firstLeader = json['first_leader'];
     secondLeader = json['second_leader'];
     thirdLeader = json['third_leader'];
+    ancestorRelation = json['ancestor_relation'];
     isDistribution = json['is_distribution'];
     freezeDistribution = json['freeze_distribution'];
     distributionH5QrCode = json['distribution_h5_qr_code'];
     distributionMnpQrCode = json['distribution_mnp_qr_code'];
     distributionAppQrCode = json['distribution_app_qr_code'];
     distributionCode = json['distribution_code'];
+    createTime = json['create_time'];
+    updateTime = json['update_time'];
     loginTime = json['login_time'];
     loginIp = json['login_ip'];
     disable = json['disable'];
     del = json['del'];
     userGrowth = json['user_growth'];
     earnings = json['earnings'];
-    payPasswrod = json['pay_passwrod'];
     makerLevel = json['maker_level'];
-    activeId = json['active_id'] != null ? json['active_id'] : 0;
-    name = json['name'] != null ? json['name'] : '';
-    userCount = json['user_count'] != null ? json['user_count'] : 0;
-    parentid = json['parentid'];
-    sameLevelCount = json['same_level_count'];
-    teamCount = json['team_count'];
+    gold = json['gold'];
     levelName = json['level_name'];
+    sumPrice = json['sum_price'];
   }
 
   Map<String, dynamic> toJson() {
@@ -223,6 +197,7 @@ class UserList {
     data['level'] = this.level;
     data['group_id'] = this.groupId;
     data['sex'] = this.sex;
+    data['birthday'] = this.birthday;
     data['user_money'] = this.userMoney;
     data['user_integral'] = this.userIntegral;
     data['total_order_amount'] = this.totalOrderAmount;
@@ -234,27 +209,25 @@ class UserList {
     data['first_leader'] = this.firstLeader;
     data['second_leader'] = this.secondLeader;
     data['third_leader'] = this.thirdLeader;
+    data['ancestor_relation'] = this.ancestorRelation;
     data['is_distribution'] = this.isDistribution;
     data['freeze_distribution'] = this.freezeDistribution;
     data['distribution_h5_qr_code'] = this.distributionH5QrCode;
     data['distribution_mnp_qr_code'] = this.distributionMnpQrCode;
     data['distribution_app_qr_code'] = this.distributionAppQrCode;
     data['distribution_code'] = this.distributionCode;
+    data['create_time'] = this.createTime;
+    data['update_time'] = this.updateTime;
     data['login_time'] = this.loginTime;
     data['login_ip'] = this.loginIp;
     data['disable'] = this.disable;
     data['del'] = this.del;
     data['user_growth'] = this.userGrowth;
     data['earnings'] = this.earnings;
-    data['pay_passwrod'] = this.payPasswrod;
     data['maker_level'] = this.makerLevel;
-    data['active_id'] = this.activeId;
-    data['name'] = this.name;
-    data['user_count'] = this.userCount;
-    data['parentid'] = this.parentid;
-    data['same_level_count'] = this.sameLevelCount;
-    data['team_count'] = this.teamCount;
+    data['gold'] = this.gold;
     data['level_name'] = this.levelName;
+    data['sum_price'] = this.sumPrice;
     return data;
   }
 }
