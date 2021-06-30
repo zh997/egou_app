@@ -43,8 +43,4 @@ class ShopLogic extends GetxController {
       state.page.value = page;
     }
   }
-
-  void onSelectShop(ShopEntryListModel shop) {
-     state.selectedShop.value = shop;
-  }
 }

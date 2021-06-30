@@ -116,8 +116,7 @@ class _ShopPageState extends State<ShopPage> {
   Widget _ShopItem(ShopEntryListModel item){
     return GestureDetector(
       onTap: (){
-        logic.onSelectShop(item);
-        Get.toNamed(RouteConfig.shop_detail);
+        Get.toNamed(RouteConfig.shop_detail + '?shop_id=${item.id}');
       },
       child: Container(
         padding: EdgeInsets.all(AppSpace.SPACE_50),

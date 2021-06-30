@@ -158,20 +158,6 @@ class MyPage extends StatelessWidget {
                                 ),
                               ],
                             )),
-                            // GestureDetector(
-                            //   onTap:(){
-                            //     Get.toNamed(RouteConfig.share_page);
-                            //   },
-                            //   child: Container(
-                            //     decoration: BoxDecoration(
-                            //       // boxShadow: [BoxShadow(color: AppColors.COLOR_GRAY_B7B7B7, blurRadius:1, spreadRadius: 0)]
-                            //     ),
-                            //     child: Image.asset(AppImages.SHARE_BANNER, width: ScreenUtil().setWidth(1087),height: ScreenUtil().setWidth(298),),
-                            //   ),
-                            // ),
-                            // Padding(padding: EdgeInsets.fromLTRB(10, 10, 10, 0), child: RadiusButton('我的订单', width: 987, onTap: () {
-                            //   Get.toNamed(RouteConfig.my_order);
-                            // })),
                           ],
                         ),
                       ),
@@ -229,18 +215,6 @@ class MyPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        // InkWell(
-                        //   onTap: (){
-                        //     Get.toNamed(RouteConfig.my_shop);
-                        //   },
-                        //   child:Column(
-                        //     children: [
-                        //       Image.asset(AppImages.ICON_16, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                        //       SizedBox(height: AppSpace.SPACE_35),
-                        //       Text('我的店铺', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                        //     ],
-                        //   ),
-                        // ),
                         InkWell(
                           onTap: (){
                             Get.toNamed(RouteConfig.about_us);
@@ -325,7 +299,24 @@ class MyPage extends StatelessWidget {
                             ],
                           ),
                         ),
-
+                        Obx((){
+                          final UserInfoModel userinfo = mainState.userInfo.value;
+                          if(userinfo.shopId != null && userinfo.shopId > 0) {
+                            return InkWell(
+                              onTap: (){
+                                Get.toNamed(RouteConfig.my_shop + '?shop_id=${userinfo.shopId}');
+                              },
+                              child:Column(
+                                children: [
+                                  Image.asset(AppImages.ICON_16, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                                  SizedBox(height: AppSpace.SPACE_35),
+                                  Text('我的店铺', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                                ],
+                              ),
+                            );
+                          }
+                          return SizedBox();
+                        })
                       ]),
                 ),
                 SizedBox(height: 20),

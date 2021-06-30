@@ -13,6 +13,7 @@ class UserInfoModel {
   String totalRechargeAmount;
   int makerLevel;
   String gold;
+  int shopId;
   int waitPay;
   int waitDelivery;
   int waitTake;
@@ -44,6 +45,7 @@ class UserInfoModel {
         this.coupon,
         this.noticeNum,
         this.nextLevelTips,
+        this.shopId,
         this.makerLevelStr});
 
   UserInfoModel.fromJson(Map<String, dynamic> json) {
@@ -59,6 +61,7 @@ class UserInfoModel {
     totalRechargeAmount = json['total_recharge_amount'];
     makerLevel = json['maker_level'];
     gold = json['gold'];
+    shopId = json['shop_id'];
     waitPay = json['wait_pay'];
     waitDelivery = json['wait_delivery'];
     waitTake = json['wait_take'];
@@ -84,6 +87,7 @@ class UserInfoModel {
     data['total_recharge_amount'] = this.totalRechargeAmount;
     data['maker_level'] = this.makerLevel;
     data['gold'] = this.gold;
+    data['shop_id'] = this.shopId;
     data['wait_pay'] = this.waitPay;
     data['wait_delivery'] = this.waitDelivery;
     data['wait_take'] = this.waitTake;

@@ -56,4 +56,7 @@ class AppApiUrls  {
   static String CONVERSION_RECORD = '/api/Conversion/lists';
   static String WITHDRAW_APPLY = '/api/money_withdraw/apply';
   static String MONEY_WITHDRAS_RECORD = '/api/money_withdraw/records';
+  static String SHOP_INFO = '/api/Shop/info';
+  static String SHOP_CODE = '/api/Share/shopCode';
+
 }

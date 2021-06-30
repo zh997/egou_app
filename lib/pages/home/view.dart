@@ -48,8 +48,13 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
   Future onQrScan() async {
     await Permission.camera.request();
     String cameraScanResult = await scanner.scan();
-    Get.toNamed(RouteConfig.discount_pay);
-    print(cameraScanResult);
+    String queryStr = cameraScanResult.split('?')[1];
+    if (queryStr.indexOf('shop_id') != -1) {
+      Get.toNamed(RouteConfig.discount_pay + '?$queryStr');
+    }
+    if (queryStr.indexOf('invitation') != -1) {
+      Get.toNamed(RouteConfig.register_page + '?$queryStr');
+    }
   }
 
   @override

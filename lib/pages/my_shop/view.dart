@@ -2,8 +2,10 @@ import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
+import 'package:egou_app/models/shop_info.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/small_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
@@ -14,23 +16,51 @@ import 'state.dart';
 class MyShopPage extends StatelessWidget {
   final MyShopLogic logic = Get.put(MyShopLogic());
   final MyShopState state = Get.find<MyShopLogic>().state;
+  String shop_id = Get.parameters['shop_id'];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '我的店铺'),
-      body: SafeArea(
-        child: ListView(
-          children: [
-            _Header(),
-            SizedBox(height: 15),
-            _Order(),
-            SizedBox(height: 15),
-            _listItem()
-          ]
-        )
-      )
-    );
+    return FutureBuilder(future: logic.onShopCode(), builder: (BuildContext context, AsyncSnapshot snapshot){
+      if (snapshot.connectionState == ConnectionState.done) {
+        return Scaffold(
+            appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '我的店铺'),
+            body: SafeArea(
+                child: Obx((){
+                  final ShopCodeModel shopCode = state.shopCode.value;
+                  return ListView(
+                      children: [
+                        _Header(),
+                        SizedBox(height: 15),
+                        _Order(),
+                        SizedBox(height: 15),
+                        _listItem(),
+                        SizedBox(height: 15),
+                        Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('收款二维码', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
+                              SizedBox(height: 20,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.network(shopCode.url, width: ScreenUtil().setWidth(486), height: ScreenUtil().setWidth(486),)
+                                ],
+                              )
+
+                            ],
+                          ),
+                        )
+                      ]
+                  );
+                })
+            )
+        );
+      }
+      return SpinKit();
+    });
   }
 
   Widget _Header() {
@@ -114,7 +144,7 @@ class MyShopPage extends StatelessWidget {
   Widget _listItem() {
     return InkWell(
       onTap: () {
-        Get.toNamed(RouteConfig.shop_detail);
+        Get.toNamed(RouteConfig.shop_detail + '?shop_id=${shop_id}');
       },
       child: Container(
           padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
