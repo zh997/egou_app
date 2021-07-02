@@ -3,6 +3,7 @@ import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/models/shop_info.dart';
+import 'package:egou_app/models/shop_order_info.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/small_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,18 +21,19 @@ class MyShopPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(future: logic.onShopCode(), builder: (BuildContext context, AsyncSnapshot snapshot){
+    return FutureBuilder(future: logic.onInitData(), builder: (BuildContext context, AsyncSnapshot snapshot){
       if (snapshot.connectionState == ConnectionState.done) {
         return Scaffold(
             appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '我的店铺'),
             body: SafeArea(
                 child: Obx((){
                   final ShopCodeModel shopCode = state.shopCode.value;
+                  final ShopOrderInfoModel shopOrderInfo = state.shopOrderInfo.value;
                   return ListView(
                       children: [
-                        _Header(),
+                        _Header(shopOrderInfo),
                         SizedBox(height: 15),
-                        _Order(),
+                        _Order(shopOrderInfo),
                         SizedBox(height: 15),
                         _listItem(),
                         SizedBox(height: 15),
@@ -63,7 +65,7 @@ class MyShopPage extends StatelessWidget {
     });
   }
 
-  Widget _Header() {
+  Widget _Header(ShopOrderInfoModel info) {
     return Container(
       color: AppColors.COLOR_PRIMARY_D22315,
       alignment: Alignment.center,
@@ -79,21 +81,21 @@ class MyShopPage extends StatelessWidget {
                 children: [
                   Text('今日收入', style: TextStyle(color:Colors.white, fontSize: AppFontsize.SIZE_36)),
                   SizedBox(height: 15),
-                  Price(color:Colors.white, size: AppFontsize.SIZE_48, price: '6666.66')
+                  Price(color:Colors.white, size: AppFontsize.SIZE_48, price: info.amount.oneDay)
                 ]
               ),
               Column(
                   children: [
                     Text('昨日收入', style: TextStyle(color:Colors.white, fontSize: AppFontsize.SIZE_36)),
                     SizedBox(height: 15),
-                    Price(color:Colors.white, size: AppFontsize.SIZE_48,price: '6666.66')
+                    Price(color:Colors.white, size: AppFontsize.SIZE_48,price: info.amount.yesterday)
                   ]
               ),
               Column(
                   children: [
                     Text('近30日收入', style: TextStyle(color:Colors.white, fontSize: AppFontsize.SIZE_36)),
                     SizedBox(height: 15),
-                    Price(color:Colors.white, size: AppFontsize.SIZE_48,price: '6666.66')
+                    Price(color:Colors.white, size: AppFontsize.SIZE_48,price: info.amount.thirtyDay)
                   ]
               )
             ]
@@ -103,7 +105,7 @@ class MyShopPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('总收入', style: TextStyle(color:Colors.white, fontSize: AppFontsize.SIZE_36)),
-              Price(color:Colors.white, size: AppFontsize.SIZE_48,price: '88888.66')
+              Price(color:Colors.white, size: AppFontsize.SIZE_48,price: info.amount.all)
             ]
           )
         ],
@@ -111,7 +113,7 @@ class MyShopPage extends StatelessWidget {
     );
   }
 
-  Widget _Order() {
+  Widget _Order(ShopOrderInfoModel info) {
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(15),
@@ -120,19 +122,19 @@ class MyShopPage extends StatelessWidget {
         children: [
           Column(
             children: [
-              Text('6', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
+              Text(info.count.oneDay.toString(), style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
               Text('今日新增订单', style: TextStyle(color: AppColors.COLOR_GRAY_B7B7B7, fontSize: AppFontsize.SIZE_48)),
             ]
           ),
           Column(
               children: [
-                Text('2', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
+                Text(info.count.yesterday.toString(), style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
                 Text('昨日订单', style: TextStyle(color: AppColors.COLOR_GRAY_B7B7B7, fontSize: AppFontsize.SIZE_48)),
               ]
           ),
           Column(
               children: [
-                Text('8', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
+                Text(info.count.sevenDay.toString(), style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_56, fontWeight: FontWeight.bold)),
                 Text('七日订单', style: TextStyle(color: AppColors.COLOR_GRAY_B7B7B7, fontSize: AppFontsize.SIZE_48)),
               ]
           )

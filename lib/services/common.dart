@@ -10,6 +10,7 @@ import 'package:egou_app/models/my_collect_item.dart';
 import 'package:egou_app/models/pay_config.dart';
 import 'package:egou_app/models/alipay_config.dart';
 import 'package:egou_app/models/shop_info.dart';
+import 'package:egou_app/models/shop_order_info.dart';
 
 class CommonService {
 
@@ -52,6 +53,14 @@ class CommonService {
     final DioResponseData response = await HttpRequest.request(AppApiUrls.SHOP_INFO, {'shop_id': shop_id} , 'POST');
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: ShopInfoModelFromJson));
+    }
+  }
+
+  // 店铺订单详情
+  static Future<RealResponseData> shopOrderInfo(String shop_id) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.SHOP_ORDER_INFO, {'shop_id': shop_id} , 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: ShopOrderInfoModelFromJson));
     }
   }
 
