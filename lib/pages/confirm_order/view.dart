@@ -216,7 +216,7 @@ class _ConfirmOrderPageState extends State<ConfirmOrderPage>  with RouteAware {
                              });
                            });
                            logic.onOrderBuy({
-                               'address_id': orderBuyInfoModel.address.id,
+                               'address_id': mainState.selectAddress.value.id,
                                'goods': goods
                            });
                          } else {

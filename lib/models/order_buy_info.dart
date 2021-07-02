@@ -5,15 +5,16 @@ class OrderBuyInfoModel {
   List<GoodsLists> goodsLists;
   int couponId;
   int totalNum;
-  dynamic totalGoodsPrice;
-  dynamic totalAmount;
-  dynamic orderAmount;
-  Address address;
+  double totalGoodsPrice;
+  double totalAmount;
+  double orderAmount;
+  List<Address> address;
   int discountAmount;
   int shippingPrice;
   String remark;
   int payWay;
   String userMoney;
+  int shopId;
 
   OrderBuyInfoModel(
       {this.orderType,
@@ -28,7 +29,8 @@ class OrderBuyInfoModel {
         this.shippingPrice,
         this.remark,
         this.payWay,
-        this.userMoney});
+        this.userMoney,
+        this.shopId});
 
   OrderBuyInfoModel.fromJson(Map<String, dynamic> json) {
     orderType = json['order_type'];
@@ -43,13 +45,18 @@ class OrderBuyInfoModel {
     totalGoodsPrice = json['total_goods_price'];
     totalAmount = json['total_amount'];
     orderAmount = json['order_amount'];
-    address =
-    json['address'] != null ? new Address.fromJson(json['address']) : null;
+    if (json['address'] != null) {
+      address = new List<Address>();
+      json['address'].forEach((v) {
+        address.add(new Address.fromJson(v));
+      });
+    }
     discountAmount = json['discount_amount'];
     shippingPrice = json['shipping_price'];
     remark = json['remark'];
     payWay = json['pay_way'];
     userMoney = json['user_money'];
+    shopId = json['shop_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -64,13 +71,14 @@ class OrderBuyInfoModel {
     data['total_amount'] = this.totalAmount;
     data['order_amount'] = this.orderAmount;
     if (this.address != null) {
-      data['address'] = this.address.toJson();
+      data['address'] = this.address.map((v) => v.toJson()).toList();
     }
     data['discount_amount'] = this.discountAmount;
     data['shipping_price'] = this.shippingPrice;
     data['remark'] = this.remark;
     data['pay_way'] = this.payWay;
     data['user_money'] = this.userMoney;
+    data['shop_id'] = this.shopId;
     return data;
   }
 }

@@ -8,7 +8,7 @@ import '../main.dart';
 void main() {
   EnvConfig.env = EnvModel(
     env: EnumEnv.dev,
-    apiUrl: 'http://shop.hlnsqz.cn',
+    apiUrl: 'https://shop.hlnsqz.cn',
     name: '开发环境'
   );
   runApp(MyApp());
