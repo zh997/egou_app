@@ -8,11 +8,24 @@ class MyShopLogic extends GetxController {
   final state = MyShopState();
   String shop_id = Get.parameters['shop_id'];
 
+  Future onInitData() async {
+    await this.onShopCode();
+    await this.onShopOrderInfo();
+  }
+
   // 店铺详情
   Future onShopInfo() async {
     final RealResponseData response = await CommonService.shopInfo(shop_id);
     if (response.result) {
       state.shopInfo.value = response.data;
+    }
+  }
+
+  // 店铺订单详情
+  Future onShopOrderInfo() async {
+    final RealResponseData response = await CommonService.shopOrderInfo(shop_id);
+    if (response.result) {
+      state.shopOrderInfo.value = response.data;
     }
   }
 

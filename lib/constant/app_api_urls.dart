@@ -58,5 +58,6 @@ class AppApiUrls  {
   static String MONEY_WITHDRAS_RECORD = '/api/money_withdraw/records';
   static String SHOP_INFO = '/api/Shop/info';
   static String SHOP_CODE = '/api/Share/shopCode';
+  static String SHOP_ORDER_INFO = '/api/shop/order';
 
 }

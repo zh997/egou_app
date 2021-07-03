@@ -6,8 +6,8 @@ class ShopEntryListModel {
   int userId;
   String address;
   String phone;
-  double longitude;
-  double latitude;
+  dynamic longitude;
+  dynamic latitude;
   String businessContent;
   String shopPhoto;
   String otherImg;
