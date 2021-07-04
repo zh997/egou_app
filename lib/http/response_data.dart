@@ -41,6 +41,7 @@ class ResponseData<T>{
           }
           more = json['data']['more'];
         } else {
+          print(json['data']);
           data = json['data'] != null ? fromJson(json['data']) : null;
         }
 

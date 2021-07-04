@@ -16,6 +16,7 @@ class ConfirmOrderLogic extends GetxController {
     data['use_integral'] = 0;
     data['order_source'] = 3;
     final RealResponseData response = await OrderService.orderBuyInfo(data);
+    print(response);
     if (response.result) {
        state.orderBuyInfo.value = response.data;
     }

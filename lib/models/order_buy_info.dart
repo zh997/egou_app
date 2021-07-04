@@ -1,20 +1,20 @@
 OrderBuyInfoModel OrderBuyInfoModelFromJson(json) => OrderBuyInfoModel.fromJson(json);
 
 class OrderBuyInfoModel {
-  int orderType;
+  dynamic orderType;
   List<GoodsLists> goodsLists;
-  int couponId;
-  int totalNum;
-  double totalGoodsPrice;
-  double totalAmount;
-  double orderAmount;
-  List<Address> address;
-  int discountAmount;
-  int shippingPrice;
-  String remark;
-  int payWay;
-  String userMoney;
-  int shopId;
+  dynamic couponId;
+  dynamic totalNum;
+  dynamic totalGoodsPrice;
+  dynamic totalAmount;
+  dynamic orderAmount;
+  dynamic address;
+  dynamic discountAmount;
+  dynamic shippingPrice;
+  dynamic remark;
+  dynamic payWay;
+  dynamic userMoney;
+  dynamic shopId;
 
   OrderBuyInfoModel(
       {this.orderType,
@@ -45,11 +45,13 @@ class OrderBuyInfoModel {
     totalGoodsPrice = json['total_goods_price'];
     totalAmount = json['total_amount'];
     orderAmount = json['order_amount'];
-    if (json['address'] != null) {
+    if (json['address'] != null && json['address'] is List) {
       address = new List<Address>();
       json['address'].forEach((v) {
         address.add(new Address.fromJson(v));
       });
+    } else {
+      address = json['address'];
     }
     discountAmount = json['discount_amount'];
     shippingPrice = json['shipping_price'];
@@ -70,8 +72,10 @@ class OrderBuyInfoModel {
     data['total_goods_price'] = this.totalGoodsPrice;
     data['total_amount'] = this.totalAmount;
     data['order_amount'] = this.orderAmount;
-    if (this.address != null) {
+    if (this.address != null && this.address is List) {
       data['address'] = this.address.map((v) => v.toJson()).toList();
+    } else {
+      data['address'] = this.address;
     }
     data['discount_amount'] = this.discountAmount;
     data['shipping_price'] = this.shippingPrice;
@@ -84,28 +88,28 @@ class OrderBuyInfoModel {
 }
 
 class GoodsLists {
-  int itemId;
-  int goodsId;
-  String goodsName;
-  int status;
-  int del;
-  String image;
-  int stock;
-  int freeShippingType;
-  String freeShipping;
-  int freeShippingTemplateId;
-  String specImage;
-  String specValueStr;
-  String specValueIds;
-  String goodsPrice;
-  String volume;
-  String weight;
-  int thirdCategoryId;
-  int shoppingType;
-  int integral;
-  int goodsNum;
-  String imageStr;
-  int discountPrice;
+  dynamic itemId;
+  dynamic goodsId;
+  dynamic goodsName;
+  dynamic status;
+  dynamic del;
+  dynamic image;
+  dynamic stock;
+  dynamic freeShippingType;
+  dynamic freeShipping;
+  dynamic freeShippingTemplateId;
+  dynamic specImage;
+  dynamic specValueStr;
+  dynamic specValueIds;
+  dynamic goodsPrice;
+  dynamic volume;
+  dynamic weight;
+  dynamic thirdCategoryId;
+  dynamic shoppingType;
+  dynamic integral;
+  dynamic goodsNum;
+  dynamic imageStr;
+  dynamic discountPrice;
 
   GoodsLists(
       {this.itemId,
