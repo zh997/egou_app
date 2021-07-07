@@ -93,6 +93,25 @@ class PayMode {
   static int wechat = 1;
   static int alipay = 2;
   static int balance = 3;
+  static int userIntegral = 11;
+  static int gold = 12;
+  static String getIcon(way){
+    if (way == 3) {
+      return AppImages.PAY_MODE_ICON_1;
+    }
+    if (way == 2) {
+      return AppImages.PAY_MODE_ICON_5;
+    }
+    if (way == 1) {
+      return AppImages.PAY_MODE_ICON_4;
+    }
+    if (way == 11) {
+      return AppImages.PAY_MODE_ICON_2;
+    }if (way == 12) {
+      return AppImages.PAY_MODE_ICON_3;
+    }
+
+  }
 }
 
 /**

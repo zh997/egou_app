@@ -7,7 +7,7 @@ import '../main.dart';
 
 void main() {
   EnvConfig.env = EnvModel(
-      env: EnumEnv.dev,
+      env: EnumEnv.release,
       apiUrl: 'https://nmmhbstl.com',
       name: '发布环境'
   );

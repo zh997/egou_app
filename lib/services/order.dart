@@ -6,6 +6,7 @@ import 'package:egou_app/models/order.dart';
 import 'package:egou_app/models/order_list.dart';
 import 'package:egou_app/models/order_detail.dart';
 import 'package:egou_app/models/order_buy_info.dart';
+import 'package:egou_app/models/order_pay_way.dart';
 
 class OrderService {
 
@@ -69,4 +70,13 @@ class OrderService {
       return HttpRequest.catchError(ResponseData.fromJson(response.data));
     }
   }
+
+  // 获取订单支付方式
+  static Future<RealResponseData> getPayWay(String order_id) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.GET_PAY_WAY, {'order_id': order_id }, 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: OrderPayWayModelFromJson));
+    }
+  }
+
 }

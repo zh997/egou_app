@@ -24,21 +24,29 @@ class PayModeLogic extends GetxController {
     }
   }
 
+  // 订单支付方式
+
+  Future onGetPayWay(String order_id) async {
+    final RealResponseData response = await OrderService.getPayWay(order_id);
+    if (response.result) {
+      state.orderPayWay.value = response.data;
+    }
+  }
+
   // 订单支付
   Future onOrderPay(Map<String, dynamic> data) async {
     data['order_source'] = 3;
     EasyLoading.show();
-    if (data['pay_way'] == PayMode.balance) {
-      final RealResponseData response = await CommonService.blancePrepay(data);
-      if (response.result) {
-        Get.toNamed(RouteConfig.pay_result);
-      }
-      EasyLoading.dismiss();
-    } else if (data['pay_way'] == PayMode.wechat) {
-      onWxPayment(data);
+    if (data['pay_way'] == PayMode.wechat) {
+      return onWxPayment(data);
     } else if (data['pay_way'] == PayMode.alipay) {
-      onAliPayment(data);
+      return onAliPayment(data);
     }
+    final RealResponseData response = await CommonService.blancePrepay(data);
+    if (response.result) {
+      Get.toNamed(RouteConfig.pay_result);
+    }
+    EasyLoading.dismiss();
   }
 
   // 微信支付

@@ -4,9 +4,10 @@ import 'package:egou_app/constant/app_images.dart';
 import 'package:egou_app/constant/app_radius.dart';
 import 'package:egou_app/constant/app_space.dart';
 import 'package:egou_app/constant/app_enums.dart';
-import 'package:egou_app/models/user.dart';
-import 'package:egou_app/pages/main/logic.dart';
-import 'package:egou_app/pages/main/state.dart';
+import 'package:egou_app/models/order_pay_way.dart';
+// import 'package:egou_app/models/user.dart';
+// import 'package:egou_app/pages/main/logic.dart';
+// import 'package:egou_app/pages/main/state.dart';
 import 'package:egou_app/widgets/app_bar.dart';
 import 'package:egou_app/widgets/app_buttons.dart';
 import 'package:egou_app/widgets/small_widget.dart';
@@ -30,19 +31,20 @@ class _PayModePageState extends State<PayModePage> {
   String from = Get.parameters['from'];
   final PayModeLogic logic = Get.put(PayModeLogic());
   final PayModeState state = Get.find<PayModeLogic>().state;
-  final MainState mainState = Get.find<MainLogic>().state;
-  final MainLogic mainLogic = Get.put(MainLogic());
+  // final MainState mainState = Get.find<MainLogic>().state;
+  // final MainLogic mainLogic = Get.put(MainLogic());
   Future _future;
 
   final FocusNode _focusNode = FocusNode();
   final TextEditingController _pwdController = TextEditingController();
   bool isFocus = false;
   String pwd = '';
-  int pay_way = PayMode.balance;
+  int pay_way = PayMode.wechat;
 
   Future _onInitData() async {
-    await mainLogic.onGetUserInfo();
+    // await mainLogic.onGetUserInfo();
     await logic.onGetOrderDetail(int.parse(order_id));
+    await logic.onGetPayWay(order_id);
   }
 
   @override
@@ -71,8 +73,9 @@ class _PayModePageState extends State<PayModePage> {
     return FutureBuilder(future: _future, builder: (BuildContext context, AsyncSnapshot snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
         return Obx(() {
-          final UserInfoModel userinfo = mainState.userInfo.value;
+          // final UserInfoModel userinfo = mainState.userInfo.value;
           final OrderDetailModel orderDetailModel = state.orderDetail.value;
+          final OrderPayWayModel orderPayWay = state.orderPayWay.value;
           return Scaffold(
             appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333),title: '支付方式'),
             body: ListView(
@@ -99,13 +102,19 @@ class _PayModePageState extends State<PayModePage> {
                   margin: EdgeInsets.only(top: AppSpace.SPACE_40),
                   child: Column(
                     children: [
-                      _payModeItem(AppImages.PAY_MODE_ICON_1, '余额支付', PayMode.balance, num: userinfo.userMoney),
-                      // shopType != 1 && shopType != 2 ? _payModeItem(AppImages.PAY_MODE_ICON_2, '金币支付', PayMode.wechat, num: '0.00') : SizedBox(),
-                      // shopType != 2 ?  _payModeItem(AppImages.PAY_MODE_ICON_3, '银币支付',PayMode.wechat, num: '0.00') : SizedBox(),
-                      _payModeItem(AppImages.PAY_MODE_ICON_4, '微信支付', PayMode.wechat ),
-                      _payModeItem(AppImages.PAY_MODE_ICON_5,'支付宝支付',  PayMode.alipay),
+                      Column(
+                        children: List.generate(orderPayWay.pay.length, (index){
+                          final Pay payItem = orderPayWay.pay[index];
+                          return _payModeItem(PayMode.getIcon(payItem.payWay), payItem.name, payItem.payWay, num: payItem.money != "-1" ? payItem.money :null );
+                        })
+                       ),
+                      // _payModeItem(AppImages.PAY_MODE_ICON_1, '余额支付', PayMode.balance, num: userinfo.userMoney),
+                      // // shopType != 1 && shopType != 2 ? _payModeItem(AppImages.PAY_MODE_ICON_2, '金币支付', PayMode.wechat, num: '0.00') : SizedBox(),
+                      // // shopType != 2 ?  _payModeItem(AppImages.PAY_MODE_ICON_3, '银币支付',PayMode.wechat, num: '0.00') : SizedBox(),
+                      // _payModeItem(AppImages.PAY_MODE_ICON_4, '微信支付', PayMode.wechat ),
+                      // _payModeItem(AppImages.PAY_MODE_ICON_5,'支付宝支付',  PayMode.alipay),
                       SizedBox(height: 20),
-                      pay_way == PayMode.balance ? Container(
+                      pay_way != PayMode.alipay && pay_way != PayMode.wechat ? Container(
                         alignment: Alignment.center,
                         // width: ScreenUtil().setWidth(895),
                         decoration: BoxDecoration(
