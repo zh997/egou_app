@@ -173,7 +173,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
                     onTap: onQrScan,
                     child: Container(
                         alignment: Alignment.centerRight,
-                        width: 50,
+                        width:ScreenUtil().setSp(180),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,

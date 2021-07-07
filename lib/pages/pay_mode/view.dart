@@ -166,7 +166,7 @@ class _PayModePageState extends State<PayModePage> {
                     data['pay_way'] = pay_way;
                     data['order_id'] = order_id;
                     data['from'] = from;
-                    if ( data['pay_way'] == PayMode.balance) {
+                    if ( data['pay_way'] != PayMode.wechat && data['pay_way'] != PayMode.alipay) {
                       data['pay_password'] = pwd;
                     }
                     // 订单支付
