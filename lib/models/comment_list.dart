@@ -7,7 +7,7 @@ class CommentListModel {
   int expressComment;
   String comment;
   int descriptionComment;
-  Null reply;
+  dynamic reply;
   String createTime;
   String nickname;
   String avatar;

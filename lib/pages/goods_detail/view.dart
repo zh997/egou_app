@@ -508,6 +508,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
 
   Widget _Comment(CommentCategoryModel commentCategory, List commentList, int category_id) {
     List<Comment> comment = commentCategory.comment;
+    print(commentList);
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(15),
@@ -537,9 +538,11 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
           ),
           SizedBox(height: 15),
           Divider(height: 1, color: AppColors.COLOR_GRAY_DDDDDD,),
+          SizedBox(height: 10),
           Column(
             children: List.generate(commentList.length, (index) => Container(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -577,7 +580,10 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                     runSpacing: 5,
                     children: List.generate(commentList[index].image.length, (index) =>
                         Image.network(commentList[index].image[index], width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),)),
-                  )
+                  ),
+                  SizedBox(height: 15),
+                  Divider(height: 1, color: AppColors.COLOR_GRAY_DDDDDD,),
+                  SizedBox(height: 10),
                 ],
               ),
             )),
