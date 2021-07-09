@@ -1,8 +1,10 @@
 import 'dart:ui';
 import 'package:egou_app/common/utils.dart';
+import 'package:egou_app/models/comment_category.dart';
 import 'package:egou_app/models/goods_detail.dart';
 import 'package:egou_app/models/order.dart';
 import 'package:egou_app/pages/main/logic.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:egou_app/common/routes.dart';
 import 'package:egou_app/constant/app_colors.dart';
@@ -31,30 +33,33 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
   final GoodsDetailLogic logic = Get.put(GoodsDetailLogic());
   final MainLogic mainLogic = Get.put(MainLogic());
   final GoodsDetailState state = Get.find<GoodsDetailLogic>().state;
-  Future _future;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _future = logic.onGetGoodsDetail();
+  Future onInit() async {
+    await logic.onGetCommentCategory();
+    await logic.onGetGoodsDetail();
+    await logic.onGetCommentList(0);
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _future,
+      future: onInit(),
       builder: (BuildContext context, AsyncSnapshot snapshot){
         if (snapshot.connectionState == ConnectionState.done) {
           return Obx((){
             final bool isCollect = state.is_collect.value == 1;
+            final CommentCategoryModel commentCategory = state.commentCategory.value;
+            final List commentList = state.commentList.value;
+            final int category_id = state.category_id.value;
             return Scaffold(
               appBar: CustomAppBar(leading: Icon(Icons.arrow_back_ios_sharp, color: AppColors.COLOR_BLACK_333333), title: state.goodsDetail.value.name),
               body: Column(
                 children: [
-                  Expanded(child: SingleChildScrollView(
-                    child: Column(
-                      children: [
+                  Expanded(child: EasyRefresh.custom(
+                    onLoad: logic.onLoadMoreComment,
+                    footer: BallPulseFooter(color: AppColors.COLOR_PRIMARY_D22315),
+                    slivers: [
+                      SliverList(delegate: SliverChildListDelegate([
                         DetailSwiper(state.goodsDetail.value.goodsImage),
                         Container(
                           color: Colors.white,
@@ -140,10 +145,10 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                             color: Colors.white,
                             child: HtmlWidget(state.goodsDetail.value.content,textStyle: TextStyle(fontSize: 14),
                             )
-                        ) : _Comment()
-                      ],
-                    ),
-                  )),
+                        ) : _Comment(commentCategory, commentList, category_id)
+                      ]))
+                    ],
+                  ),),
                   Container(
                     height: ScreenUtil().setWidth(200),
                     decoration: BoxDecoration(
@@ -501,7 +506,8 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
   }
 
 
-  Widget _Comment() {
+  Widget _Comment(CommentCategoryModel commentCategory, List commentList, int category_id) {
+    List<Comment> comment = commentCategory.comment;
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(15),
@@ -511,145 +517,71 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
           Wrap(
             spacing: 20,
             runSpacing: 20,
-            children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                decoration: BoxDecoration(
-                  border:Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
-                  borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
+            children: List.generate(comment.length, (index) {
+              Color categoryColor = category_id == comment[index].id ? AppColors.COLOR_PRIMARY_D22315 : AppColors.COLOR_BLACK_848484;
+              return GestureDetector(
+                onTap: (){
+                    logic.onChangeCategoryId( comment[index].id);
+                },
+                behavior: HitTestBehavior.opaque,
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                  decoration: BoxDecoration(
+                      border:  Border.all(width: 1, color: categoryColor),
+                      borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
+                  ),
+                  child: Text('${comment[index].name}(${comment[index].count})', style: TextStyle(color: categoryColor, fontSize: AppFontsize.SIZE_44)),
                 ),
-                child: Text('性价比高(4)', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                decoration: BoxDecoration(
-                    border:Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
-                    borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
-                ),
-                child: Text('质量超好(4)', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                decoration: BoxDecoration(
-                    border:Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
-                    borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
-                ),
-                child: Text('手感不多(8)', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                decoration: BoxDecoration(
-                    border:Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
-                    borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
-                ),
-                child: Text('性价比高(7)', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                decoration: BoxDecoration(
-                    border:Border.all(width: 1, color: AppColors.COLOR_PRIMARY_D22315),
-                    borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
-                ),
-                child: Text('性价比高(4)', style: TextStyle(color: AppColors.COLOR_PRIMARY_D22315, fontSize: AppFontsize.SIZE_44)),
-              )
-            ],
+              );
+            }),
           ),
           SizedBox(height: 15),
           Divider(height: 1, color: AppColors.COLOR_GRAY_DDDDDD,),
-          SizedBox(height: 15),
-          Container(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                            width: ScreenUtil().setWidth(128),
-                            height: ScreenUtil().setWidth(128),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular( ScreenUtil().setWidth(128)),
-                            ),
-                            clipBehavior: Clip.hardEdge,
-                            child: Image.asset(AppImages.APP_LOGO, fit: BoxFit.cover)
-                        ),
-                        SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('麻**夜', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
-                            Text('9天前 | 尺码：英码4', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40))
-                          ],
-                        )
-                      ],
-                    ),
-                    Text('浏览12次', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40)),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Text('物美价廉物美价廉物美价廉物美价廉物美价廉物美价廉物美价廉', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
-                SizedBox(height: 10),
-                Wrap(
-                  spacing: 5,
-                  runSpacing: 5,
-                  children: [
-                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),),
-                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),),
-                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),)
-                  ],
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 30),
-          Container(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                            width: ScreenUtil().setWidth(128),
-                            height: ScreenUtil().setWidth(128),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular( ScreenUtil().setWidth(128)),
-                            ),
-                            clipBehavior: Clip.hardEdge,
-                            child: Image.asset(AppImages.APP_LOGO, fit: BoxFit.cover)
-                        ),
-                        SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('麻**夜', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
-                            Text('9天前 | 尺码：英码4', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40))
-                          ],
-                        )
-                      ],
-                    ),
-                    Text('浏览12次', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40)),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Text('物美价廉物美价廉物美价廉物美价廉物美价廉物美价廉物美价廉', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
-                SizedBox(height: 10),
-                Wrap(
-                  spacing: 5,
-                  runSpacing: 5,
-                  children: [
-                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),),
-                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),),
-                    Image.network(AppImages.GOODS_IMG_1, width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),)
-                  ],
-                )
-              ],
-            ),
-          ),
+          Column(
+            children: List.generate(commentList.length, (index) => Container(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                              width: ScreenUtil().setWidth(128),
+                              height: ScreenUtil().setWidth(128),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular( ScreenUtil().setWidth(128)),
+                              ),
+                              clipBehavior: Clip.hardEdge,
+                              child: Image.network(commentList[index].avatar, fit: BoxFit.cover)
+                          ),
+                          SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(commentList[index].nickname, style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
+                              Text(commentList[index].specValueStr, style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40))
+                            ],
+                          )
+                        ],
+                      ),
+                      // Text('浏览12次', style: TextStyle(color: AppColors.COLOR_GRAY_999999, fontSize: AppFontsize.SIZE_40)),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Text(commentList[index].comment, style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_48)),
+                  SizedBox(height: 10),
+                  Wrap(
+                    spacing: 5,
+                    runSpacing: 5,
+                    children: List.generate(commentList[index].image.length, (index) =>
+                        Image.network(commentList[index].image[index], width: ScreenUtil().setWidth(330), height:  ScreenUtil().setWidth(330),)),
+                  )
+                ],
+              ),
+            )),
+          )
         ],
       ),
     );

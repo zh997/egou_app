@@ -3,6 +3,7 @@ import 'package:egou_app/http/response_data.dart';
 import 'package:egou_app/models/goods_detail.dart';
 import 'package:egou_app/services/cart.dart';
 import 'package:egou_app/services/goods_detail.dart';
+import 'package:egou_app/services/goods.dart';
 import 'package:get/get.dart';
 
 import 'state.dart';
@@ -69,4 +70,41 @@ class GoodsDetailLogic extends GetxController {
       }
     }
   }
+
+  Future onGetCommentCategory() async {
+    final RealResponseData response = await GoodsService.commentCategory(int.parse(id));
+    if (response.result) {
+      state.commentCategory.value = response.data;
+    }
+  }
+
+  Future onGetCommentList(int category_id) async {
+    final RealResponseData response = await GoodsService.commentList(1, goods_id: int.parse(id), id: category_id );
+    if (response.result) {
+      state.commentList.value = response.data;
+      state.hasMore.value = response.more;
+      state.page.value = 1;
+      state.category_id.value = category_id;
+    }
+  }
+
+  Future onLoadMoreComment() async {
+    if (state.hasMore.value > 0) {
+      final page = state.page.value + 1;
+      int category_id = state.category_id.value;
+      final RealResponseData response = await GoodsService.commentList(page,  goods_id: int.parse(id), id: category_id);
+      final List list = [];
+      list.addAll(state.commentList.value);
+      list.addAll(response.data);
+      state.commentList.value = list;
+      state.hasMore.value = response.more;
+      state.page.value = page;
+    }
+  }
+
+  Future onChangeCategoryId(int category_id) async{
+     await this.onGetCommentList(category_id);
+     state.category_id.value = category_id;
+  }
+
 }

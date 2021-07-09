@@ -60,5 +60,7 @@ class AppApiUrls  {
   static String SHOP_CODE = '/api/Share/shopCode';
   static String SHOP_ORDER_INFO = '/api/shop/order';
   static String GET_PAY_WAY = '/api/Payment/getPayWay';
+  static String COMMENT_CATEGORY = '/api/goods_comment/category';
+  static String COMMENT_LIST = '/api/goods_comment/lists';
 
 }
