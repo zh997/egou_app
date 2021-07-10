@@ -54,6 +54,7 @@ dependencies:
   octo_image: ^1.0.0+1
   fluwx: ^3.4.2
   tobias: ^2.1.0
+  photo_view: ^0.7.0
 
 dev_dependencies:
   flutter_test:
