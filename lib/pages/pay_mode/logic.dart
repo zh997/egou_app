@@ -37,6 +37,7 @@ class PayModeLogic extends GetxController {
   Future onOrderPay(Map<String, dynamic> data) async {
     data['order_source'] = 3;
     EasyLoading.show();
+    print(data);
     if (data['pay_way'] == PayMode.wechat) {
       return onWxPayment(data);
     } else if (data['pay_way'] == PayMode.alipay) {
@@ -46,7 +47,7 @@ class PayModeLogic extends GetxController {
     if (response.result) {
       Get.toNamed(RouteConfig.pay_result);
     }
-    EasyLoading.dismiss();
+    EasyLoading.dismiss(); 
   }
 
   // 微信支付
