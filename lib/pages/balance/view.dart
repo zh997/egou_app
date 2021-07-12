@@ -27,6 +27,7 @@ class BalancePage extends StatefulWidget {
 class _BalancePageState extends State<BalancePage> {
   final BalanceLogic logic = Get.put(BalanceLogic());
   final BalanceState state = Get.find<BalanceLogic>().state;
+  final MainLogic mainLogic = Get.put(MainLogic());
   final MainState mainState = Get.find<MainLogic>().state;
   String type = Get.parameters['type'];
 
@@ -40,15 +41,20 @@ class _BalancePageState extends State<BalancePage> {
     if (type == balanceType.goldcoin.toString()) {
       return {
         'text': '金牛',
-        'source': 5
+        'source': 2
       };
     }
     if (type == balanceType.silvercoin.toString()) {
       return {
         'text': '金马',
-        'source': 2
+        'source': 5
       };
     }
+  }
+
+  Future _onInitData() async {
+    await mainLogic.onGetUserInfo();
+    await logic.onGetAccountLog({'source': getTitle(type)['source']});
   }
 
   bool isShowWithDrawalBtn() {
@@ -60,7 +66,7 @@ class _BalancePageState extends State<BalancePage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(future: logic.onGetAccountLog({'source': getTitle(type)['source']}),builder: (BuildContext context, AsyncSnapshot snapshot){
+    return FutureBuilder(future: _onInitData() ,builder: (BuildContext context, AsyncSnapshot snapshot){
       if (snapshot.connectionState == ConnectionState.done) {
         return Obx(() {
           final List accounLogList = state.accounLogList.value;
@@ -73,12 +79,12 @@ class _BalancePageState extends State<BalancePage> {
             logTitle = '余额明细';
           }
           if (getTitle(type)['source'] == 5) {
-            amount = userinfo.userIntegral.toString();
+            amount = userinfo.gold.toString();
             isShowUnit = false;
             logTitle = '收益记录';
           }
           if (getTitle(type)['source'] == 2) {
-            amount = userinfo.gold.toString();
+            amount = userinfo.userIntegral.toString();
             isShowUnit = false;
             logTitle = '收益记录';
           }
