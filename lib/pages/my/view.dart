@@ -120,42 +120,42 @@ class MyPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.goldcoin.toString());
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Image.asset(AppImages.MONEY_ICON_2, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
-                                      SizedBox(height: ScreenUtil().setWidth(20),),
-                                      Text('金牛', style: TextStyle(
-                                          fontSize: AppFontsize.SIZE_36,
-                                          color: Colors.white
-                                      )),
-                                      SizedBox(height: ScreenUtil().setWidth(20),),
-                                      Price(color: Colors.white, price: userinfo.userIntegral.toString(), isShowUnit: false,)
-                                    ],
-                                  ),
-                                ),
-                                GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.silvercoin.toString());
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Image.asset(AppImages.MONEY_ICON_3, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
-                                      SizedBox(height: ScreenUtil().setWidth(20),),
-                                      Text('金马', style: TextStyle(
-                                          fontSize: AppFontsize.SIZE_36,
-                                          color: Colors.white
-                                      )),
-                                      SizedBox(height: ScreenUtil().setWidth(20),),
-                                      Price(color: Colors.white, isShowUnit: false,price: userinfo.gold.toString())
-                                    ],
-                                  ),
-                                ),
+                                // GestureDetector(
+                                //   behavior: HitTestBehavior.opaque,
+                                //   onTap: () {
+                                //     Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.goldcoin.toString());
+                                //   },
+                                //   child: Column(
+                                //     children: [
+                                //       Image.asset(AppImages.MONEY_ICON_2, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
+                                //       SizedBox(height: ScreenUtil().setWidth(20),),
+                                //       Text('金牛', style: TextStyle(
+                                //           fontSize: AppFontsize.SIZE_36,
+                                //           color: Colors.white
+                                //       )),
+                                //       SizedBox(height: ScreenUtil().setWidth(20),),
+                                //       Price(color: Colors.white, price: userinfo.userIntegral.toString(), isShowUnit: false,)
+                                //     ],
+                                //   ),
+                                // ),
+                                // GestureDetector(
+                                //   behavior: HitTestBehavior.opaque,
+                                //   onTap: () {
+                                //     Get.toNamed(RouteConfig.balance_page + '?type=' + balanceType.silvercoin.toString());
+                                //   },
+                                //   child: Column(
+                                //     children: [
+                                //       Image.asset(AppImages.MONEY_ICON_3, width: ScreenUtil().setWidth(74), height: ScreenUtil().setWidth(74)),
+                                //       SizedBox(height: ScreenUtil().setWidth(20),),
+                                //       Text('金马', style: TextStyle(
+                                //           fontSize: AppFontsize.SIZE_36,
+                                //           color: Colors.white
+                                //       )),
+                                //       SizedBox(height: ScreenUtil().setWidth(20),),
+                                //       Price(color: Colors.white, isShowUnit: false,price: userinfo.gold.toString())
+                                //     ],
+                                //   ),
+                                // ),
                               ],
                             )),
                           ],
@@ -275,30 +275,30 @@ class MyPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        InkWell(
-                          onTap: (){
-                            Get.toNamed(RouteConfig.bank_card_list);
-                          },
-                          child:Column(
-                            children: [
-                              Image.asset(AppImages.QRCODE_ICON, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                              SizedBox(height: AppSpace.SPACE_35),
-                              Text('绑定收款码', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                            ],
-                          ),
-                        ),
-                        InkWell(
-                          onTap: (){
-                            Get.toNamed(RouteConfig.transformation_page);
-                          },
-                          child:Column(
-                            children: [
-                              Image.asset(AppImages.TRANSFORMATION_ICON, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
-                              SizedBox(height: AppSpace.SPACE_35),
-                              Text('互转', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
-                            ],
-                          ),
-                        ),
+                        // InkWell(
+                        //   onTap: (){
+                        //     Get.toNamed(RouteConfig.bank_card_list);
+                        //   },
+                        //   child:Column(
+                        //     children: [
+                        //       Image.asset(AppImages.QRCODE_ICON, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                        //       SizedBox(height: AppSpace.SPACE_35),
+                        //       Text('绑定收款码', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                        //     ],
+                        //   ),
+                        // ),
+                        // InkWell(
+                        //   onTap: (){
+                        //     Get.toNamed(RouteConfig.transformation_page);
+                        //   },
+                        //   child:Column(
+                        //     children: [
+                        //       Image.asset(AppImages.TRANSFORMATION_ICON, width: ScreenUtil().setWidth(101),height:  ScreenUtil().setWidth(101)),
+                        //       SizedBox(height: AppSpace.SPACE_35),
+                        //       Text('互转', style: TextStyle(color: AppColors.COLOR_BLACK_333333, fontSize: AppFontsize.SIZE_44))
+                        //     ],
+                        //   ),
+                        // ),
                         Obx((){
                           final UserInfoModel userinfo = mainState.userInfo.value;
                           if(userinfo.shopId != null && userinfo.shopId > 0) {
