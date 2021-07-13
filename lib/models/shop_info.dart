@@ -27,7 +27,7 @@ class ShopInfoModel {
   int longitude;
   int latitude;
   int collectionType;
-  Null collectionNumber;
+  dynamic collectionNumber;
   String businessContent;
   int auditStatus;
   String shopPhoto;
@@ -36,11 +36,11 @@ class ShopInfoModel {
   String createTime;
   String updateTime;
   String auditTime;
-  Null type;
+  dynamic type;
   String reasons;
   int categoryId;
   int del;
-  Null delTime;
+  dynamic delTime;
   List<String> shopPhotoArr;
   int proportion;
 

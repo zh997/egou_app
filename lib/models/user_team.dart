@@ -81,13 +81,13 @@ class UserList {
   int firstLeader;
   int secondLeader;
   int thirdLeader;
-  String ancestorRelation;
+  dynamic ancestorRelation;
   int isDistribution;
   int freezeDistribution;
   String distributionH5QrCode;
   String distributionMnpQrCode;
   String distributionAppQrCode;
-  Null distributionCode;
+  dynamic distributionCode;
   int createTime;
   int updateTime;
   int loginTime;
@@ -98,6 +98,8 @@ class UserList {
   int earnings;
   int makerLevel;
   String gold;
+  dynamic shopId;
+  String shopQrCode;
   String levelName;
   String sumPrice;
 
@@ -140,6 +142,8 @@ class UserList {
         this.earnings,
         this.makerLevel,
         this.gold,
+        this.shopId,
+        this.shopQrCode,
         this.levelName,
         this.sumPrice});
 
@@ -182,6 +186,8 @@ class UserList {
     earnings = json['earnings'];
     makerLevel = json['maker_level'];
     gold = json['gold'];
+    shopId = json['shop_id'];
+    shopQrCode = json['shop_qr_code'];
     levelName = json['level_name'];
     sumPrice = json['sum_price'];
   }
@@ -226,6 +232,8 @@ class UserList {
     data['earnings'] = this.earnings;
     data['maker_level'] = this.makerLevel;
     data['gold'] = this.gold;
+    data['shop_id'] = this.shopId;
+    data['shop_qr_code'] = this.shopQrCode;
     data['level_name'] = this.levelName;
     data['sum_price'] = this.sumPrice;
     return data;
@@ -245,6 +253,7 @@ class User {
   String totalRechargeAmount;
   int makerLevel;
   String gold;
+  dynamic shopId;
   int waitPay;
   int waitDelivery;
   int waitTake;
@@ -268,6 +277,7 @@ class User {
         this.totalRechargeAmount,
         this.makerLevel,
         this.gold,
+        this.shopId,
         this.waitPay,
         this.waitDelivery,
         this.waitTake,
@@ -291,6 +301,7 @@ class User {
     totalRechargeAmount = json['total_recharge_amount'];
     makerLevel = json['maker_level'];
     gold = json['gold'];
+    shopId = json['shop_id'];
     waitPay = json['wait_pay'];
     waitDelivery = json['wait_delivery'];
     waitTake = json['wait_take'];
@@ -316,6 +327,7 @@ class User {
     data['total_recharge_amount'] = this.totalRechargeAmount;
     data['maker_level'] = this.makerLevel;
     data['gold'] = this.gold;
+    data['shop_id'] = this.shopId;
     data['wait_pay'] = this.waitPay;
     data['wait_delivery'] = this.waitDelivery;
     data['wait_take'] = this.waitTake;
