@@ -223,6 +223,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.2"
+  flutter_qr_reader:
+    dependency: "direct main"
+    description:
+      name: flutter_qr_reader
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.5"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -464,13 +471,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.2.1"
-  qrscan:
-    dependency: "direct main"
-    description:
-      name: qrscan
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.2.22"
   rational:
     dependency: transitive
     description:
