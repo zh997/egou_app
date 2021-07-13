@@ -55,7 +55,7 @@ class ShopDetailPage extends StatelessWidget {
                                 width: ScreenUtil().setWidth(1044),
                                 height: ScreenUtil().setWidth(460),
                                 margin: EdgeInsets.only(bottom: 10),
-                                child: Image.network(shopInfo.shopPhotoArr[index], fit:BoxFit.cover),
+                                child: Image.network(shopInfo.shopPhotoArr[index], fit:BoxFit.fill),
                               )),
                             )
                           ],
