@@ -55,6 +55,8 @@ dependencies:
   fluwx: ^3.4.2
   tobias: ^2.1.0
   photo_view: ^0.7.0
+  adaptive_action_sheet: ^2.0.0
+  url_launcher: ^6.0.9
 
 dev_dependencies:
   flutter_test:
