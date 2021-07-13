@@ -6,7 +6,6 @@ import 'state.dart';
 
 class ShopDetailLogic extends GetxController {
   final state = ShopDetailState();
-  String shop_id = Get.parameters['shop_id'];
   @override
   void onInit() async {
     // TODO: implement onInit
@@ -16,7 +15,7 @@ class ShopDetailLogic extends GetxController {
 
 
   // 店铺详情
-  Future onShopInfo() async {
+  Future onShopInfo(String shop_id) async {
     final RealResponseData response = await CommonService.shopInfo(shop_id);
     if (response.result) {
       state.shopInfo.value = response.data;

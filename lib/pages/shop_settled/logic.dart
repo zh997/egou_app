@@ -69,7 +69,7 @@ class ShopSettledLogic extends getx.GetxController {
     EasyLoading.show();
     final RealResponseData response = await CommonService.entryAdd(data);
     if (response.result) {
-      Utils.toast('入驻成功');
+      Utils.toast('申请成功');
     }
     EasyLoading.dismiss();
   }
