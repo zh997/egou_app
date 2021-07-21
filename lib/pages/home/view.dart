@@ -240,19 +240,19 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin,
     return Padding(padding: EdgeInsets.all(ScreenUtil().setWidth(44)), child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            Get.toNamed(RouteConfig.be_guest);
-          },
-          child: Column(
-            children: [
-              Image.asset(AppImages.ICON_24, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),
-              SizedBox(height: ScreenUtil().setWidth(29)),
-              Text(AppStrings.STRING_1, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: AppColors.COLOR_BLACK_000000))
-            ],
-          ),
-        ),
+        // GestureDetector(
+        //   behavior: HitTestBehavior.opaque,
+        //   onTap: () {
+        //     Get.toNamed(RouteConfig.be_guest);
+        //   },
+        //   child: Column(
+        //     children: [
+        //       Image.asset(AppImages.ICON_24, width: ScreenUtil().setWidth(151), height: ScreenUtil().setWidth(151)),
+        //       SizedBox(height: ScreenUtil().setWidth(29)),
+        //       Text(AppStrings.STRING_1, style: TextStyle(fontSize: ScreenUtil().setSp(44), color: AppColors.COLOR_BLACK_000000))
+        //     ],
+        //   ),
+        // ),
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
