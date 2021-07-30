@@ -22,7 +22,7 @@ class HttpRequest {
     receiveTimeout: 3000,
   );
 
-  static Future<DioResponseData> request(url, params, String method) async {
+  static Future<DioResponseData> request(url, params, String method, {bool notBaseUrl = false}) async {
     Response response;
     Response errorResponse;
 
@@ -40,6 +40,7 @@ class HttpRequest {
     }
 
     options.method = method;
+    options.baseUrl = notBaseUrl ? null : baseUrl;
     // options.headers['token'] = '81db4474cdaf61cb99855b309354b683';
     addHeaders('token', AppStorage.getString('token'));
     Dio dio = new Dio(options);
@@ -52,7 +53,7 @@ class HttpRequest {
         };
         client.findProxy = (url) {
           ///设置代理 电脑ip地址
-          return "PROXY 192.168.0.107:8866";
+          return "PROXY 10.11.1.46:8866";
 
           ///不设置代理
 //          return 'DIRECT';

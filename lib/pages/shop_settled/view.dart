@@ -58,9 +58,9 @@ class _ShopSettledPageState extends State<ShopSettledPage> {
 
   _upLoadImage(File image, String key) async {
     String path = image.path;
-    var name = path.substring(path.lastIndexOf("/") + 1, path.length);
+    // var name = path.substring(path.lastIndexOf("/") + 1, path.length);
     FormData formdata = FormData.fromMap(
-        {"file": await MultipartFile.fromFile(path, filename: name)});
+        {"file": await MultipartFile.fromFile(path)});
 
     await logic.appUploadImg(formdata, key);
   }

@@ -57,6 +57,7 @@ dependencies:
   photo_view: ^0.7.0
   adaptive_action_sheet: ^2.0.0
   url_launcher: ^6.0.9
+  webview_flutter: ^2.0.10
 
 dev_dependencies:
   flutter_test:

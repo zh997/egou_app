@@ -23,6 +23,7 @@ import 'package:egou_app/pages/my_team/view.dart';
 import 'package:egou_app/pages/order_detail/view.dart';
 import 'package:egou_app/pages/pay_mode/view.dart';
 import 'package:egou_app/pages/pay_result/view.dart';
+import 'package:egou_app/pages/pay_result_web/view.dart';
 import 'package:egou_app/pages/points_mall/view.dart';
 import 'package:egou_app/pages/publish_comments/view.dart';
 import 'package:egou_app/pages/pwd_update/view.dart';
@@ -44,6 +45,7 @@ import 'package:egou_app/pages/home/view.dart';
 import 'package:egou_app/pages/launch/view.dart';
 import 'package:egou_app/pages/login/view.dart';
 import 'package:egou_app/pages/main/view.dart';
+import 'package:egou_app/pages/pay_middle/view.dart';
 
 class RouteConfig {
   static final String launch_page = '/';
@@ -90,6 +92,8 @@ class RouteConfig {
   static final String transformation_record_page = '/transformation_record_page';
   static final String discount_pay = '/discount_pay';
   static final String discount_pay_record = '/discount_pay_record';
+  static final String pay_middle = '/pay_middle';
+  static final String pay_result_web = '/pay_result_web';
 
   static final List<GetPage> getPages = [
     GetPage(name: guide_page, page: () => GuidePage()),
@@ -103,7 +107,7 @@ class RouteConfig {
     GetPage(name: shop_detail, page: () => ShopDetailPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: confirm_order, page: () => ConfirmOrderPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: pay_mode, page: () => PayModePage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
-    GetPage(name: pay_result, page: () => PayResultPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
+    GetPage(name: pay_result, page: () => PayResultPage()),
     GetPage(name: shop_settled, page: () => ShopSettledPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: my_order, page: () => MyOrderPage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
     GetPage(name: recharge_page, page: () => RechargePage(), middlewares: [RouteAuthMiddleware(priority: 1)] ),
@@ -136,5 +140,7 @@ class RouteConfig {
     GetPage(name: transformation_record_page, page: () => TransformationRecordPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
     GetPage(name: discount_pay, page: () => DiscountPayPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
     GetPage(name: discount_pay_record, page: () => DiscountPayRecordPage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
+    GetPage(name: pay_middle, page: () => PayMiddlePage(), middlewares: [RouteAuthMiddleware(priority: 1)]),
+    GetPage(name: pay_result_web, page: () => PayResultWebPage()),
   ];
 }
