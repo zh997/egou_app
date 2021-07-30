@@ -51,8 +51,8 @@
 		<string>alipayULAPI</string>
 		<string>iosamap</string>
 		<string>androidamap</string>
-        <string>qqmap</string>
-        <string>baidumap</string>
+		<string>qqmap</string>
+		<string>baidumap</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
