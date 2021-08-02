@@ -11,6 +11,7 @@ import 'package:egou_app/models/pay_config.dart';
 import 'package:egou_app/models/alipay_config.dart';
 import 'package:egou_app/models/shop_info.dart';
 import 'package:egou_app/models/shop_order_info.dart';
+import 'package:egou_app/models/third_pay.dart';
 
 class CommonService {
 
@@ -99,6 +100,22 @@ class CommonService {
   // 余额预支付
   static Future<RealResponseData> blancePrepay(Map<String, dynamic> data) async {
     final DioResponseData response = await HttpRequest.request(AppApiUrls.WX_PAYMENT_PREPAY, data , 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data));
+    }
+  }
+
+  // 第三方支付
+  static Future<RealResponseData> thirdPay(Map<String, dynamic> data) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.WX_PAYMENT_PREPAY, data , 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: ThirdPayModelFromJson));
+    }
+  }
+
+  // 请求第三方支付
+  static Future<RealResponseData> postThirdPay(String url, Map<String, dynamic> data) async {
+    final DioResponseData response = await HttpRequest.request(url, data , 'POST', notBaseUrl: true);
     if (response.result && response.data != null) {
       return HttpRequest.catchError(ResponseData.fromJson(response.data));
     }

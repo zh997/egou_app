@@ -22,7 +22,8 @@ class HttpRequest {
     receiveTimeout: 3000,
   );
 
-  static Future<DioResponseData> request(url, params, String method) async {
+  static Future<DioResponseData> request(url, params, String method,
+      {bool notBaseUrl = false}) async {
     Response response;
     Response errorResponse;
 
@@ -40,6 +41,7 @@ class HttpRequest {
     }
 
     options.method = method;
+    options.baseUrl = notBaseUrl ? null : baseUrl;
     // options.headers['token'] = '81db4474cdaf61cb99855b309354b683';
     addHeaders('token', AppStorage.getString('token'));
     Dio dio = new Dio(options);

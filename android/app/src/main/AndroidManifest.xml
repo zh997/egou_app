@@ -31,6 +31,9 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+                <data
+                  android:scheme="nmmhbstl"
+                  android:host="com.nmmhbstl.egou" />
             </intent-filter>
         </activity>
          <activity

@@ -114,7 +114,7 @@ class _PayModePageState extends State<PayModePage> {
                       // _payModeItem(AppImages.PAY_MODE_ICON_4, '微信支付', PayMode.wechat ),
                       // _payModeItem(AppImages.PAY_MODE_ICON_5,'支付宝支付',  PayMode.alipay),
                       SizedBox(height: 20),
-                      pay_way != PayMode.alipay && pay_way != PayMode.wechat ? Container(
+                      pay_way != PayMode.alipay && pay_way != PayMode.wechat && pay_way != PayMode.third_party? Container(
                         alignment: Alignment.center,
                         // width: ScreenUtil().setWidth(895),
                         decoration: BoxDecoration(

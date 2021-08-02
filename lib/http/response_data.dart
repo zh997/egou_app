@@ -16,9 +16,9 @@ class ResponseData<T> {
   ResponseData({this.msg, this.data, this.code, this.more});
 
   ResponseData.fromJson(Map<String, dynamic> json, {fromJson, bool noList}) {
-    print('----------------------');
-    print(json);
-    print('----------------------');
+    // print('----------------------');
+    // print(json);
+    // print('----------------------');
     msg = json['msg'];
     if (fromJson != null && json['code'] == 1) {
       if (json['data'] is List) {
