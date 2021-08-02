@@ -113,6 +113,14 @@ class CommonService {
     }
   }
 
+  // 第三方支付h5
+  static Future<RealResponseData> thirdPayH5(Map<String, dynamic> data) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.WX_PAYMENT_PREPAY, data , 'POST');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data));
+    }
+  }
+
   // 请求第三方支付
   static Future<RealResponseData> postThirdPay(String url, Map<String, dynamic> data) async {
     final DioResponseData response = await HttpRequest.request(url, data , 'POST', notBaseUrl: true);

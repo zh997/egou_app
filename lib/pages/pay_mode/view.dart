@@ -1,3 +1,4 @@
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
@@ -39,7 +40,7 @@ class _PayModePageState extends State<PayModePage> {
   final TextEditingController _pwdController = TextEditingController();
   bool isFocus = false;
   String pwd = '';
-  int pay_way = PayMode.wechat;
+  int pay_way = 0;
 
   Future _onInitData() async {
     // await mainLogic.onGetUserInfo();
@@ -114,7 +115,7 @@ class _PayModePageState extends State<PayModePage> {
                       // _payModeItem(AppImages.PAY_MODE_ICON_4, '微信支付', PayMode.wechat ),
                       // _payModeItem(AppImages.PAY_MODE_ICON_5,'支付宝支付',  PayMode.alipay),
                       SizedBox(height: 20),
-                      pay_way != PayMode.alipay && pay_way != PayMode.wechat && pay_way != PayMode.third_party? Container(
+                      pay_way != PayMode.alipay && pay_way != PayMode.wechat && pay_way != PayMode.third_party && pay_way != PayMode.third_party_h5 && pay_way != 0 ? Container(
                         alignment: Alignment.center,
                         // width: ScreenUtil().setWidth(895),
                         decoration: BoxDecoration(
@@ -162,6 +163,9 @@ class _PayModePageState extends State<PayModePage> {
                 Container(
                   padding: EdgeInsets.fromLTRB(AppSpace.SPACE_52, 0, AppSpace.SPACE_52, AppSpace.SPACE_52),
                   child:  RadiusButton('结算', onTap: (){
+                    if (pay_way == 0) {
+                      return Utils.toast('请选择支付方式');
+                    }
                     final Map<String, dynamic> data = {};
                     data['pay_way'] = pay_way;
                     data['order_id'] = order_id;

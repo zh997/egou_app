@@ -46,6 +46,8 @@ class PayModeLogic extends GetxController {
       return onAliPayment(data);
     } else if (data['pay_way'] == PayMode.third_party) {
       return onThirdPay(data);
+    } else if (data['pay_way'] == PayMode.third_party_h5) {
+      return onThirdPayH5(data);
     }
     final RealResponseData response = await CommonService.blancePrepay(data);
     if (response.result) {
@@ -66,7 +68,26 @@ class PayModeLogic extends GetxController {
       if (await canLaunch(url)) {
         await launch(url);
       } else {
-        throw 'Could not launch $url';
+        Utils.toast('Could not launch $response.data');
+      }
+    }
+    EasyLoading.dismiss();
+  }
+
+  // 第三方支付H5
+  Future onThirdPayH5(Map<String, dynamic> data) async {
+    final RealResponseData response = await CommonService.thirdPayH5(data);
+    if (response.result) {
+      // state.thirdPayModel.value = response.data;
+      print(response.data);
+      // Get.toNamed(RouteConfig.pay_middle);
+      // String url = EnvConfig.env.apiUrl +
+      //     '/index/index/payform' +
+      //     "?charset=${response.data.data.charset}&signType=${response.data.data.signType}&data=${Uri.encodeComponent(response.data.data.data)}&sign=${response.data.data.sign}";
+      if (await canLaunch(response.data)) {
+        await launch(response.data);
+      } else {
+        Utils.toast('Could not launch $response.data');
       }
     }
     EasyLoading.dismiss();
