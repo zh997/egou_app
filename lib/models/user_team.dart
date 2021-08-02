@@ -1,27 +1,27 @@
-UserTeamListModel UserTeamListModelFromJson(json) => UserTeamListModel.fromJson(json);
-
+UserTeamListModel UserTeamListModelFromJson(json) =>
+    UserTeamListModel.fromJson(json);
 
 class UserTeamListModel {
-  int firstCount;
+  dynamic firstCount;
   List<UserList> list;
-  int page;
-  int size;
-  int count;
-  int teamCount;
+  dynamic page;
+  dynamic size;
+  dynamic count;
+  dynamic teamCount;
   User user;
-  int mySumPrice;
-  int more;
+  dynamic mySumPrice;
+  dynamic more;
 
   UserTeamListModel(
       {this.firstCount,
-        this.list,
-        this.page,
-        this.size,
-        this.count,
-        this.teamCount,
-        this.user,
-        this.mySumPrice,
-        this.more});
+      this.list,
+      this.page,
+      this.size,
+      this.count,
+      this.teamCount,
+      this.user,
+      this.mySumPrice,
+      this.more});
 
   UserTeamListModel.fromJson(Map<String, dynamic> json) {
     firstCount = json['first_count'];
@@ -60,88 +60,92 @@ class UserTeamListModel {
 }
 
 class UserList {
-  int id;
-  String sn;
-  int root;
-  String nickname;
-  String avatar;
-  String mobile;
-  int level;
-  int groupId;
-  int sex;
-  int birthday;
-  String userMoney;
-  String userIntegral;
-  String totalOrderAmount;
-  String totalRechargeAmount;
-  String account;
-  String password;
-  String payPassword;
-  String salt;
-  int firstLeader;
-  int secondLeader;
-  int thirdLeader;
-  String ancestorRelation;
-  int isDistribution;
-  int freezeDistribution;
-  String distributionH5QrCode;
-  String distributionMnpQrCode;
-  String distributionAppQrCode;
-  Null distributionCode;
-  int createTime;
-  int updateTime;
-  int loginTime;
-  String loginIp;
-  int disable;
-  int del;
-  int userGrowth;
-  int earnings;
-  int makerLevel;
-  String gold;
-  String levelName;
-  String sumPrice;
+  dynamic id;
+  dynamic sn;
+  dynamic root;
+  dynamic nickname;
+  dynamic avatar;
+  dynamic mobile;
+  dynamic level;
+  dynamic groupId;
+  dynamic sex;
+  dynamic birthday;
+  dynamic userMoney;
+  dynamic userIntegral;
+  dynamic totalOrderAmount;
+  dynamic totalRechargeAmount;
+  dynamic account;
+  dynamic password;
+  dynamic payPassword;
+  dynamic salt;
+  dynamic firstLeader;
+  dynamic secondLeader;
+  dynamic thirdLeader;
+  dynamic ancestorRelation;
+  dynamic isDistribution;
+  dynamic freezeDistribution;
+  dynamic distributionH5QrCode;
+  dynamic distributionMnpQrCode;
+  dynamic distributionAppQrCode;
+  dynamic distributionCode;
+  dynamic createTime;
+  dynamic updateTime;
+  dynamic loginTime;
+  dynamic loginIp;
+  dynamic disable;
+  dynamic del;
+  dynamic userGrowth;
+  dynamic earnings;
+  dynamic makerLevel;
+  dynamic gold;
+  dynamic shopId;
+  dynamic shopQrCode;
+  dynamic levelName;
+  dynamic sumPrice;
 
   UserList(
       {this.id,
-        this.sn,
-        this.root,
-        this.nickname,
-        this.avatar,
-        this.mobile,
-        this.level,
-        this.groupId,
-        this.sex,
-        this.birthday,
-        this.userMoney,
-        this.userIntegral,
-        this.totalOrderAmount,
-        this.totalRechargeAmount,
-        this.account,
-        this.password,
-        this.payPassword,
-        this.salt,
-        this.firstLeader,
-        this.secondLeader,
-        this.thirdLeader,
-        this.ancestorRelation,
-        this.isDistribution,
-        this.freezeDistribution,
-        this.distributionH5QrCode,
-        this.distributionMnpQrCode,
-        this.distributionAppQrCode,
-        this.distributionCode,
-        this.createTime,
-        this.updateTime,
-        this.loginTime,
-        this.loginIp,
-        this.disable,
-        this.del,
-        this.userGrowth,
-        this.earnings,
-        this.makerLevel,
-        this.gold,
-        this.levelName,
-        this.sumPrice});
+      this.sn,
+      this.root,
+      this.nickname,
+      this.avatar,
+      this.mobile,
+      this.level,
+      this.groupId,
+      this.sex,
+      this.birthday,
+      this.userMoney,
+      this.userIntegral,
+      this.totalOrderAmount,
+      this.totalRechargeAmount,
+      this.account,
+      this.password,
+      this.payPassword,
+      this.salt,
+      this.firstLeader,
+      this.secondLeader,
+      this.thirdLeader,
+      this.ancestorRelation,
+      this.isDistribution,
+      this.freezeDistribution,
+      this.distributionH5QrCode,
+      this.distributionMnpQrCode,
+      this.distributionAppQrCode,
+      this.distributionCode,
+      this.createTime,
+      this.updateTime,
+      this.loginTime,
+      this.loginIp,
+      this.disable,
+      this.del,
+      this.userGrowth,
+      this.earnings,
+      this.makerLevel,
+      this.gold,
+      this.shopId,
+      this.shopQrCode,
+      this.levelName,
+      this.sumPrice});
 
   UserList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -182,6 +186,8 @@ class UserList {
     earnings = json['earnings'];
     makerLevel = json['maker_level'];
     gold = json['gold'];
+    shopId = json['shop_id'];
+    shopQrCode = json['shop_qr_code'];
     levelName = json['level_name'];
     sumPrice = json['sum_price'];
   }
@@ -226,6 +232,8 @@ class UserList {
     data['earnings'] = this.earnings;
     data['maker_level'] = this.makerLevel;
     data['gold'] = this.gold;
+    data['shop_id'] = this.shopId;
+    data['shop_qr_code'] = this.shopQrCode;
     data['level_name'] = this.levelName;
     data['sum_price'] = this.sumPrice;
     return data;
@@ -233,50 +241,52 @@ class UserList {
 }
 
 class User {
-  int id;
-  String sn;
-  String nickname;
-  String avatar;
-  String mobile;
-  String level;
-  String userMoney;
-  String userIntegral;
-  String totalOrderAmount;
-  String totalRechargeAmount;
-  int makerLevel;
-  String gold;
-  int waitPay;
-  int waitDelivery;
-  int waitTake;
-  int waitComment;
-  int afterSale;
-  int coupon;
-  int noticeNum;
-  String nextLevelTips;
-  String makerLevelStr;
+  dynamic id;
+  dynamic sn;
+  dynamic nickname;
+  dynamic avatar;
+  dynamic mobile;
+  dynamic level;
+  dynamic userMoney;
+  dynamic userIntegral;
+  dynamic totalOrderAmount;
+  dynamic totalRechargeAmount;
+  dynamic makerLevel;
+  dynamic gold;
+  dynamic shopId;
+  dynamic waitPay;
+  dynamic waitDelivery;
+  dynamic waitTake;
+  dynamic waitComment;
+  dynamic afterSale;
+  dynamic coupon;
+  dynamic noticeNum;
+  dynamic nextLevelTips;
+  dynamic makerLevelStr;
 
   User(
       {this.id,
-        this.sn,
-        this.nickname,
-        this.avatar,
-        this.mobile,
-        this.level,
-        this.userMoney,
-        this.userIntegral,
-        this.totalOrderAmount,
-        this.totalRechargeAmount,
-        this.makerLevel,
-        this.gold,
-        this.waitPay,
-        this.waitDelivery,
-        this.waitTake,
-        this.waitComment,
-        this.afterSale,
-        this.coupon,
-        this.noticeNum,
-        this.nextLevelTips,
-        this.makerLevelStr});
+      this.sn,
+      this.nickname,
+      this.avatar,
+      this.mobile,
+      this.level,
+      this.userMoney,
+      this.userIntegral,
+      this.totalOrderAmount,
+      this.totalRechargeAmount,
+      this.makerLevel,
+      this.gold,
+      this.shopId,
+      this.waitPay,
+      this.waitDelivery,
+      this.waitTake,
+      this.waitComment,
+      this.afterSale,
+      this.coupon,
+      this.noticeNum,
+      this.nextLevelTips,
+      this.makerLevelStr});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -291,6 +301,7 @@ class User {
     totalRechargeAmount = json['total_recharge_amount'];
     makerLevel = json['maker_level'];
     gold = json['gold'];
+    shopId = json['shop_id'];
     waitPay = json['wait_pay'];
     waitDelivery = json['wait_delivery'];
     waitTake = json['wait_take'];
@@ -316,6 +327,7 @@ class User {
     data['total_recharge_amount'] = this.totalRechargeAmount;
     data['maker_level'] = this.makerLevel;
     data['gold'] = this.gold;
+    data['shop_id'] = this.shopId;
     data['wait_pay'] = this.waitPay;
     data['wait_delivery'] = this.waitDelivery;
     data['wait_take'] = this.waitTake;

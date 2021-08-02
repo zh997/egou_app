@@ -18,10 +18,12 @@ import 'state.dart';
 class ShopDetailPage extends StatelessWidget {
   final ShopDetailLogic logic = Get.put(ShopDetailLogic());
   final ShopDetailState state = Get.find<ShopDetailLogic>().state;
+  String shop_id = Get.parameters['shop_id'];
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(future: logic.onShopInfo(), builder: (BuildContext context, AsyncSnapshot snapshot){
+    print(shop_id);
+    return FutureBuilder(future: logic.onShopInfo(shop_id), builder: (BuildContext context, AsyncSnapshot snapshot){
       if (snapshot.connectionState == ConnectionState.done) {
         return Obx(() {
           final ShopInfoModel shopInfo = state.shopInfo.value;
@@ -55,7 +57,7 @@ class ShopDetailPage extends StatelessWidget {
                                 width: ScreenUtil().setWidth(1044),
                                 height: ScreenUtil().setWidth(460),
                                 margin: EdgeInsets.only(bottom: 10),
-                                child: Image.network(shopInfo.shopPhotoArr[index], fit:BoxFit.cover),
+                                child: Image.network(shopInfo.shopPhotoArr[index], fit:BoxFit.fill),
                               )),
                             )
                           ],

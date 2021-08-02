@@ -8,15 +8,14 @@ class DioResponseData<T> {
   DioResponseData(this.code, this.data, this.result, this.message);
 }
 
-
-class ResponseData<T>{
+class ResponseData<T> {
   String msg;
   dynamic data;
   int code;
   int more;
   ResponseData({this.msg, this.data, this.code, this.more});
 
-  ResponseData.fromJson(Map<String, dynamic> json, { fromJson,bool noList }) {
+  ResponseData.fromJson(Map<String, dynamic> json, {fromJson, bool noList}) {
     // print('----------------------');
     // print(json);
     // print('----------------------');
@@ -27,12 +26,12 @@ class ResponseData<T>{
         json['data'].forEach((v) {
           data.add(fromJson(v));
         });
-      } else if(json['data'] is Map) {
+      } else if (json['data'] is Map) {
         if (json['data']['more'] != null) {
           if (noList == true) {
             data = json['data'] != null ? fromJson(json['data']) : null;
           } else {
-            if ( json['data']['list'] != null && json['data']['list'] is List) {
+            if (json['data']['list'] != null && json['data']['list'] is List) {
               data = new List();
               json['data']['list'].forEach((v) {
                 data.add(fromJson(v));
@@ -43,7 +42,6 @@ class ResponseData<T>{
         } else {
           data = json['data'] != null ? fromJson(json['data']) : null;
         }
-
       }
     } else {
       data = json['data'];
@@ -51,7 +49,6 @@ class ResponseData<T>{
     code = json['code'];
   }
 }
-
 
 class RealResponseData<T> {
   final bool result;

@@ -1,4 +1,5 @@
 import 'package:egou_app/common/routes.dart';
+import 'package:egou_app/common/utils.dart';
 import 'package:egou_app/constant/app_colors.dart';
 import 'package:egou_app/constant/app_fontsize.dart';
 import 'package:egou_app/constant/app_images.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:get/get.dart';
 
 import 'logic.dart';
@@ -172,22 +174,42 @@ class _ShopPageState extends State<ShopPage> {
                   ],
                 )
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  width: ScreenUtil().setWidth(284),
-                  height: ScreenUtil().setWidth(100),
-                  decoration: BoxDecoration(
-                      color: AppColors.COLOR_PRIMARY_D22315,
-                      borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(AppImages.ICON_8, width: ScreenUtil().setWidth(38), height: ScreenUtil().setHeight(38)),
-                      Text('导航到店', style: TextStyle(color: Colors.white, fontSize: AppFontsize.SIZE_44))
-                    ],
+                InkWell(
+                  onTap: (){
+                    showAdaptiveActionSheet(
+                      context: context,
+                      actions: <BottomSheetAction>[
+                        BottomSheetAction(title: const Text('高德地图'), onPressed: () {
+                          MapUtil.gotoAMap(item.longitude, item.latitude);
+                        }),
+                        BottomSheetAction(title: const Text('腾讯地图'), onPressed: () {
+                          MapUtil.gotoTencentMap(item.longitude, item.latitude);
+                        }),
+                        BottomSheetAction(title: const Text('百度地图'), onPressed: () {
+                          MapUtil.gotoBaiduMap(item.longitude, item.latitude);
+                        }),
+                      ],
+                      cancelAction: CancelAction(title: const Text('关闭')),// onPressed parameter is optional by default will dismiss the ActionSheet
+                    );
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: ScreenUtil().setWidth(284),
+                    height: ScreenUtil().setWidth(100),
+                    decoration: BoxDecoration(
+                        color: AppColors.COLOR_PRIMARY_D22315,
+                        borderRadius: BorderRadius.circular(AppRadius.RADIUS_8)
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(AppImages.ICON_8, width: ScreenUtil().setWidth(38), height: ScreenUtil().setHeight(38)),
+                        Text('导航到店', style: TextStyle(color: Colors.white, fontSize: AppFontsize.SIZE_44))
+                      ],
+                    ),
                   ),
                 )
+
               ],
             )
           ],

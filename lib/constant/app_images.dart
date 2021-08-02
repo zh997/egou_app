@@ -47,6 +47,7 @@ class AppImages {
   static String PAY_MODE_ICON_3 = 'static/images/pay_mode_icon_3.png';
   static String PAY_MODE_ICON_4 = 'static/images/pay_mode_icon_4.png';
   static String PAY_MODE_ICON_5 = 'static/images/pay_mode_icon_5.png';
+  static String PAY_MODE_ICON_6 = 'static/images/third_party_pay_icon.png';
   static String PAY_SUCCESS_ICON = 'static/images/pay_success_icon.png';
   static String GOODS_DETAIL = 'static/images/goods_detail.jpeg';
   static String SHARE_BG = 'static/images/share_bg.jpg';

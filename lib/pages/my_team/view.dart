@@ -70,7 +70,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
                                           child: Container(
                                             padding: EdgeInsets.only(bottom: 15),
                                             decoration: BoxDecoration(
-                                                border: type == 0 ? Border(bottom: BorderSide(width: 2, color: AppColors.COLOR_PRIMARY_D22315)) : Border()
+                                                border: type == 0 ? Border(bottom: BorderSide(width: 2, color: AppColors.COLOR_PRIMARY_D22315)) : Border(bottom: BorderSide(width: 2, color: Colors.white))
                                             ),
                                             child: Column(
                                                 children: [
@@ -90,7 +90,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
                                           child: Container(
                                             padding: EdgeInsets.only(bottom: 15),
                                             decoration: BoxDecoration(
-                                                border: type == 1 ? Border(bottom: BorderSide(width: 2, color: AppColors.COLOR_PRIMARY_D22315)) : Border()
+                                                border: type == 1 ? Border(bottom: BorderSide(width: 2, color: AppColors.COLOR_PRIMARY_D22315)) : Border(bottom: BorderSide(width: 2, color: Colors.white))
                                             ),
                                             child: Column(
                                                 children: [
@@ -124,6 +124,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
   }
 
   Widget _infoItem(radius, isShowId, item) {
+    print(item.mobile);
     return Column(
         children: [
           SizedBox(height: 15),
@@ -147,7 +148,7 @@ class _MyTeamPageState extends State<MyTeamPage> {
                 children: [
                   Row(
                     children: [
-                      Text(item.mobile, style: TextStyle(
+                      Text(item.mobile != null ? item.mobile: '' , style: TextStyle(
                           fontSize: AppFontsize.SIZE_56,
                           color: AppColors.COLOR_BLACK_000000
                       )),

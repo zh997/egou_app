@@ -13,10 +13,7 @@ import 'package:get/get.dart' as navigator;
 import 'package:flutter/foundation.dart';
 import 'package:connectivity/connectivity.dart';
 
-
-
-class HttpRequest{
-
+class HttpRequest {
   static String baseUrl = AppApiUrls.BASE_URL;
 
   static BaseOptions options = new BaseOptions(
@@ -25,8 +22,8 @@ class HttpRequest{
     receiveTimeout: 3000,
   );
 
-  static Future<DioResponseData> request(url, params, String method) async {
-
+  static Future<DioResponseData> request(url, params, String method,
+      {bool notBaseUrl = false}) async {
     Response response;
     Response errorResponse;
 
@@ -40,37 +37,38 @@ class HttpRequest{
       // no network
       EasyLoading.dismiss();
       Utils.toast('请检查网络');
-      return DioResponseData(StatusCode.NETWORK_ERROR, '' , false, '请检查网络');
+      return DioResponseData(StatusCode.NETWORK_ERROR, '', false, '请检查网络');
     }
 
     options.method = method;
+    options.baseUrl = notBaseUrl ? null : baseUrl;
     // options.headers['token'] = '81db4474cdaf61cb99855b309354b683';
     addHeaders('token', AppStorage.getString('token'));
     Dio dio = new Dio(options);
-    if (!Utils.inProduction) {
-      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) {
-          return Platform.isAndroid;
-        };
-        client.findProxy = (url) {
-          ///设置代理 电脑ip地址
-          return "PROXY 10.11.1.46:8866";
+//     if (!Utils.inProduction) {
+//       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+//           (client) {
+//         client.badCertificateCallback =
+//             (X509Certificate cert, String host, int port) {
+//           return Platform.isAndroid;
+//         };
+//         client.findProxy = (url) {
+//           ///设置代理 电脑ip地址
+//           return "PROXY 192.168.0.107:8866";
 
-          ///不设置代理
-//          return 'DIRECT';
-        };
-
-      };
-    }
+//           ///不设置代理
+// //          return 'DIRECT';
+//         };
+//       };
+//     }
 
     try {
       if (method == 'POST') {
-        response = await dio.request(url,data: params);
-      } else if(method == 'GET') {
+        response = await dio.request(url, data: params);
+      } else if (method == 'GET') {
         response = await dio.request(url, queryParameters: params);
       }
-    } on DioError catch(e) {
+    } on DioError catch (e) {
       if (e.response != null) {
         errorResponse = e.response;
       } else {
@@ -85,11 +83,13 @@ class HttpRequest{
       }
       Utils.toast(errorResponse.statusMessage);
       EasyLoading.dismiss();
-      return DioResponseData(errorResponse.statusCode, '' , false, errorResponse.statusMessage);
+      return DioResponseData(
+          errorResponse.statusCode, '', false, errorResponse.statusMessage);
     }
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return DioResponseData(response.statusCode, response.data , true, response.statusMessage);
+      return DioResponseData(
+          response.statusCode, response.data, true, response.statusMessage);
     }
   }
 
@@ -108,7 +108,8 @@ class HttpRequest{
       EasyLoading.dismiss();
       return RealResponseData(result: false, data: null);
     } else {
-      return RealResponseData(result: true, data: response.data, more: response.more);
+      return RealResponseData(
+          result: true, data: response.data, more: response.more);
     }
   }
 }

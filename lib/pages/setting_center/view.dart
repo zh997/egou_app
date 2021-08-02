@@ -23,18 +23,18 @@ class SettingCenterPage extends StatelessWidget {
           _listItem('登陆密码修改', onTap: () {
             Get.toNamed(RouteConfig.pwd_update + '?type=1');
           }),
-          SizedBox(height: 15),
-          _listItem('找回登录密码', onTap: () {
-            Get.toNamed(RouteConfig.forget_pwd);
-          }),
+          // SizedBox(height: 15),
+          // _listItem('找回登录密码', onTap: () {
+          //   Get.toNamed(RouteConfig.forget_pwd);
+          // }),
           SizedBox(height: 15),
           _listItem('交易密码修改',onTap: () {
             Get.toNamed(RouteConfig.pwd_update + '?type=2');
           }),
-          SizedBox(height: 15),
-          _listItem('找回交易密码',onTap: () {
-            Get.toNamed(RouteConfig.forget_pwd);
-          })
+          // SizedBox(height: 15),
+          // _listItem('找回交易密码',onTap: () {
+          //   Get.toNamed(RouteConfig.forget_pwd);
+          // })
         ]
       )
     );

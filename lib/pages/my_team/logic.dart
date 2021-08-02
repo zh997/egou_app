@@ -1,4 +1,5 @@
 import 'package:egou_app/http/response_data.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:egou_app/services/team.dart';
 import 'state.dart';
@@ -7,6 +8,7 @@ class MyTeamLogic extends GetxController {
   final state = MyTeamState();
 
   Future onGetTeamList(int type) async {
+    EasyLoading.show();
     final RealResponseData response = await TeamService.userMyTeam({'page_no': 1, 'type': type});
     if (response.result) {
       state.teamLists.value = response.data.list;
@@ -17,6 +19,7 @@ class MyTeamLogic extends GetxController {
       state.page.value = 1;
       state.type.value = type;
     }
+    EasyLoading.dismiss();
   }
 
   Future onLoadMore(int type) async {
@@ -25,7 +28,7 @@ class MyTeamLogic extends GetxController {
       final RealResponseData response = await TeamService.userMyTeam({'page_no': page, 'type': type});
       final List list = [];
       list.addAll(state.teamLists.value);
-      list.addAll(response.data);
+      list.addAll(response.data.list);
       state.teamLists.value = list;
       state.hasMore.value = response.more;
       state.page.value = page;
