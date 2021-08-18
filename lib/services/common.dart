@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:egou_app/models/pay_reslut.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:dio/dio.dart';
 import 'package:egou_app/constant/app_api_urls.dart';
@@ -109,7 +110,15 @@ class CommonService {
   static Future<RealResponseData> thirdPay(Map<String, dynamic> data) async {
     final DioResponseData response = await HttpRequest.request(AppApiUrls.WX_PAYMENT_PREPAY, data , 'POST');
     if (response.result && response.data != null) {
-      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: ThirdPayModelFromJson));
+      return HttpRequest.catchError(ResponseData.fromJson(response.data));
+    }
+  }
+
+  // 支付结果
+  static Future<RealResponseData> getPayResult(String id) async {
+    final DioResponseData response = await HttpRequest.request(AppApiUrls.PAY_STATUS, {'id': id} , 'GET');
+    if (response.result && response.data != null) {
+      return HttpRequest.catchError(ResponseData.fromJson(response.data, fromJson: PayResultModelFromJson));
     }
   }
 

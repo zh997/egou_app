@@ -96,6 +96,7 @@ class PayMode {
   static int userIntegral = 11;
   static int gold = 12;
   static int third_party = 14;
+  static int third_party_15 = 15;
   static String getIcon(way){
     if (way == balance) {
       return AppImages.PAY_MODE_ICON_1;
@@ -111,7 +112,7 @@ class PayMode {
     } if (way == gold) {
       return AppImages.PAY_MODE_ICON_3;
     }
-    if (way == third_party) {
+    if (way == third_party || way == third_party_15) {
       return AppImages.PAY_MODE_ICON_6;
     }
   }

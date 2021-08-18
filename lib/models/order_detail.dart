@@ -1,45 +1,45 @@
 OrderDetailModel OrderDetailModelFromJson(json) => OrderDetailModel.fromJson(json);
 
 class OrderDetailModel {
-  int id;
-  String orderSn;
-  int orderType;
-  int orderStatus;
-  int payWay;
-  String payTime;
-  String consignee;
-  String mobile;
-  int deliveryType;
-  String goodsPrice;
-  String orderAmount;
-  String discountAmount;
-  String integralAmount;
-  String totalAmount;
-  int totalNum;
-  String shippingPrice;
-  int shippingTime;
-  String userRemark;
-  int confirmTakeTime;
-  String cancelTime;
-  int refundStatus;
-  int settleId;
-  String settleAmount;
-  int useIntegral;
-  String refundAmount;
-  String orderRemarks;
-  int createTime;
-  int updateTime;
-  int couponListId;
-  int deliveryId;
+  dynamic id;
+  dynamic orderSn;
+  dynamic orderType;
+  dynamic orderStatus;
+  dynamic payWay;
+  dynamic payTime;
+  dynamic consignee;
+  dynamic mobile;
+  dynamic deliveryType;
+  dynamic goodsPrice;
+  dynamic orderAmount;
+  dynamic discountAmount;
+  dynamic integralAmount;
+  dynamic totalAmount;
+  dynamic totalNum;
+  dynamic shippingPrice;
+  dynamic shippingTime;
+  dynamic userRemark;
+  dynamic confirmTakeTime;
+  dynamic cancelTime;
+  dynamic refundStatus;
+  dynamic settleId;
+  dynamic settleAmount;
+  dynamic useIntegral;
+  dynamic refundAmount;
+  dynamic orderRemarks;
+  dynamic createTime;
+  dynamic updateTime;
+  dynamic couponListId;
+  dynamic deliveryId;
   List<OrderGoods> orderGoods;
-  String deliveryAddress;
-  int payBtn;
-  int cancelBtn;
-  int deliveryBtn;
-  int takeBtn;
-  int delBtn;
-  int orderCancelTime;
-  String payWayText;
+  dynamic deliveryAddress;
+  dynamic payBtn;
+  dynamic cancelBtn;
+  dynamic deliveryBtn;
+  dynamic takeBtn;
+  dynamic delBtn;
+  dynamic orderCancelTime;
+  dynamic payWayText;
 
   OrderDetailModel(
       {this.id,
@@ -177,27 +177,27 @@ class OrderDetailModel {
 }
 
 class OrderGoods {
-  int id;
-  int orderId;
-  int goodsId;
-  int itemId;
-  String goodsName;
-  int goodsNum;
-  String goodsPrice;
-  String totalPrice;
-  String totalPayPrice;
-  String discountPrice;
-  String integralPrice;
-  String specValueIds;
-  int refundStatus;
-  int isComment;
-  int isSeckill;
-  String goodsInfo;
-  int createTime;
-  int commentBtn;
-  int refundBtn;
-  String specValue;
-  String image;
+  dynamic id;
+  dynamic orderId;
+  dynamic goodsId;
+  dynamic itemId;
+  dynamic goodsName;
+  dynamic goodsNum;
+  dynamic goodsPrice;
+  dynamic totalPrice;
+  dynamic totalPayPrice;
+  dynamic discountPrice;
+  dynamic integralPrice;
+  dynamic specValueIds;
+  dynamic refundStatus;
+  dynamic isComment;
+  dynamic isSeckill;
+  dynamic goodsInfo;
+  dynamic createTime;
+  dynamic commentBtn;
+  dynamic refundBtn;
+  dynamic specValue;
+  dynamic image;
 
   OrderGoods(
       {this.id,

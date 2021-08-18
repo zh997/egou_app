@@ -26,7 +26,7 @@ class PayModePage extends StatefulWidget {
   _PayModePageState createState() => _PayModePageState();
 }
 
-class _PayModePageState extends State<PayModePage> {
+class _PayModePageState extends State<PayModePage> with WidgetsBindingObserver {
   String order_id = Get.parameters['order_id'];
   String from = Get.parameters['from'];
   final PayModeLogic logic = Get.put(PayModeLogic());
@@ -64,6 +64,15 @@ class _PayModePageState extends State<PayModePage> {
       }
     });
     _future = _onInitData();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print("--" + state.toString());
+    if (state == AppLifecycleState.resumed) {
+      logic.onGetPayResult(order_id);
+    }
   }
 
 
@@ -114,7 +123,7 @@ class _PayModePageState extends State<PayModePage> {
                       // _payModeItem(AppImages.PAY_MODE_ICON_4, '微信支付', PayMode.wechat ),
                       // _payModeItem(AppImages.PAY_MODE_ICON_5,'支付宝支付',  PayMode.alipay),
                       SizedBox(height: 20),
-                      pay_way != PayMode.alipay && pay_way != PayMode.wechat && pay_way != PayMode.third_party? Container(
+                      pay_way != PayMode.alipay && pay_way != PayMode.wechat && pay_way != PayMode.third_party && pay_way != PayMode.third_party_15? Container(
                         alignment: Alignment.center,
                         // width: ScreenUtil().setWidth(895),
                         decoration: BoxDecoration(

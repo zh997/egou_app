@@ -44,7 +44,7 @@ class PayModeLogic extends GetxController {
       return onWxPayment(data);
     } else if (data['pay_way'] == PayMode.alipay) {
       return onAliPayment(data);
-    } else if (data['pay_way'] == PayMode.third_party) {
+    } else if (data['pay_way'] == PayMode.third_party || data['pay_way'] == PayMode.third_party_15) {
       return onThirdPay(data);
     }
     final RealResponseData response = await CommonService.blancePrepay(data);
@@ -58,15 +58,29 @@ class PayModeLogic extends GetxController {
   Future onThirdPay(Map<String, dynamic> data) async {
     final RealResponseData response = await CommonService.thirdPay(data);
     if (response.result) {
-      state.thirdPayModel.value = response.data;
+      // state.thirdPayModel.value = response.data;
+      // print(response.data);
       // Get.toNamed(RouteConfig.pay_middle);
-      String url = EnvConfig.env.apiUrl +
-          '/index/index/payform' +
-          "?charset=${response.data.data.charset}&signType=${response.data.data.signType}&data=${Uri.encodeComponent(response.data.data.data)}&sign=${response.data.data.sign}";
-      if (await canLaunch(url)) {
-        await launch(url);
+      // String url = EnvConfig.env.apiUrl +
+      //     '/index/index/payform' +
+      //     "?charset=${response.data.data.charset}&signType=${response.data.data.signType}&data=${Uri.encodeComponent(response.data.data.data)}&sign=${response.data.data.sign}";
+      if (await canLaunch(response.data)) {
+        await launch(response.data);
       } else {
-        throw 'Could not launch $url';
+        throw 'Could not launch $response.data';
+      }
+    }
+    EasyLoading.dismiss();
+  }
+
+  // 支付结果
+  Future onGetPayResult(String id) async {
+    final RealResponseData response = await CommonService.getPayResult(id);
+    if (response.result) {
+      if(response.data.payStatus == 0) {
+        Utils.toast('支付失败');
+      } else {
+        Get.toNamed(RouteConfig.pay_result);
       }
     }
     EasyLoading.dismiss();
